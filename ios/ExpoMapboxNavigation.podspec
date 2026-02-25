@@ -34,7 +34,6 @@ Pod::Spec.new do |s|
     'Frameworks/MapboxNavigationCore.xcframework',
     'Frameworks/MapboxNavigationNative.xcframework',
     'Frameworks/MapboxNavigationUIKit.xcframework',
-    'Frameworks/Turf.xcframework',
   ]
 
   # Swift/Objective-C compatibility
