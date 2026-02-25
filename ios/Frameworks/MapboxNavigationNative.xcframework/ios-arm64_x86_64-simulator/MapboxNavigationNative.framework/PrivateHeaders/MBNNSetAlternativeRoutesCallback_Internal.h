@@ -5,5 +5,10 @@
 
 @class MBNNRouteAlternative;
 
+/**
+ * WARNING: This API is not intended for public usage. It can be deleted or changed without any notice.
+ * Callback which is getting called to report setAlternativeRoutes result.
+ * @param   result  collection of alternatives on success, error string on failure.
+ */
 NS_SWIFT_NAME(SetAlternativeRoutesCallback)
 typedef void (^MBNNSetAlternativeRoutesCallback)(MBXExpected<NSArray<MBNNRouteAlternative *> *, NSString *> * _Nonnull result); // NOLINT(modernize-use-using)

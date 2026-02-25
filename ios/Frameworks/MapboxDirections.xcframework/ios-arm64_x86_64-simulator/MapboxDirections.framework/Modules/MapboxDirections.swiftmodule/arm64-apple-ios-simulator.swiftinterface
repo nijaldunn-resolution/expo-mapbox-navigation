@@ -1,10 +1,11 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.0.3 effective-5.10 (swiftlang-6.0.3.1.10 clang-1600.0.30.1)
-// swift-module-flags: -target arm64-apple-ios14.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-bare-slash-regex -module-name MapboxDirections
-// swift-module-flags-ignorable: -no-verify-emitted-module-interface
+// swift-compiler-version: Apple Swift version 6.2.3 effective-5.10 (swiftlang-6.2.3.3.21 clang-1700.6.3.2)
+// swift-module-flags: -target arm64-apple-ios14.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name MapboxDirections -package-name mapbox_nav_ios_build
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.2.3
 import CoreGraphics
 import CoreLocation
 import Foundation
+import OSLog
 import Swift
 import Turf
 import UIKit
@@ -24,7 +25,9 @@ public struct Amenity : Swift.Codable, Swift.Equatable, Swift.Sendable {
   public let name: Swift.String?
   public let brand: Swift.String?
   public let type: MapboxDirections.AmenityType
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(type: MapboxDirections.AmenityType, name: Swift.String? = nil, brand: Swift.String? = nil)
+  #endif
   public init(from decoder: any Swift.Decoder) throws
   public func encode(to encoder: any Swift.Encoder) throws
   public static func == (lhs: MapboxDirections.Amenity, rhs: MapboxDirections.Amenity) -> Swift.Bool
@@ -49,7 +52,9 @@ public enum AmenityType : Swift.String, Swift.Codable, Swift.Equatable, Swift.Se
   case picnicShelter
   case post
   case fax
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.String)
+  #endif
   public typealias RawValue = Swift.String
   public var rawValue: Swift.String {
     get
@@ -68,7 +73,9 @@ public struct AttributeOptions : MapboxDirections.CustomValueOptionSet, Swift.Cu
   public static let maximumSpeedLimit: MapboxDirections.AttributeOptions
   public static let numericCongestionLevel: MapboxDirections.AttributeOptions
   public static let trafficTendency: MapboxDirections.AttributeOptions
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(descriptions: [Swift.String])
+  #endif
   public var description: Swift.String {
     get
   }
@@ -105,7 +112,9 @@ public struct BlockedLanes : Swift.OptionSet, Swift.CustomStringConvertible, Swi
   public static let lane8: MapboxDirections.BlockedLanes
   public static let lane9: MapboxDirections.BlockedLanes
   public static let lane10: MapboxDirections.BlockedLanes
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(descriptions: [Swift.String])
+  #endif
   public var description: Swift.String {
     get
   }
@@ -123,7 +132,9 @@ public enum CongestionLevel : Swift.String, Swift.Codable, Swift.CaseIterable, S
   case moderate
   case heavy
   case severe
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.String)
+  #endif
   public typealias AllCases = [MapboxDirections.CongestionLevel]
   public typealias RawValue = Swift.String
   nonisolated public static var allCases: [MapboxDirections.CongestionLevel] {
@@ -137,10 +148,14 @@ public typealias NumericCongestionLevel = Swift.Int
 public struct Credentials : Swift.Equatable, Swift.Sendable {
   public let accessToken: Swift.String?
   public let host: Foundation.URL
+  #if compiler(>=5.3) && $NonescapableTypes
   public var skuToken: Swift.String? {
     get
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(accessToken token: Swift.String? = nil, host: Foundation.URL? = nil)
+  #endif
   public init(requestURL url: Foundation.URL)
   public static func == (a: MapboxDirections.Credentials, b: MapboxDirections.Credentials) -> Swift.Bool
 }
@@ -150,8 +165,8 @@ public enum CustomOptionComparisonPolicy : Swift.Equatable, Swift.Sendable {
   case equal
   case equalOrNull
   case rawValueEqual
-  public func hash(into hasher: inout Swift.Hasher)
   public static func == (a: MapboxDirections.CustomOptionComparisonPolicy, b: MapboxDirections.CustomOptionComparisonPolicy) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
   public var hashValue: Swift.Int {
     get
   }
@@ -172,9 +187,15 @@ public protocol CustomValueOptionSet : Swift.OptionSet where Self == Self.Elemen
   func subtracting(_ other: Self.Element, comparisonPolicy: MapboxDirections.CustomOptionComparisonPolicy) -> Self.Element
   mutating func subtract(_ other: Self.Element, comparisonPolicy: MapboxDirections.CustomOptionComparisonPolicy)
   mutating func insert(_ newMember: Self.Element, comparisonPolicy: MapboxDirections.CustomOptionComparisonPolicy) -> (inserted: Swift.Bool, memberAfterInsert: Self.Element)
+  #if compiler(>=5.3) && $NonescapableTypes
   mutating func remove(_ member: Self.Element, comparisonPolicy: MapboxDirections.CustomOptionComparisonPolicy) -> Self.Element?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   mutating func update(with newMember: Self.Element, comparisonPolicy: MapboxDirections.CustomOptionComparisonPolicy) -> Self.Element?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   mutating func update(customOption: (Self.RawValue, Self.CustomValue), comparisonPolicy: MapboxDirections.CustomOptionComparisonPolicy) -> Self.Element?
+  #endif
   func isSubset(of other: Self.Element, comparisonPolicy: MapboxDirections.CustomOptionComparisonPolicy) -> Swift.Bool
   func isSuperset(of other: Self.Element, comparisonPolicy: MapboxDirections.CustomOptionComparisonPolicy) -> Swift.Bool
   func isStrictSubset(of other: Self.Element, comparisonPolicy: MapboxDirections.CustomOptionComparisonPolicy) -> Swift.Bool
@@ -194,6 +215,7 @@ extension MapboxDirections.CustomValueOptionSet {
             return (true, newMember)
         }
     }
+  #if compiler(>=5.3) && $NonescapableTypes
   @discardableResult
   @inlinable public mutating func remove(_ member: Self.Element, comparisonPolicy: MapboxDirections.CustomOptionComparisonPolicy) -> Self.Element? {
         let intersection = intersection(member, comparisonPolicy: comparisonPolicy)
@@ -207,6 +229,8 @@ extension MapboxDirections.CustomValueOptionSet {
             return intersection
         }
     }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @discardableResult
   @inlinable public mutating func update(with newMember: Self.Element, comparisonPolicy: MapboxDirections.CustomOptionComparisonPolicy) -> Self.Element? {
         let intersection = intersection(newMember, comparisonPolicy: comparisonPolicy)
@@ -223,6 +247,7 @@ extension MapboxDirections.CustomValueOptionSet {
             return intersection
         }
     }
+  #endif
   public mutating func formIntersection(_ other: Self.Element, comparisonPolicy: MapboxDirections.CustomOptionComparisonPolicy)
   public mutating func subtract(_ other: Self.Element, comparisonPolicy: MapboxDirections.CustomOptionComparisonPolicy)
   @discardableResult
@@ -243,12 +268,14 @@ extension MapboxDirections.CustomValueOptionSet {
         difference.formSymmetricDifference(other, comparisonPolicy: comparisonPolicy)
         return difference
     }
+  #if compiler(>=5.3) && $NonescapableTypes
   @discardableResult
   @inlinable public mutating func update(customOption: (Self.RawValue, Self.CustomValue), comparisonPolicy: MapboxDirections.CustomOptionComparisonPolicy) -> Self.Element? {
         var newMember = Self(rawValue: customOption.0)
         newMember.customOptionsByRawValue[customOption.0] = customOption.1
         return update(with: newMember, comparisonPolicy: comparisonPolicy)
     }
+  #endif
   @inlinable public mutating func formUnion(_ other: Self, comparisonPolicy: MapboxDirections.CustomOptionComparisonPolicy) {
         _ = update(with: other, comparisonPolicy: comparisonPolicy)
     }
@@ -311,14 +338,18 @@ extension MapboxDirections.CustomValueOptionSet {
   @inlinable public mutating func insert(_ newMember: Self.Element) -> (inserted: Swift.Bool, memberAfterInsert: Self.Element) {
         return insert(newMember, comparisonPolicy: .equal)
     }
+  #if compiler(>=5.3) && $NonescapableTypes
   @discardableResult
   @inlinable public mutating func remove(_ member: Self.Element) -> Self.Element? {
         return remove(member, comparisonPolicy: .equal)
     }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @discardableResult
   @inlinable public mutating func update(with newMember: Self.Element) -> Self.Element? {
         return update(with: newMember, comparisonPolicy: .equal)
     }
+  #endif
   @inlinable public mutating func formUnion(_ other: Self) {
         formUnion(other, comparisonPolicy: .equal)
     }
@@ -362,10 +393,14 @@ public let MBDirectionsErrorDomain: Swift.String
   open func calculate(_ options: MapboxDirections.MatchOptions, completionHandler: @escaping MapboxDirections.Directions.MatchCompletionHandler) -> Foundation.URLSessionDataTask
   @discardableResult
   open func calculateRoutes(matching options: MapboxDirections.MatchOptions, completionHandler: @escaping MapboxDirections.Directions.RouteCompletionHandler) -> Foundation.URLSessionDataTask
+  #if compiler(>=5.3) && $NonescapableTypes
   @discardableResult
   open func refreshRoute(responseIdentifier: Swift.String, routeIndex: Swift.Int, fromLegAtIndex startLegIndex: Swift.Int = 0, completionHandler: @escaping MapboxDirections.Directions.RouteRefreshCompletionHandler) -> Foundation.URLSessionDataTask?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @discardableResult
   open func refreshRoute(responseIdentifier: Swift.String, routeIndex: Swift.Int, fromLegAtIndex startLegIndex: Swift.Int = 0, currentRouteShapeIndex: Swift.Int, completionHandler: @escaping MapboxDirections.Directions.RouteRefreshCompletionHandler) -> Foundation.URLSessionDataTask?
+  #endif
   open func urlRequest(forRefreshing responseIdentifier: Swift.String, routeIndex: Swift.Int, fromLegAtIndex startLegIndex: Swift.Int) -> Foundation.URLRequest
   open func urlRequest(forRefreshing responseIdentifier: Swift.String, routeIndex: Swift.Int, fromLegAtIndex startLegIndex: Swift.Int, currentRouteShapeIndex: Swift.Int) -> Foundation.URLRequest
   open func url(forCalculating options: MapboxDirections.DirectionsOptions) -> Foundation.URL
@@ -374,9 +409,6 @@ public let MBDirectionsErrorDomain: Swift.String
   public static func url(forCalculating options: MapboxDirections.DirectionsOptions, credentials: MapboxDirections.Credentials, httpMethod: Swift.String) -> Foundation.URL
   open func urlRequest(forCalculating options: MapboxDirections.DirectionsOptions) -> Foundation.URLRequest
   @objc deinit
-}
-@available(*, unavailable)
-extension MapboxDirections.Directions : @unchecked Swift.Sendable {
 }
 extension Swift.CodingUserInfoKey {
   public static let options: Swift.CodingUserInfoKey
@@ -388,7 +420,9 @@ extension Swift.CodingUserInfoKey {
   public static let startLegIndex: Swift.CodingUserInfoKey
 }
 public enum DirectionsError : Foundation.LocalizedError {
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(code: Swift.String?, message: Swift.String?, response: Foundation.URLResponse?, underlyingError error: (any Swift.Error)?)
+  #endif
   case network(Foundation.URLError)
   case noData
   case invalidInput(message: Swift.String?)
@@ -401,12 +435,16 @@ public enum DirectionsError : Foundation.LocalizedError {
   case requestTooLarge
   case rateLimited(rateLimitInterval: Foundation.TimeInterval?, rateLimit: Swift.UInt?, resetTime: Foundation.Date?)
   case unknown(response: Foundation.URLResponse?, underlying: (any Swift.Error)?, code: Swift.String?, message: Swift.String?)
+  #if compiler(>=5.3) && $NonescapableTypes
   public var failureReason: Swift.String? {
     get
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public var recoverySuggestion: Swift.String? {
     get
   }
+  #endif
 }
 extension MapboxDirections.DirectionsError : Swift.Equatable {
   public static func == (lhs: MapboxDirections.DirectionsError, rhs: MapboxDirections.DirectionsError) -> Swift.Bool
@@ -424,7 +462,9 @@ public enum RouteShapeFormat : Swift.String, Swift.Codable, Swift.Equatable, Swi
   case geoJSON
   case polyline
   case polyline6
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.String)
+  #endif
   public typealias RawValue = Swift.String
   public var rawValue: Swift.String {
     get
@@ -434,7 +474,9 @@ public enum RouteShapeResolution : Swift.String, Swift.Codable, Swift.Equatable,
   case none
   case low
   case full
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.String)
+  #endif
   public typealias RawValue = Swift.String
   public var rawValue: Swift.String {
     get
@@ -443,7 +485,9 @@ public enum RouteShapeResolution : Swift.String, Swift.Codable, Swift.Equatable,
 public enum MeasurementSystem : Swift.String, Swift.Codable, Swift.Equatable, Swift.Sendable {
   case imperial
   case metric
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.String)
+  #endif
   public typealias RawValue = Swift.String
   public var rawValue: Swift.String {
     get
@@ -460,9 +504,13 @@ public struct DirectionsPriority : Swift.Hashable, Swift.RawRepresentable, Swift
   public typealias RawValue = Swift.Double
 }
 open class DirectionsOptions : Swift.Codable, @unchecked Swift.Sendable {
+  #if compiler(>=5.3) && $NonescapableTypes
   required public init(waypoints: [MapboxDirections.Waypoint], profileIdentifier: MapboxDirections.ProfileIdentifier? = nil, queryItems: [Foundation.URLQueryItem]? = nil)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   convenience public init?(url: Foundation.URL)
-  public func encode(to encoder: any Swift.Encoder) throws
+  #endif
+  open func encode(to encoder: any Swift.Encoder) throws
   required public init(from decoder: any Swift.Decoder) throws
   public var waypoints: [MapboxDirections.Waypoint]
   public var profileIdentifier: MapboxDirections.ProfileIdentifier
@@ -486,9 +534,6 @@ open class DirectionsOptions : Swift.Codable, @unchecked Swift.Sendable {
 extension MapboxDirections.DirectionsOptions : Swift.Equatable {
   public static func == (lhs: MapboxDirections.DirectionsOptions, rhs: MapboxDirections.DirectionsOptions) -> Swift.Bool
 }
-@available(*, unavailable)
-extension MapboxDirections.DirectionsOptions : @unchecked Swift.Sendable {
-}
 public enum DirectionsResultCodingKeys : Swift.String, Swift.CodingKey, Swift.CaseIterable {
   case shape
   case legs
@@ -497,17 +542,25 @@ public enum DirectionsResultCodingKeys : Swift.String, Swift.CodingKey, Swift.Ca
   case typicalTravelTime
   case directionsOptions
   case speechLocale
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.String)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(stringValue: Swift.String)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(intValue: Swift.Int)
+  #endif
   public typealias AllCases = [MapboxDirections.DirectionsResultCodingKeys]
   public typealias RawValue = Swift.String
   nonisolated public static var allCases: [MapboxDirections.DirectionsResultCodingKeys] {
     get
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   public var intValue: Swift.Int? {
     get
   }
+  #endif
   public var rawValue: Swift.String {
     get
   }
@@ -516,43 +569,63 @@ public enum DirectionsResultCodingKeys : Swift.String, Swift.CodingKey, Swift.Ca
   }
 }
 public struct DirectionsCodingKey : Swift.CodingKey {
+  #if compiler(>=5.3) && $NonescapableTypes
   public var intValue: Swift.Int? {
     get
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(intValue: Swift.Int)
+  #endif
   public let stringValue: Swift.String
   public init(stringValue: Swift.String)
   public static func directionsResult(_ key: MapboxDirections.DirectionsResultCodingKeys) -> MapboxDirections.DirectionsCodingKey
 }
 public protocol DirectionsResult : Swift.Decodable, Swift.Encodable, Swift.Equatable, Turf.ForeignMemberContainer {
+  #if compiler(>=5.3) && $NonescapableTypes
   var shape: Turf.LineString? { get }
+  #endif
   var legs: [MapboxDirections.RouteLeg] { get set }
   var distance: Turf.LocationDistance { get }
   var expectedTravelTime: Foundation.TimeInterval { get set }
+  #if compiler(>=5.3) && $NonescapableTypes
   var typicalTravelTime: Foundation.TimeInterval? { get set }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   var speechLocale: Foundation.Locale? { get set }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   var fetchStartDate: Foundation.Date? { get set }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   var responseEndDate: Foundation.Date? { get set }
+  #endif
   var responseContainsSpeechLocale: Swift.Bool { get }
+  #if compiler(>=5.3) && $NonescapableTypes
   var legSeparators: [MapboxDirections.Waypoint?] { get set }
+  #endif
 }
 extension MapboxDirections.DirectionsResult {
+  #if compiler(>=5.3) && $NonescapableTypes
   public var legSeparators: [MapboxDirections.Waypoint?] {
     get
     set
   }
+  #endif
 }
 public enum DrivingSide : Swift.String, Swift.Codable, Swift.Equatable, Swift.Sendable {
   case left
   case right
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.String)
+  #endif
   public typealias RawValue = Swift.String
   public var rawValue: Swift.String {
     get
   }
 }
-public typealias LocationSpeed = CoreLocation.CLLocationSpeed
-public typealias LocationAccuracy = CoreLocation.CLLocationAccuracy
+public typealias LocationSpeed = _LocationEssentials.CLLocationSpeed
+public typealias LocationAccuracy = _LocationEssentials.CLLocationAccuracy
 public protocol ForeignMemberContainerClass : AnyObject {
   var foreignMembers: Turf.JSONObject { get set }
   func decodeForeignMembers<WellKnownCodingKeys>(notKeyedBy codingKeys: WellKnownCodingKeys.Type, with decoder: any Swift.Decoder) throws where WellKnownCodingKeys : Swift.CaseIterable, WellKnownCodingKeys : Swift.CodingKey
@@ -569,12 +642,16 @@ extension Turf.BoundingBox : Swift.CustomStringConvertible {
 }
 public enum GeometryError : Foundation.LocalizedError {
   case cannotDecodePolyline(precision: Swift.Double)
+  #if compiler(>=5.3) && $NonescapableTypes
   public var failureReason: Swift.String? {
     get
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public var recoverySuggestion: Swift.String? {
     get
   }
+  #endif
 }
 public struct Incident : Swift.Codable, Swift.Equatable, Turf.ForeignMemberContainer, Swift.Sendable {
   public var foreignMembers: Turf.JSONObject
@@ -593,7 +670,9 @@ public struct Incident : Swift.Codable, Swift.Equatable, Turf.ForeignMemberConta
     case roadHazard
     case weather
     case undefined
+    #if compiler(>=5.3) && $NonescapableTypes
     public init?(rawValue: Swift.String)
+    #endif
     public typealias RawValue = Swift.String
     public var rawValue: Swift.String {
       get
@@ -605,16 +684,20 @@ public struct Incident : Swift.Codable, Swift.Equatable, Turf.ForeignMemberConta
     case major
     case minor
     case low
+    #if compiler(>=5.3) && $NonescapableTypes
     public init?(rawValue: Swift.String)
+    #endif
     public typealias RawValue = Swift.String
     public var rawValue: Swift.String {
       get
     }
   }
   public var identifier: Swift.String
+  #if compiler(>=5.3) && $NonescapableTypes
   public var kind: MapboxDirections.Incident.Kind? {
     get
   }
+  #endif
   public var description: Swift.String
   public var creationDate: Foundation.Date
   public var startDate: Foundation.Date
@@ -632,14 +715,18 @@ public struct Incident : Swift.Codable, Swift.Equatable, Turf.ForeignMemberConta
   public var alertCodes: Swift.Set<Swift.Int>
   public var lanesBlocked: MapboxDirections.BlockedLanes?
   public var shapeIndexRange: Swift.Range<Swift.Int>
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(identifier: Swift.String, type: MapboxDirections.Incident.Kind, description: Swift.String, creationDate: Foundation.Date, startDate: Foundation.Date, endDate: Foundation.Date, impact: MapboxDirections.Incident.Impact?, subtype: Swift.String?, subtypeDescription: Swift.String?, alertCodes: Swift.Set<Swift.Int>, lanesBlocked: MapboxDirections.BlockedLanes?, shapeIndexRange: Swift.Range<Swift.Int>, countryCodeAlpha3: Swift.String? = nil, countryCode: Swift.String? = nil, roadIsClosed: Swift.Bool? = nil, longDescription: Swift.String? = nil, numberOfBlockedLanes: Swift.Int? = nil, congestionLevel: MapboxDirections.NumericCongestionLevel? = nil, affectedRoadNames: [Swift.String]? = nil)
+  #endif
   public init(from decoder: any Swift.Decoder) throws
   public func encode(to encoder: any Swift.Encoder) throws
   public static func == (a: MapboxDirections.Incident, b: MapboxDirections.Incident) -> Swift.Bool
 }
 public struct Interchange : Swift.Codable, Swift.Equatable, Swift.Sendable {
   public let name: Swift.String?
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(name: Swift.String?)
+  #endif
   public static func == (a: MapboxDirections.Interchange, b: MapboxDirections.Interchange) -> Swift.Bool
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
@@ -647,7 +734,9 @@ public struct Interchange : Swift.Codable, Swift.Equatable, Swift.Sendable {
 public struct Intersection : Turf.ForeignMemberContainer, Swift.Equatable, Swift.Sendable {
   public var foreignMembers: Turf.JSONObject
   public var lanesForeignMembers: [Turf.JSONObject]
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(location: MapboxDirections.LocationCoordinate2D, headings: [Turf.LocationDirection], approachIndex: Swift.Int, outletIndex: Swift.Int, outletIndexes: Foundation.IndexSet, approachLanes: [MapboxDirections.LaneIndication]?, usableApproachLanes: Foundation.IndexSet?, preferredApproachLanes: Foundation.IndexSet?, usableLaneIndication: MapboxDirections.ManeuverDirection?, outletRoadClasses: MapboxDirections.RoadClasses? = nil, tollCollection: MapboxDirections.TollCollection? = nil, tunnelName: Swift.String? = nil, restStop: MapboxDirections.RestStop? = nil, isUrban: Swift.Bool? = nil, regionCode: Swift.String? = nil, outletMapboxStreetsRoadClass: MapboxDirections.MapboxStreetsRoadClass? = nil, railroadCrossing: Swift.Bool? = nil, trafficSignal: Swift.Bool? = nil, stopSign: Swift.Bool? = nil, yieldSign: Swift.Bool? = nil, interchange: MapboxDirections.Interchange? = nil, junction: MapboxDirections.Junction? = nil)
+  #endif
   public let location: MapboxDirections.LocationCoordinate2D
   public let headings: [Turf.LocationDirection]
   public let outletIndexes: Foundation.IndexSet
@@ -681,7 +770,9 @@ extension MapboxDirections.Intersection {
   public static func == (lhs: MapboxDirections.Intersection, rhs: MapboxDirections.Intersection) -> Swift.Bool
 }
 public enum IsochroneError : Foundation.LocalizedError {
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(code: Swift.String?, message: Swift.String?, response: Foundation.URLResponse?, underlyingError error: (any Swift.Error)?)
+  #endif
   case network(Foundation.URLError)
   case invalidResponse(Foundation.URLResponse?)
   case noData
@@ -696,8 +787,8 @@ public struct IsochroneOptions : Swift.Equatable, Swift.Sendable {
   public enum ContourFormat : Swift.Equatable, Swift.Sendable {
     case lineString
     case polygon
-    public func hash(into hasher: inout Swift.Hasher)
     public static func == (a: MapboxDirections.IsochroneOptions.ContourFormat, b: MapboxDirections.IsochroneOptions.ContourFormat) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
     public var hashValue: Swift.Int {
       get
     }
@@ -715,11 +806,15 @@ public struct IsochroneOptions : Swift.Equatable, Swift.Sendable {
 }
 extension MapboxDirections.IsochroneOptions {
   public enum Contours : Swift.Equatable, Swift.Sendable {
-    public struct Definition<Unt> : Swift.Equatable, Swift.Sendable where Unt : Foundation.Dimension, Unt : Swift.Sendable {
+    public struct Definition<Unt> : Swift.Equatable, Swift.Sendable where Unt : Foundation.Dimension {
       public var value: Foundation.Measurement<Unt>
       public var color: MapboxDirections.IsochroneOptions.Color?
+      #if compiler(>=5.3) && $NonescapableTypes
       public init(value: Foundation.Measurement<Unt>, color: MapboxDirections.IsochroneOptions.Color? = nil)
+      #endif
+      #if compiler(>=5.3) && $NonescapableTypes
       public init(value: Swift.Double, unit: Unt, color: MapboxDirections.IsochroneOptions.Color? = nil)
+      #endif
       public static func == (a: MapboxDirections.IsochroneOptions.Contours.Definition<Unt>, b: MapboxDirections.IsochroneOptions.Contours.Definition<Unt>) -> Swift.Bool
     }
     case byExpectedTravelTimes([MapboxDirections.IsochroneOptions.Contours.Definition<Foundation.UnitDuration>])
@@ -742,12 +837,11 @@ open class Isochrones : @unchecked Swift.Sendable {
   open func urlRequest(forCalculating options: MapboxDirections.IsochroneOptions) -> Foundation.URLRequest
   @objc deinit
 }
-@available(*, unavailable)
-extension MapboxDirections.Isochrones : @unchecked Swift.Sendable {
-}
 public struct Junction : Swift.Codable, Swift.Equatable, Swift.Sendable {
   public let name: Swift.String?
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(name: Swift.String?)
+  #endif
   public static func == (a: MapboxDirections.Junction, b: MapboxDirections.Junction) -> Swift.Bool
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
@@ -763,7 +857,9 @@ public struct LaneIndication : Swift.OptionSet, Swift.CustomStringConvertible, S
   public static let left: MapboxDirections.LaneIndication
   public static let sharpLeft: MapboxDirections.LaneIndication
   public static let uTurn: MapboxDirections.LaneIndication
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(descriptions: [Swift.String])
+  #endif
   public var descriptions: [Swift.String] {
     get
   }
@@ -788,7 +884,9 @@ public struct MapMatchingResponse : Turf.ForeignMemberContainer {
   public var created: Foundation.Date
 }
 extension MapboxDirections.MapMatchingResponse : Swift.Codable {
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(httpResponse: Foundation.HTTPURLResponse?, matches: [MapboxDirections.Match]? = nil, tracepoints: [MapboxDirections.Match.Tracepoint]? = nil, options: MapboxDirections.MatchOptions, credentials: MapboxDirections.Credentials)
+  #endif
   public init(from decoder: any Swift.Decoder) throws
   public func encode(to encoder: any Swift.Encoder) throws
 }
@@ -803,17 +901,25 @@ public struct Match : MapboxDirections.DirectionsResult {
     case confidence
     case weight
     case weightName
+    #if compiler(>=5.3) && $NonescapableTypes
     public init?(rawValue: Swift.String)
+    #endif
+    #if compiler(>=5.3) && $NonescapableTypes
     public init?(stringValue: Swift.String)
+    #endif
+    #if compiler(>=5.3) && $NonescapableTypes
     public init?(intValue: Swift.Int)
+    #endif
     public typealias AllCases = [MapboxDirections.Match.CodingKeys]
     public typealias RawValue = Swift.String
     nonisolated public static var allCases: [MapboxDirections.Match.CodingKeys] {
       get
     }
+    #if compiler(>=5.3) && $NonescapableTypes
     public var intValue: Swift.Int? {
       get
     }
+    #endif
     public var rawValue: Swift.String {
       get
     }
@@ -831,7 +937,9 @@ public struct Match : MapboxDirections.DirectionsResult {
   public var responseEndDate: Foundation.Date?
   public var responseContainsSpeechLocale: Swift.Bool
   public var foreignMembers: Turf.JSONObject
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(legs: [MapboxDirections.RouteLeg], shape: Turf.LineString?, distance: Turf.LocationDistance, expectedTravelTime: Foundation.TimeInterval, confidence: Swift.Float, weight: MapboxDirections.Weight)
+  #endif
   public init(from decoder: any Swift.Decoder) throws
   public func encode(to encoder: any Swift.Encoder) throws
   public var weight: MapboxDirections.Weight
@@ -847,10 +955,16 @@ extension MapboxDirections.DirectionsCodingKey {
   public static func match(_ key: MapboxDirections.Match.CodingKeys) -> MapboxDirections.DirectionsCodingKey
 }
 @_inheritsConvenienceInitializers open class MatchOptions : MapboxDirections.DirectionsOptions, @unchecked Swift.Sendable {
-  convenience public init(locations: [CoreLocation.CLLocation], profileIdentifier: MapboxDirections.ProfileIdentifier? = nil, queryItems: [Foundation.URLQueryItem]? = nil)
+  #if compiler(>=5.3) && $NonescapableTypes
+  convenience public init(locations: [_LocationEssentials.CLLocation], profileIdentifier: MapboxDirections.ProfileIdentifier? = nil, queryItems: [Foundation.URLQueryItem]? = nil)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   convenience public init(coordinates: [MapboxDirections.LocationCoordinate2D], profileIdentifier: MapboxDirections.ProfileIdentifier? = nil, queryItems: [Foundation.URLQueryItem]? = nil)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   required public init(waypoints: [MapboxDirections.Waypoint], profileIdentifier: MapboxDirections.ProfileIdentifier? = nil, queryItems: [Foundation.URLQueryItem]? = nil)
-  override public func encode(to encoder: any Swift.Encoder) throws
+  #endif
+  override open func encode(to encoder: any Swift.Encoder) throws
   required public init(from decoder: any Swift.Decoder) throws
   open var resamplesTraces: Swift.Bool
   @available(*, deprecated, message: "Use Waypoint.separatesLegs instead.")
@@ -859,9 +973,6 @@ extension MapboxDirections.DirectionsCodingKey {
     get
   }
   @objc deinit
-}
-@available(*, unavailable)
-extension MapboxDirections.MatchOptions : @unchecked Swift.Sendable {
 }
 extension MapboxDirections.MatchOptions {
   public static func == (lhs: MapboxDirections.MatchOptions, rhs: MapboxDirections.MatchOptions) -> Swift.Bool
@@ -875,7 +986,9 @@ extension MapboxDirections.Match {
     public var waypointIndex: Swift.Int?
     public init(from decoder: any Swift.Decoder) throws
     public func encode(to encoder: any Swift.Encoder) throws
+    #if compiler(>=5.3) && $NonescapableTypes
     public init(coordinate: MapboxDirections.LocationCoordinate2D, countOfAlternatives: Swift.Int, name: Swift.String? = nil, matchingIndex: Swift.Int = 0, waypointIndex: Swift.Int = 0)
+    #endif
     public static func == (a: MapboxDirections.Match.Tracepoint, b: MapboxDirections.Match.Tracepoint) -> Swift.Bool
   }
 }
@@ -909,7 +1022,9 @@ public enum MapboxStreetsRoadClass : Swift.String, Swift.Codable, Swift.Equatabl
   case aerialway
   case golf
   case undefined
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.String)
+  #endif
   public typealias RawValue = Swift.String
   public var rawValue: Swift.String {
     get
@@ -928,7 +1043,9 @@ open class Matrix : @unchecked Swift.Sendable {
   @objc deinit
 }
 public enum MatrixError : Foundation.LocalizedError {
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(code: Swift.String?, message: Swift.String?, response: Foundation.URLResponse?, underlyingError error: (any Swift.Error)?)
+  #endif
   case network(Foundation.URLError)
   case invalidResponse(Foundation.URLResponse?)
   case noData
@@ -974,11 +1091,17 @@ public struct MatrixResponse : Swift.Sendable {
   public let sources: [MapboxDirections.Waypoint]?
   public let distances: MapboxDirections.MatrixResponse.DistanceMatrix?
   public let travelTimes: MapboxDirections.MatrixResponse.DurationMatrix?
+  #if compiler(>=5.3) && $NonescapableTypes
   public func distance(from sourceIndex: Swift.Int, to destinationIndex: Swift.Int) -> Turf.LocationDistance?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func travelTime(from sourceIndex: Swift.Int, to destinationIndex: Swift.Int) -> Foundation.TimeInterval?
+  #endif
 }
 extension MapboxDirections.MatrixResponse : Swift.Codable {
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(httpResponse: Foundation.HTTPURLResponse?, distances: MapboxDirections.MatrixResponse.DistanceMatrix?, travelTimes: MapboxDirections.MatrixResponse.DurationMatrix?, destinations: [MapboxDirections.Waypoint]?, sources: [MapboxDirections.Waypoint]?)
+  #endif
   public init(from decoder: any Swift.Decoder) throws
   public func encode(to encoder: any Swift.Encoder) throws
 }
@@ -1000,25 +1123,39 @@ extension MapboxDirections.Directions : MapboxDirections.OfflineDirectionsProtoc
   @discardableResult
   public func downloadTiles(in coordinateBounds: Turf.BoundingBox, version: MapboxDirections.OfflineVersion, completionHandler: @escaping MapboxDirections.OfflineDownloaderCompletionHandler) -> Foundation.URLSessionDownloadTask
 }
-public typealias LocationCoordinate2D = CoreLocation.CLLocationCoordinate2D
+public typealias LocationCoordinate2D = _LocationEssentials.CLLocationCoordinate2D
 public struct Polyline {
   public let coordinates: [MapboxDirections.LocationCoordinate2D]?
   public let encodedPolyline: Swift.String
   public let levels: [Swift.UInt32]?
   public let encodedLevels: Swift.String?
-  public var locations: [CoreLocation.CLLocation]? {
+  #if compiler(>=5.3) && $NonescapableTypes
+  public var locations: [_LocationEssentials.CLLocation]? {
     get
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(coordinates: [MapboxDirections.LocationCoordinate2D], levels: [Swift.UInt32]? = nil, precision: Swift.Double = 1e5)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(encodedPolyline: Swift.String, encodedLevels: Swift.String? = nil, precision: Swift.Double = 1e5)
-  public init(locations: [CoreLocation.CLLocation], levels: [Swift.UInt32]? = nil, precision: Swift.Double = 1e5)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  public init(locations: [_LocationEssentials.CLLocation], levels: [Swift.UInt32]? = nil, precision: Swift.Double = 1e5)
+  #endif
 }
 public func encodeCoordinates(_ coordinates: [MapboxDirections.LocationCoordinate2D], precision: Swift.Double = 1e5) -> Swift.String
-public func encodeLocations(_ locations: [CoreLocation.CLLocation], precision: Swift.Double = 1e5) -> Swift.String
+public func encodeLocations(_ locations: [_LocationEssentials.CLLocation], precision: Swift.Double = 1e5) -> Swift.String
 public func encodeLevels(_ levels: [Swift.UInt32]) -> Swift.String
+#if compiler(>=5.3) && $NonescapableTypes
 public func decodePolyline(_ encodedPolyline: Swift.String, precision: Swift.Double = 1e5) -> [MapboxDirections.LocationCoordinate2D]?
-public func decodePolyline(_ encodedPolyline: Swift.String, precision: Swift.Double = 1e5) -> [CoreLocation.CLLocation]?
+#endif
+#if compiler(>=5.3) && $NonescapableTypes
+public func decodePolyline(_ encodedPolyline: Swift.String, precision: Swift.Double = 1e5) -> [_LocationEssentials.CLLocation]?
+#endif
+#if compiler(>=5.3) && $NonescapableTypes
 public func decodeLevels(_ encodedLevels: Swift.String) -> [Swift.UInt32]?
+#endif
 public struct ProfileIdentifier : Swift.Codable, Swift.Hashable, Swift.RawRepresentable, Swift.Sendable {
   public init(rawValue: Swift.String)
   public var rawValue: Swift.String
@@ -1032,6 +1169,20 @@ public struct ProfileIdentifier : Swift.Codable, Swift.Hashable, Swift.RawRepres
 public typealias MBDirectionsProfileIdentifier = MapboxDirections.ProfileIdentifier
 @available(*, deprecated, renamed: "ProfileIdentifier")
 public typealias DirectionsProfileIdentifier = MapboxDirections.ProfileIdentifier
+extension MapboxDirections.ProfileIdentifier {
+  public var isAutomobileAvoidingTraffic: Swift.Bool {
+    get
+  }
+  public var isAutomobile: Swift.Bool {
+    get
+  }
+  public var isWalking: Swift.Bool {
+    get
+  }
+  public var isCycling: Swift.Bool {
+    get
+  }
+}
 public struct RefreshedRoute : Turf.ForeignMemberContainer, Swift.Equatable {
   public var foreignMembers: Turf.JSONObject
   public var legs: [MapboxDirections.RefreshedRouteLeg]
@@ -1057,7 +1208,9 @@ public struct RestStop : Swift.Codable, Swift.Equatable, Turf.ForeignMemberConta
   public enum StopType : Swift.String, Swift.Codable, Swift.Sendable {
     case serviceArea
     case restArea
+    #if compiler(>=5.3) && $NonescapableTypes
     public init?(rawValue: Swift.String)
+    #endif
     public typealias RawValue = Swift.String
     public var rawValue: Swift.String {
       get
@@ -1067,7 +1220,9 @@ public struct RestStop : Swift.Codable, Swift.Equatable, Turf.ForeignMemberConta
   public let name: Swift.String?
   public let amenities: [MapboxDirections.Amenity]?
   public init(type: MapboxDirections.RestStop.StopType)
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(type: MapboxDirections.RestStop.StopType, name: Swift.String?, amenities: [MapboxDirections.Amenity]?)
+  #endif
   public init(from decoder: any Swift.Decoder) throws
   public func encode(to encoder: any Swift.Encoder) throws
   public static func == (lhs: MapboxDirections.RestStop, rhs: MapboxDirections.RestStop) -> Swift.Bool
@@ -1093,7 +1248,9 @@ public struct RoadClasses : Swift.OptionSet, Swift.CustomStringConvertible, Swif
   public static let highOccupancyToll: MapboxDirections.RoadClasses
   public static let unpaved: MapboxDirections.RoadClasses
   public static let cashTollOnly: MapboxDirections.RoadClasses
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(descriptions: [Swift.String])
+  #endif
   public var description: Swift.String {
     get
   }
@@ -1108,17 +1265,25 @@ extension MapboxDirections.RoadClasses : Swift.Codable {
 public struct Route : MapboxDirections.DirectionsResult {
   public enum CodingKeys : Swift.String, Swift.CodingKey, Swift.CaseIterable {
     case tollPrices
+    #if compiler(>=5.3) && $NonescapableTypes
     public init?(rawValue: Swift.String)
+    #endif
+    #if compiler(>=5.3) && $NonescapableTypes
     public init?(stringValue: Swift.String)
+    #endif
+    #if compiler(>=5.3) && $NonescapableTypes
     public init?(intValue: Swift.Int)
+    #endif
     public typealias AllCases = [MapboxDirections.Route.CodingKeys]
     public typealias RawValue = Swift.String
     nonisolated public static var allCases: [MapboxDirections.Route.CodingKeys] {
       get
     }
+    #if compiler(>=5.3) && $NonescapableTypes
     public var intValue: Swift.Int? {
       get
     }
+    #endif
     public var rawValue: Swift.String {
       get
     }
@@ -1136,7 +1301,9 @@ public struct Route : MapboxDirections.DirectionsResult {
   public var responseEndDate: Foundation.Date?
   public var responseContainsSpeechLocale: Swift.Bool
   public var foreignMembers: Turf.JSONObject
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(legs: [MapboxDirections.RouteLeg], shape: Turf.LineString?, distance: Turf.LocationDistance, expectedTravelTime: Foundation.TimeInterval, typicalTravelTime: Foundation.TimeInterval? = nil)
+  #endif
   public init(from decoder: any Swift.Decoder) throws
   public func encode(to encoder: any Swift.Encoder) throws
   public var tollPrices: [MapboxDirections.TollPrice]?
@@ -1166,17 +1333,25 @@ public struct RouteLeg : Swift.Codable, Turf.ForeignMemberContainer, Swift.Equat
     case incidents
     case viaWaypoints
     case closures
+    #if compiler(>=5.3) && $NonescapableTypes
     public init?(rawValue: Swift.String)
+    #endif
+    #if compiler(>=5.3) && $NonescapableTypes
     public init?(stringValue: Swift.String)
+    #endif
+    #if compiler(>=5.3) && $NonescapableTypes
     public init?(intValue: Swift.Int)
+    #endif
     public typealias AllCases = [MapboxDirections.RouteLeg.CodingKeys]
     public typealias RawValue = Swift.String
     nonisolated public static var allCases: [MapboxDirections.RouteLeg.CodingKeys] {
       get
     }
+    #if compiler(>=5.3) && $NonescapableTypes
     public var intValue: Swift.Int? {
       get
     }
+    #endif
     public var rawValue: Swift.String {
       get
     }
@@ -1184,7 +1359,9 @@ public struct RouteLeg : Swift.Codable, Turf.ForeignMemberContainer, Swift.Equat
       get
     }
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(steps: [MapboxDirections.RouteStep], name: Swift.String, distance: Turf.LocationDistance, expectedTravelTime: Foundation.TimeInterval, typicalTravelTime: Foundation.TimeInterval? = nil, profileIdentifier: MapboxDirections.ProfileIdentifier)
+  #endif
   public init(from decoder: any Swift.Decoder) throws
   public func encode(to encoder: any Swift.Encoder) throws
   public var source: MapboxDirections.Waypoint?
@@ -1201,7 +1378,9 @@ public struct RouteLeg : Swift.Codable, Turf.ForeignMemberContainer, Swift.Equat
   public var segmentMaximumSpeedLimits: [Foundation.Measurement<Foundation.UnitSpeed>?]?
   public var closures: [MapboxDirections.RouteLeg.Closure]?
   public var trafficTendencies: [MapboxDirections.TrafficTendency]?
+  #if compiler(>=5.3) && $NonescapableTypes
   public func regionCode(atStepIndex stepIndex: Swift.Int, intersectionIndex: Swift.Int) -> Swift.String?
+  #endif
   public let name: Swift.String
   public let distance: Turf.LocationDistance
   public var expectedTravelTime: Foundation.TimeInterval
@@ -1249,10 +1428,16 @@ extension MapboxDirections.RouteLeg.Attributes : Swift.Codable {
   public func encode(to encoder: any Swift.Encoder) throws
 }
 @_inheritsConvenienceInitializers open class RouteOptions : MapboxDirections.DirectionsOptions, @unchecked Swift.Sendable {
+  #if compiler(>=5.3) && $NonescapableTypes
   required public init(waypoints: [MapboxDirections.Waypoint], profileIdentifier: MapboxDirections.ProfileIdentifier? = nil, queryItems: [Foundation.URLQueryItem]? = nil)
-  convenience public init(locations: [CoreLocation.CLLocation], profileIdentifier: MapboxDirections.ProfileIdentifier? = nil, queryItems: [Foundation.URLQueryItem]? = nil)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  convenience public init(locations: [_LocationEssentials.CLLocation], profileIdentifier: MapboxDirections.ProfileIdentifier? = nil, queryItems: [Foundation.URLQueryItem]? = nil)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   convenience public init(coordinates: [MapboxDirections.LocationCoordinate2D], profileIdentifier: MapboxDirections.ProfileIdentifier? = nil, queryItems: [Foundation.URLQueryItem]? = nil)
-  override public func encode(to encoder: any Swift.Encoder) throws
+  #endif
+  override open func encode(to encoder: any Swift.Encoder) throws
   required public init(from decoder: any Swift.Decoder) throws
   convenience public init(matchOptions: MapboxDirections.MatchOptions)
   open var allowsUTurnAtWaypoint: Swift.Bool
@@ -1269,18 +1454,17 @@ extension MapboxDirections.RouteLeg.Attributes : Swift.Codable {
   open var maximumHeight: Foundation.Measurement<Foundation.UnitLength>?
   open var maximumWidth: Foundation.Measurement<Foundation.UnitLength>?
   open var maximumWeight: Foundation.Measurement<Foundation.UnitMass>?
+  #if compiler(>=5.3) && $NonescapableTypes
   open var initialManeuverAvoidanceRadius: Turf.LocationDistance? {
     get
     set
   }
+  #endif
   open var includesTollPrices: Swift.Bool
   override open var urlQueryItems: [Foundation.URLQueryItem] {
     get
   }
   @objc deinit
-}
-@available(*, unavailable)
-extension MapboxDirections.RouteOptions : @unchecked Swift.Sendable {
 }
 public struct RouteRefreshResponse : Turf.ForeignMemberContainer, Swift.Equatable {
   public var foreignMembers: Turf.JSONObject
@@ -1302,16 +1486,24 @@ public protocol RouteRefreshSource {
 }
 public protocol RouteLegRefreshSource {
   var refreshedAttributes: MapboxDirections.RouteLeg.Attributes { get }
+  #if compiler(>=5.3) && $NonescapableTypes
   var refreshedIncidents: [MapboxDirections.Incident]? { get }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   var refreshedClosures: [MapboxDirections.RouteLeg.Closure]? { get }
+  #endif
 }
 extension MapboxDirections.RouteLegRefreshSource {
+  #if compiler(>=5.3) && $NonescapableTypes
   public var refreshedIncidents: [MapboxDirections.Incident]? {
     get
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public var refreshedClosures: [MapboxDirections.RouteLeg.Closure]? {
     get
   }
+  #endif
 }
 extension MapboxDirections.Route : MapboxDirections.RouteRefreshSource {
   public var refreshedLegs: [any MapboxDirections.RouteLegRefreshSource] {
@@ -1322,12 +1514,16 @@ extension MapboxDirections.RouteLeg : MapboxDirections.RouteLegRefreshSource {
   public var refreshedAttributes: MapboxDirections.RouteLeg.Attributes {
     get
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   public var refreshedIncidents: [MapboxDirections.Incident]? {
     get
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public var refreshedClosures: [MapboxDirections.RouteLeg.Closure]? {
     get
   }
+  #endif
 }
 extension MapboxDirections.RefreshedRoute : MapboxDirections.RouteRefreshSource {
   public var refreshedLegs: [any MapboxDirections.RouteLegRefreshSource] {
@@ -1338,19 +1534,21 @@ extension MapboxDirections.RefreshedRouteLeg : MapboxDirections.RouteLegRefreshS
   public var refreshedAttributes: MapboxDirections.RouteLeg.Attributes {
     get
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   public var refreshedIncidents: [MapboxDirections.Incident]? {
     get
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public var refreshedClosures: [MapboxDirections.RouteLeg.Closure]? {
     get
   }
+  #endif
 }
-public enum ResponseOptions : Swift.Sendable {
+public enum ResponseOptions : Swift.Sendable, Swift.Equatable {
   case route(MapboxDirections.RouteOptions)
   case match(MapboxDirections.MatchOptions)
-}
-@available(*, unavailable)
-extension MapboxDirections.ResponseOptions : @unchecked Swift.Sendable {
+  public static func == (a: MapboxDirections.ResponseOptions, b: MapboxDirections.ResponseOptions) -> Swift.Bool
 }
 public struct RouteResponse : Turf.ForeignMemberContainer {
   public var foreignMembers: Turf.JSONObject
@@ -1365,23 +1563,33 @@ public struct RouteResponse : Turf.ForeignMemberContainer {
   public let credentials: MapboxDirections.Credentials
   public var created: Foundation.Date
   public let refreshTTL: Foundation.TimeInterval?
+  #if compiler(>=5.3) && $NonescapableTypes
   public var refreshInvalidationDate: Foundation.Date? {
     get
   }
+  #endif
   public var roadClassExclusionViolations: [MapboxDirections.RoadClassExclusionViolation]? {
     get
   }
 }
 extension MapboxDirections.RouteResponse : Swift.Codable {
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(httpResponse: Foundation.HTTPURLResponse?, identifier: Swift.String? = nil, routes: [MapboxDirections.Route]? = nil, waypoints: [MapboxDirections.Waypoint]? = nil, options: MapboxDirections.ResponseOptions, credentials: MapboxDirections.Credentials, refreshTTL: Foundation.TimeInterval? = nil)
+  #endif
   public init(matching response: MapboxDirections.MapMatchingResponse, options: MapboxDirections.MatchOptions, credentials: MapboxDirections.Credentials) throws
   public init(from decoder: any Swift.Decoder) throws
   public func encode(to encoder: any Swift.Encoder) throws
 }
 extension MapboxDirections.RouteResponse {
+  #if compiler(>=5.3) && $NonescapableTypes
   public func exclusionViolations(routeIndex: Swift.Int, legIndex: Swift.Int? = nil) -> Swift.LazyFilterSequence<[MapboxDirections.RoadClassExclusionViolation]>
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func exclusionViolations(routeIndex: Swift.Int, legIndex: Swift.Int, stepIndex: Swift.Int? = nil) -> Swift.LazyFilterSequence<[MapboxDirections.RoadClassExclusionViolation]>
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func exclusionViolations(routeIndex: Swift.Int, legIndex: Swift.Int, stepIndex: Swift.Int, intersectionIndex: Swift.Int?) -> Swift.LazyFilterSequence<[MapboxDirections.RoadClassExclusionViolation]>
+  #endif
 }
 public enum TransportType : Swift.String, Swift.Codable, Swift.Equatable, Swift.Sendable {
   case automobile
@@ -1392,7 +1600,9 @@ public enum TransportType : Swift.String, Swift.Codable, Swift.Equatable, Swift.
   case cycling
   case train
   public init(from decoder: any Swift.Decoder) throws
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.String)
+  #endif
   public typealias RawValue = Swift.String
   public var rawValue: Swift.String {
     get
@@ -1416,7 +1626,9 @@ public enum ManeuverType : Swift.String, Swift.Codable, Swift.Equatable, Swift.S
   case exitRotary
   case heedWarning
   case arrive
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.String)
+  #endif
   public typealias RawValue = Swift.String
   public var rawValue: Swift.String {
     get
@@ -1433,7 +1645,9 @@ public enum ManeuverDirection : Swift.String, Swift.Codable, Swift.Equatable, Sw
   case uTurn
   case undefined
   public init(from decoder: any Swift.Decoder) throws
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.String)
+  #endif
   public typealias RawValue = Swift.String
   public var rawValue: Swift.String {
     get
@@ -1442,7 +1656,9 @@ public enum ManeuverDirection : Swift.String, Swift.Codable, Swift.Equatable, Sw
 public enum SignStandard : Swift.String, Swift.Codable, Swift.Equatable, Swift.Sendable {
   case mutcd
   case viennaConvention
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.String)
+  #endif
   public typealias RawValue = Swift.String
   public var rawValue: Swift.String {
     get
@@ -1451,7 +1667,9 @@ public enum SignStandard : Swift.String, Swift.Codable, Swift.Equatable, Swift.S
 public struct RouteStep : Swift.Codable, Turf.ForeignMemberContainer, Swift.Equatable, Swift.Sendable {
   public var foreignMembers: Turf.JSONObject
   public var maneuverForeignMembers: Turf.JSONObject
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(transportType: MapboxDirections.TransportType, maneuverLocation: Turf.LocationCoordinate2D, maneuverType: MapboxDirections.ManeuverType, maneuverDirection: MapboxDirections.ManeuverDirection? = nil, instructions: Swift.String, initialHeading: Turf.LocationDirection? = nil, finalHeading: Turf.LocationDirection? = nil, drivingSide: MapboxDirections.DrivingSide, exitCodes: [Swift.String]? = nil, exitNames: [Swift.String]? = nil, phoneticExitNames: [Swift.String]? = nil, distance: Turf.LocationDistance, expectedTravelTime: Foundation.TimeInterval, typicalTravelTime: Foundation.TimeInterval? = nil, names: [Swift.String]? = nil, phoneticNames: [Swift.String]? = nil, codes: [Swift.String]? = nil, destinationCodes: [Swift.String]? = nil, destinations: [Swift.String]? = nil, intersections: [MapboxDirections.Intersection]? = nil, speedLimitSignStandard: MapboxDirections.SignStandard? = nil, speedLimitUnit: Foundation.UnitSpeed? = nil, instructionsSpokenAlongStep: [MapboxDirections.SpokenInstruction]? = nil, instructionsDisplayedAlongStep: [MapboxDirections.VisualInstructionBanner]? = nil, administrativeAreaContainerByIntersection: [Swift.Int?]? = nil, segmentIndicesByIntersection: [Swift.Int?]? = nil)
+  #endif
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
   public var shape: Turf.LineString?
@@ -1497,13 +1715,21 @@ public struct SilentWaypoint : Swift.Codable, Swift.Equatable, Turf.ForeignMembe
     case waypointIndex
     case distanceFromStart
     case shapeCoordinateIndex
+    #if compiler(>=5.3) && $NonescapableTypes
     public init?(rawValue: Swift.String)
+    #endif
+    #if compiler(>=5.3) && $NonescapableTypes
     public init?(stringValue: Swift.String)
+    #endif
+    #if compiler(>=5.3) && $NonescapableTypes
     public init?(intValue: Swift.Int)
+    #endif
     public typealias RawValue = Swift.String
+    #if compiler(>=5.3) && $NonescapableTypes
     public var intValue: Swift.Int? {
       get
     }
+    #endif
     public var rawValue: Swift.String {
       get
     }
@@ -1535,9 +1761,11 @@ public struct TimeZoneInformation : Swift.Codable, Swift.Equatable, Swift.Sendab
   public let identifier: Swift.String
   public let offset: Swift.String
   public let abbreviation: Swift.String?
+  #if compiler(>=5.3) && $NonescapableTypes
   public var timeZone: Foundation.TimeZone? {
     get
   }
+  #endif
   public static func == (a: MapboxDirections.TimeZoneInformation, b: MapboxDirections.TimeZoneInformation) -> Swift.Bool
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
@@ -1547,7 +1775,9 @@ public struct TollCollection : Swift.Codable, Swift.Equatable, Turf.ForeignMembe
   public enum CollectionType : Swift.String, Swift.Codable, Swift.Sendable {
     case booth
     case gantry
+    #if compiler(>=5.3) && $NonescapableTypes
     public init?(rawValue: Swift.String)
+    #endif
     public typealias RawValue = Swift.String
     public var rawValue: Swift.String {
       get
@@ -1556,7 +1786,9 @@ public struct TollCollection : Swift.Codable, Swift.Equatable, Turf.ForeignMembe
   public let type: MapboxDirections.TollCollection.CollectionType
   public var name: Swift.String?
   public init(type: MapboxDirections.TollCollection.CollectionType)
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(type: MapboxDirections.TollCollection.CollectionType, name: Swift.String?)
+  #endif
   public init(from decoder: any Swift.Decoder) throws
   public func encode(to encoder: any Swift.Encoder) throws
   public static func == (lhs: MapboxDirections.TollCollection, rhs: MapboxDirections.TollCollection) -> Swift.Bool
@@ -1565,8 +1797,8 @@ public struct TollPaymentMethod : Swift.Hashable, Swift.Equatable, Swift.Sendabl
   public let identifier: Swift.String
   public static let electronicTollCollection: MapboxDirections.TollPaymentMethod
   public static let cash: MapboxDirections.TollPaymentMethod
-  public func hash(into hasher: inout Swift.Hasher)
   public static func == (a: MapboxDirections.TollPaymentMethod, b: MapboxDirections.TollPaymentMethod) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
   public var hashValue: Swift.Int {
     get
   }
@@ -1578,8 +1810,8 @@ public struct TollCategory : Swift.Hashable, Swift.Equatable, Swift.Sendable {
   public static let middle: MapboxDirections.TollCategory
   public static let large: MapboxDirections.TollCategory
   public static let jumbo: MapboxDirections.TollCategory
-  public func hash(into hasher: inout Swift.Hasher)
   public static func == (a: MapboxDirections.TollCategory, b: MapboxDirections.TollCategory) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
   public var hashValue: Swift.Int {
     get
   }
@@ -1603,7 +1835,9 @@ public enum TrafficTendency : Swift.Int, Swift.Codable, Swift.CaseIterable, Swif
   case decreasing
   case rapidlyIncreasing
   case rapidlyDecreasing
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias AllCases = [MapboxDirections.TrafficTendency]
   public typealias RawValue = Swift.Int
   nonisolated public static var allCases: [MapboxDirections.TrafficTendency] {
@@ -1615,7 +1849,9 @@ public enum TrafficTendency : Swift.Int, Swift.Codable, Swift.CaseIterable, Swif
 }
 public struct VisualInstruction : Swift.Codable, Turf.ForeignMemberContainer, Swift.Equatable, Swift.Sendable {
   public var foreignMembers: Turf.JSONObject
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(text: Swift.String?, maneuverType: MapboxDirections.ManeuverType?, maneuverDirection: MapboxDirections.ManeuverDirection?, components: [MapboxDirections.VisualInstruction.Component], degrees: Turf.LocationDegrees? = nil)
+  #endif
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
   public let text: Swift.String?
@@ -1629,7 +1865,9 @@ extension MapboxDirections.VisualInstruction {
 }
 public struct VisualInstructionBanner : Swift.Codable, Turf.ForeignMemberContainer, Swift.Equatable, Swift.Sendable {
   public var foreignMembers: Turf.JSONObject
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(distanceAlongStep: Turf.LocationDistance, primary: MapboxDirections.VisualInstruction, secondary: MapboxDirections.VisualInstruction?, tertiary: MapboxDirections.VisualInstruction?, quaternary: MapboxDirections.VisualInstruction?, drivingSide: MapboxDirections.DrivingSide)
+  #endif
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
   public let distanceAlongStep: Turf.LocationDistance
@@ -1656,7 +1894,9 @@ extension MapboxDirections.VisualInstruction {
 }
 extension MapboxDirections.VisualInstruction.Component {
   public struct TextRepresentation : Swift.Equatable, Swift.Sendable {
+    #if compiler(>=5.3) && $NonescapableTypes
     public init(text: Swift.String, abbreviation: Swift.String?, abbreviationPriority: Swift.Int?)
+    #endif
     public let text: Swift.String
     public let abbreviation: Swift.String?
     public let abbreviationPriority: Swift.Int?
@@ -1666,16 +1906,22 @@ extension MapboxDirections.VisualInstruction.Component {
     public enum Format : Swift.String, Swift.Sendable {
       case png
       case svg
+      #if compiler(>=5.3) && $NonescapableTypes
       public init?(rawValue: Swift.String)
+      #endif
       public typealias RawValue = Swift.String
       public var rawValue: Swift.String {
         get
       }
     }
+    #if compiler(>=5.3) && $NonescapableTypes
     public init(imageBaseURL: Foundation.URL?, shield: MapboxDirections.VisualInstruction.Component.ShieldRepresentation? = nil)
+    #endif
     public let imageBaseURL: Foundation.URL?
     public let shield: MapboxDirections.VisualInstruction.Component.ShieldRepresentation?
+    #if compiler(>=5.3) && $NonescapableTypes
     public func imageURL(scale: MapboxDirections.Scale, format: MapboxDirections.VisualInstruction.Component.ImageRepresentation.Format = .png) -> Foundation.URL?
+    #endif
     public static func == (a: MapboxDirections.VisualInstruction.Component.ImageRepresentation, b: MapboxDirections.VisualInstruction.Component.ImageRepresentation) -> Swift.Bool
   }
   public struct ShieldRepresentation : Swift.Equatable, Swift.Codable, Swift.Sendable {
@@ -1690,7 +1936,9 @@ extension MapboxDirections.VisualInstruction.Component {
   }
 }
 public struct GuidanceViewImageRepresentation : Swift.Equatable, Swift.Sendable {
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(imageURL: Foundation.URL?)
+  #endif
   public let imageURL: Foundation.URL?
   public static func == (a: MapboxDirections.GuidanceViewImageRepresentation, b: MapboxDirections.GuidanceViewImageRepresentation) -> Swift.Bool
 }
@@ -1705,8 +1953,12 @@ public struct Waypoint : Swift.Codable, Turf.ForeignMemberContainer, Swift.Equat
   public var foreignMembers: Turf.JSONObject
   public init(from decoder: any Swift.Decoder) throws
   public func encode(to encoder: any Swift.Encoder) throws
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(coordinate: MapboxDirections.LocationCoordinate2D, coordinateAccuracy: MapboxDirections.LocationAccuracy? = nil, name: Swift.String? = nil)
-  public init(location: CoreLocation.CLLocation, heading: CoreLocation.CLHeading? = nil, name: Swift.String? = nil)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  public init(location: _LocationEssentials.CLLocation, heading: CoreLocation.CLHeading? = nil, name: Swift.String? = nil)
+  #endif
   public let coordinate: MapboxDirections.LocationCoordinate2D
   public var coordinateAccuracy: MapboxDirections.LocationAccuracy?
   public var targetCoordinate: MapboxDirections.LocationCoordinate2D?

@@ -5,3 +5,8 @@ framework module MapboxNavigationNative {
   module * { export * }
   link "c++"
 }
+
+module MapboxNavigationNative.Swift {
+  header "MapboxNavigationNative-Swift.h"
+  requires objc
+}

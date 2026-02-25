@@ -2,10 +2,10 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
-#import <MapboxNavigationNative/MBNNWaypointType.h>
 @class MBXCoordinate2D;
 
 @class MBNNTimeZone;
+typedef NS_ENUM(NSInteger, MBNNWaypointType);
 
 /**
  *  Waypoint object from Directions API route response.
@@ -21,13 +21,6 @@ __attribute__((visibility ("default")))
 // This class provides custom init which should be called
 + (nonnull instancetype)new NS_UNAVAILABLE;
 
-- (nonnull instancetype)initWithName:(nonnull NSString *)name
-                            location:(CLLocationCoordinate2D)location
-                            distance:(nullable NSNumber *)distance
-                            metadata:(nullable NSString *)metadata
-                              target:(nullable MBXCoordinate2D *)target
-                                type:(MBNNWaypointType)type
-                            timeZone:(nullable MBNNTimeZone *)timeZone;
 
 /**
  *  Field name as is from direction's response.
@@ -50,12 +43,9 @@ __attribute__((visibility ("default")))
 /**
  *  Type of waypoint.
  *  Silent type calculates based on `via_vaypoints` field, or segment's source of each leg for legacy routes.
- *  EvChargingServer and EvChangingUser types're calculated based on `metadata` field.
+ *  EvChargingServer and EvChargingUser types're calculated based on `metadata` field.
  */
 @property (nonatomic, readonly) MBNNWaypointType type;
-
-/** Time zone info */
-@property (nonatomic, readonly, nullable) MBNNTimeZone *timeZone;
 
 
 - (BOOL)isEqualToWaypoint:(nonnull MBNNWaypoint *)other;

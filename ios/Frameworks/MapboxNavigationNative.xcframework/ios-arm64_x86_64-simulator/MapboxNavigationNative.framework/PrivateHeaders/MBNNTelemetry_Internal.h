@@ -1,13 +1,17 @@
 // This file is generated and will be overwritten automatically.
 
 #import <Foundation/Foundation.h>
-#import <MapboxNavigationNative/MBNNOuterDeviceAction.h>
 #import <MapboxNavigationNative/MBNNUserFeedbackCallback_Internal.h>
 
 @class MBNNUserFeedback;
 @class MBNNUserFeedbackHandle;
 @class MBNNUserFeedbackMetadata;
+typedef NS_ENUM(NSInteger, MBNNOuterDeviceAction);
 
+/**
+ * WARNING: This API is not intended for public usage. It can be deleted or changed without any notice.
+ * Contains telemetry APIs.
+ */
 NS_SWIFT_NAME(Telemetry)
 @protocol MBNNTelemetry
 /**
@@ -22,12 +26,14 @@ NS_SWIFT_NAME(Telemetry)
                                 version:(nonnull NSString *)version
                                 payload:(nullable NSString *)payload;
 /**
+ * WARNING: This API is not intended for public usage. It can be deleted or changed without any notice.
  * Send outer device telemetry event whenever an outer device is connected or disconnected
  *
  * @param action   value of OuterDeviceAction enum
  */
 - (void)postOuterDeviceEventForAction:(MBNNOuterDeviceAction)action;
 /**
+ * WARNING: This API is not intended for public usage. It can be deleted or changed without any notice.
  * Starts building user feedback metadata which can be send later using `postUserFeedback(...)`
  * The built metadata is provided using the returned UserFeedbackHandle
  *
@@ -43,6 +49,16 @@ NS_SWIFT_NAME(Telemetry)
  * if `startBuildUserFeedbackMetadata` called not the right time.
  */
 - (nonnull MBNNUserFeedbackHandle *)startBuildUserFeedbackMetadata;
+/**
+ * WARNING: This API is not intended for public usage. It can be deleted or changed without any notice.
+ * Sends user feedback metadata to the server. The metadata for the feedback is built using `startBuildUserFeedbackMetadata(...)`.
+ *
+ * @param feedbackMetadata The user feedback metadata which must be provided using `UserFeedbackHandle.getMetadata()`
+ * @param userFeedback     The user feedback data
+ * @param callback         The callback which will be called when the user feedback is sent to the server
+ *
+ * The callback is scheduled using the `common::Scheduler` of the thread calling the `Navigator` constructor.
+ */
 - (void)postUserFeedbackForFeedbackMetadata:(nonnull MBNNUserFeedbackMetadata *)feedbackMetadata
                                userFeedback:(nonnull MBNNUserFeedback *)userFeedback
                                    callback:(nonnull MBNNUserFeedbackCallback)callback;

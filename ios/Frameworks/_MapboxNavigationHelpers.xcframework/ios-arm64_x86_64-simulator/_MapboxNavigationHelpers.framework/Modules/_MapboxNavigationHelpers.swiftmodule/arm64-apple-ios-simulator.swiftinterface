@@ -1,11 +1,10 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.0.3 effective-5.10 (swiftlang-6.0.3.1.10 clang-1600.0.30.1)
-// swift-module-flags: -target arm64-apple-ios14.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-bare-slash-regex -module-name _MapboxNavigationHelpers
-// swift-module-flags-ignorable: -no-verify-emitted-module-interface
+// swift-compiler-version: Apple Swift version 6.2.3 effective-5.10 (swiftlang-6.2.3.3.21 clang-1700.6.3.2)
+// swift-module-flags: -target arm64-apple-ios14.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name _MapboxNavigationHelpers -package-name mapbox_nav_ios_build
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.2.3
 import Combine
 import Foundation
 import Swift
-import SwiftUI
 import UIKit
 import _Concurrency
 import _StringProcessing
@@ -22,13 +21,8 @@ final public class AsyncStreamBridge<Element> {
 extension _MapboxNavigationHelpers.AsyncStreamBridge : _Concurrency.AsyncSequence {
   final public func makeAsyncIterator() -> _Concurrency.AsyncStream<Element>.AsyncIterator
   public typealias AsyncIterator = _Concurrency.AsyncStream<Element>.AsyncIterator
-  #if compiler(>=5.3) && $AssociatedTypeImplements
   @available(iOS 18.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, macOS 15.0, *)
   @_implements(_Concurrency.AsyncSequence, Failure) public typealias __AsyncSequence_Failure = _Concurrency.AsyncStream<Element>.Iterator.__AsyncIteratorProtocol_Failure
-  #else
-  @available(iOS 18.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, macOS 15.0, *)
-  public typealias __AsyncSequence_Failure = _Concurrency.AsyncStream<Element>.Iterator.__AsyncIteratorProtocol_Failure
-  #endif
 }
 extension _MapboxNavigationHelpers.AsyncStreamBridge : Swift.Sendable where Element : Swift.Sendable {
 }
@@ -109,7 +103,9 @@ extension _MapboxNavigationHelpers.Locked where Lock == Foundation.NSLock {
 public func onMainAsync(_ work: @escaping @_Concurrency.MainActor @Sendable () -> Swift.Void)
 public func onMainQueueSync<T>(execute work: @_Concurrency.MainActor () throws -> T) rethrows -> T
 final public class QueueGuard<Value> : @unchecked Swift.Sendable {
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(_ initialValue: Value, queueLabel: Swift.String, target: Dispatch.DispatchQueue? = nil)
+  #endif
   final public func async<Output>(_ exclusiveAccessBlock: @escaping @Sendable (inout Value) -> Output) async -> Output
   final public func async<Output>(_ exclusiveAccessBlock: @escaping @Sendable (inout Value) throws -> Output) async throws -> Output
   final public func sync<Output>(_ exclusiveAccessBlock: @Sendable (inout Value) throws -> Output) rethrows -> Output
@@ -128,13 +124,8 @@ final public class UnfairLock : Foundation.NSLocking, Swift.Sendable {
   @objc final public func lock()
   @objc final public func unlock()
 }
-#if compiler(>=5.3) && $NoncopyableGenerics
 extension Swift.UnsafeMutablePointer : @unchecked Swift.Sendable where Pointee == Darwin.os_unfair_lock_s {
 }
-#else
-extension Swift.UnsafeMutablePointer : @unchecked Swift.Sendable where Pointee == Darwin.os_unfair_lock_s {
-}
-#endif
 public typealias UnfairLocked<Value> = _MapboxNavigationHelpers.Locked<Value, _MapboxNavigationHelpers.UnfairLock>
 extension _MapboxNavigationHelpers.Locked where Lock == _MapboxNavigationHelpers.UnfairLock {
   convenience public init(_ wrappedValue: Value)
@@ -143,16 +134,20 @@ extension CoreFoundation.CGPoint {
   public func distance(to: CoreFoundation.CGPoint) -> CoreFoundation.CGFloat
 }
 extension Swift.Collection {
+  #if compiler(>=5.3) && $NonescapableTypes
   public subscript(safe index: Self.Index) -> Self.Element? {
     get
   }
+  #endif
 }
 extension Foundation.DateComponentsFormatter {
   public static let fullDateComponentsFormatter: Foundation.DateComponentsFormatter
   public static let noCommaShortDateComponentsFormatter: Foundation.DateComponentsFormatter
   public static let briefDateComponentsFormatter: Foundation.DateComponentsFormatter
   public static func travelDurationUnitStyle(interval: Foundation.TimeInterval) -> Foundation.DateComponentsFormatter.UnitsStyle
+  #if compiler(>=5.3) && $NonescapableTypes
   public static func travelTimeString(_ interval: Foundation.TimeInterval, signed: Swift.Bool, allowedUnits: Foundation.NSCalendar.Unit? = nil, unitStyle: Foundation.DateComponentsFormatter.UnitsStyle? = nil) -> Swift.String
+  #endif
 }
 extension Swift.String {
   public func firstCapitalized() -> Swift.String
@@ -162,8 +157,10 @@ extension UIKit.UIView {
   @_Concurrency.MainActor @preconcurrency public func pinEdgesToSuperview(padding: CoreFoundation.CGFloat = 0, respectingSafeArea safeArea: Swift.Bool = false)
 }
 extension UIKit.NSLayoutConstraint {
+  #if compiler(>=5.3) && $NonescapableTypes
   @discardableResult
   @_Concurrency.MainActor @preconcurrency public func assign(to variable: inout UIKit.NSLayoutConstraint!) -> Self
+  #endif
 }
 @_documentation(visibility: internal) public protocol Anchorable {
   @_Concurrency.MainActor var topAnchor: UIKit.NSLayoutYAxisAnchor { get }
@@ -178,23 +175,14 @@ extension UIKit.UIView : _MapboxNavigationHelpers.Anchorable {
 extension UIKit.UILayoutGuide : _MapboxNavigationHelpers.Anchorable {
 }
 extension UIKit.UIColor {
-  convenience public init(rgb: Swift.Int, alpha: CoreFoundation.CGFloat = 1.0)
+  #if compiler(>=5.3) && $NonescapableTypes
   public var hexString: Swift.String? {
     get
   }
+  #endif
 }
 extension UIKit.UIColor {
   public func image(_ size: CoreFoundation.CGSize = .zero) -> UIKit.UIImage
-}
-extension SwiftUICore.ColorScheme {
-  public var traitCollection: UIKit.UITraitCollection {
-    get
-  }
-}
-extension UIKit.UITraitCollection {
-  public var colorScheme: SwiftUICore.ColorScheme {
-    get
-  }
 }
 extension UIKit.UIView {
   @inlinable @inline(__always) @_Concurrency.MainActor @preconcurrency public func forEachSubview(action: @escaping (UIKit.UIView) -> Swift.Void) {

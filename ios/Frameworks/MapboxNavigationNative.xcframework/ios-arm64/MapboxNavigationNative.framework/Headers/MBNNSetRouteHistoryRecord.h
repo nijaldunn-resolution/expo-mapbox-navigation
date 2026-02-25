@@ -1,9 +1,10 @@
 // This file is generated and will be overwritten automatically.
 
 #import <Foundation/Foundation.h>
-#import <MapboxNavigationNative/MBNNMapboxAPI.h>
-#import <MapboxNavigationNative/MBNNRouterOrigin.h>
-#import <MapboxNavigationNative/MBNNSetRoutesReason.h>
+
+typedef NS_ENUM(NSInteger, MBNNMapboxAPI);
+typedef NS_ENUM(NSInteger, MBNNRouterOrigin);
+typedef NS_ENUM(NSInteger, MBNNSetRoutesReason);
 
 NS_SWIFT_NAME(SetRouteHistoryRecord)
 __attribute__((visibility ("default")))

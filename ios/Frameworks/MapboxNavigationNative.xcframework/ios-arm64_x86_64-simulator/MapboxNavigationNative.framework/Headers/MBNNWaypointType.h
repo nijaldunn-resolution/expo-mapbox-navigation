@@ -17,12 +17,12 @@ typedef NS_ENUM(NSInteger, MBNNWaypointType)
      * Charging stops inserted by EV Routing for routes requiring charging along
      * the way. As these type of waypoints are not requested by user, they may change
      * on reroutes. But they are not silent, i.e. such waypoint is an ending of a leg
-     * and a beginning of another. Note, changing requires time, so they effect route duration
+     * and a beginning of another. Note, charging requires time, so they effect route duration
      */
     MBNNWaypointTypeEvChargingServer,
     /**
      * Charging stop added by User. Unlike `EvChargingServer` this will not be changed on
-     * reroutes and cannot be skipped. Mind that changing requires time, calculated on server.
+     * reroutes and cannot be skipped. Mind that charging requires time, calculated on server.
      */
     MBNNWaypointTypeEvChargingUser
 } NS_SWIFT_NAME(WaypointType);

@@ -1,0 +1,25 @@
+---
+triple:          'x86_64-apple-darwin'
+binary-path:     '/private/tmp/mapbox-nav-ios-build/.build/scipio/DerivedData/Products/Release-iphonesimulator/_MapboxNavigationLocalization.framework/_MapboxNavigationLocalization'
+relocations:
+  - { offset: 0x2AB54, size: 0x8, addend: 0x0, symName: '_$s29_MapboxNavigationLocalization0C7ManagerV06customC6BundleSo8NSBundleCSgvgZ', symObjAddr: 0x0, symBinAddr: 0xE60, symSize: 0x50 }
+  - { offset: 0x2AB78, size: 0x8, addend: 0x0, symName: '_$s29_MapboxNavigationLocalization0C7ManagerV07_customC6Bundle33_5B8F5DE3654354E69836BEA95C85E818LL01_aB7Helpers6LockedCySo8NSBundleCSgSo6NSLockCGvpZ', symObjAddr: 0x3358, symBinAddr: 0x4300, symSize: 0x0 }
+  - { offset: 0x2AB92, size: 0x8, addend: 0x0, symName: '_$s29_MapboxNavigationLocalization0C7ManagerV19nonExistentKeyValue33_5B8F5DE3654354E69836BEA95C85E818LLSSvpZ.0', symObjAddr: 0x3368, symBinAddr: 0x4310, symSize: 0x0 }
+  - { offset: 0x2AB9D, size: 0x8, addend: 0x0, symName: '_$s29_MapboxNavigationLocalization0C7ManagerV19nonExistentKeyValue33_5B8F5DE3654354E69836BEA95C85E818LLSSvpZ.1', symObjAddr: 0x3370, symBinAddr: 0x4318, symSize: 0x0 }
+  - { offset: 0x2AC6E, size: 0x8, addend: 0x0, symName: '_$s29_MapboxNavigationLocalization0C7ManagerV06customC6BundleSo8NSBundleCSgvpZACmTK', symObjAddr: 0x50, symBinAddr: 0xEB0, symSize: 0x50 }
+  - { offset: 0x2ACA1, size: 0x8, addend: 0x0, symName: '_$s29_MapboxNavigationLocalization0C7ManagerV06customC6BundleSo8NSBundleCSgvpZACmTk', symObjAddr: 0xA0, symBinAddr: 0xF00, symSize: 0x50 }
+  - { offset: 0x2ACDE, size: 0x8, addend: 0x0, symName: '_$s29_MapboxNavigationLocalization0C7ManagerV07_customC6Bundle33_5B8F5DE3654354E69836BEA95C85E818LL_WZ', symObjAddr: 0x210, symBinAddr: 0x1070, symSize: 0x40 }
+  - { offset: 0x2ACF8, size: 0x8, addend: 0x0, symName: '_$s29_MapboxNavigationLocalization0C7ManagerV19nonExistentKeyValue33_5B8F5DE3654354E69836BEA95C85E818LL_WZ', symObjAddr: 0x250, symBinAddr: 0x10B0, symSize: 0x40 }
+  - { offset: 0x2AD4F, size: 0x8, addend: 0x0, symName: ___swift_memcpy0_1, symObjAddr: 0x420, symBinAddr: 0x1280, symSize: 0x10 }
+  - { offset: 0x2AD63, size: 0x8, addend: 0x0, symName: ___swift_noop_void_return, symObjAddr: 0x430, symBinAddr: 0x1290, symSize: 0x10 }
+  - { offset: 0x2AD77, size: 0x8, addend: 0x0, symName: '_$s29_MapboxNavigationLocalization0C7ManagerVwet', symObjAddr: 0x440, symBinAddr: 0x12A0, symSize: 0x50 }
+  - { offset: 0x2AD8B, size: 0x8, addend: 0x0, symName: '_$s29_MapboxNavigationLocalization0C7ManagerVwst', symObjAddr: 0x490, symBinAddr: 0x12F0, symSize: 0xA0 }
+  - { offset: 0x2AD9F, size: 0x8, addend: 0x0, symName: '_$s29_MapboxNavigationLocalization0C7ManagerVMa', symObjAddr: 0x530, symBinAddr: 0x1390, symSize: 0x10 }
+  - { offset: 0x2ADB3, size: 0x8, addend: 0x0, symName: ___swift_instantiateConcreteTypeFromMangledNameV2, symObjAddr: 0x540, symBinAddr: 0x13A0, symSize: 0x35 }
+  - { offset: 0x2AF1B, size: 0x8, addend: 0x0, symName: '_$s29_MapboxNavigationLocalization0C7ManagerV06customC6BundleSo8NSBundleCSgvgZ', symObjAddr: 0x0, symBinAddr: 0xE60, symSize: 0x50 }
+  - { offset: 0x2AF89, size: 0x8, addend: 0x0, symName: '_$s29_MapboxNavigationLocalization0C7ManagerV06customC6BundleSo8NSBundleCSgvsZ', symObjAddr: 0xF0, symBinAddr: 0xF50, symSize: 0x60 }
+  - { offset: 0x2AFBC, size: 0x8, addend: 0x0, symName: '_$s29_MapboxNavigationLocalization0C7ManagerV06customC6BundleSo8NSBundleCSgvMZ', symObjAddr: 0x150, symBinAddr: 0xFB0, symSize: 0x50 }
+  - { offset: 0x2B007, size: 0x8, addend: 0x0, symName: '_$s29_MapboxNavigationLocalization0C7ManagerV06customC6BundleSo8NSBundleCSgvMZ.resume.0', symObjAddr: 0x1A0, symBinAddr: 0x1000, symSize: 0x70 }
+  - { offset: 0x2B083, size: 0x8, addend: 0x0, symName: '_$s29_MapboxNavigationLocalization0C7ManagerV15localizedString_9tableName13defaultBundle5value7commentS2S_SSSgSo8NSBundleCS2StFZ', symObjAddr: 0x290, symBinAddr: 0x10F0, symSize: 0x180 }
+  - { offset: 0x2B16F, size: 0x8, addend: 0x0, symName: '_$s29_MapboxNavigationLocalization0C7ManagerVACycfC', symObjAddr: 0x410, symBinAddr: 0x1270, symSize: 0x10 }
+...

@@ -1,12 +1,12 @@
 // This file is generated and will be overwritten automatically.
 
 #import <Foundation/Foundation.h>
-#import <MapboxNavigationNative/MBNNHistoryRecordType.h>
 
 @class MBNNGetStatusHistoryRecord;
 @class MBNNPushHistoryRecord;
 @class MBNNSetRouteHistoryRecord;
 @class MBNNUpdateLocationHistoryRecord;
+typedef NS_ENUM(NSInteger, MBNNHistoryRecordType);
 
 NS_SWIFT_NAME(HistoryRecord)
 __attribute__((visibility ("default")))

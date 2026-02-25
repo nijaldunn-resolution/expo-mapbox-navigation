@@ -1,25 +1,27 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.0.3 effective-5.10 (swiftlang-6.0.3.1.10 clang-1600.0.30.1)
-// swift-module-flags: -target x86_64-apple-ios14.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-bare-slash-regex -module-name MapboxNavigationUIKit
-// swift-module-flags-ignorable: -no-verify-emitted-module-interface
+// swift-compiler-version: Apple Swift version 6.2.3 effective-5.10 (swiftlang-6.2.3.3.21 clang-1700.6.3.2)
+// swift-module-flags: -target x86_64-apple-ios14.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name MapboxNavigationUIKit -package-name mapbox_nav_ios_build
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.2.3
 import AVFoundation
 import CarPlay
 import Combine
 import CommonCrypto
 import CoreGraphics
 import CoreLocation
+import DeveloperToolsSupport
 import Foundation
 import Foundation/*.Bundle*/
 import Foundation/*.ProcessInfo*/
 import Foundation/*.URL*/
 import MapKit
-import MapboxCoreMaps
+@_spi(Restricted) import MapboxCoreMaps
 import MapboxDirections
 @_spi(Restricted) import MapboxMaps
 @_spi(MapboxInternal) import MapboxNavigationCore
-import MapboxNavigationNative
+import MapboxNavigationNative_Private
 import MobileCoreServices
 import Swift
+import SwiftUI
 @_spi(Restricted) import Turf
 import UIKit
 import UserNotifications
@@ -42,7 +44,9 @@ public struct BannerConfiguration {
   public var expansionOffset: CoreFoundation.CGFloat {
     get
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(position: MapboxNavigationUIKit.BannerPosition, height: CoreFoundation.CGFloat? = nil, isExpandable: Swift.Bool = false, expansionOffset: CoreFoundation.CGFloat = 0.0)
+  #endif
 }
 @_documentation(visibility: internal) public enum BannerPosition {
   case topLeading
@@ -76,12 +80,18 @@ public struct BannerConfiguration {
     set
   }
   @_Concurrency.MainActor @preconcurrency public init(_ position: MapboxNavigationUIKit.BannerPosition, frame: CoreFoundation.CGRect = .zero)
+  #if compiler(>=5.3) && $NonescapableTypes
   @available(*, unavailable)
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @_Concurrency.MainActor @preconcurrency @objc override dynamic open func didMoveToSuperview()
   @_documentation(visibility: internal) public typealias CompletionHandler = (_ completed: Swift.Bool) -> Swift.Void
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency public func show(animated: Swift.Bool = true, duration: Foundation.TimeInterval = 0.2, animations: (() -> Swift.Void)? = nil, completion: MapboxNavigationUIKit.BannerContainerView.CompletionHandler? = nil)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency public func hide(animated: Swift.Bool = true, duration: Foundation.TimeInterval = 0.2, animations: (() -> Swift.Void)? = nil, completion: MapboxNavigationUIKit.BannerContainerView.CompletionHandler? = nil)
+  #endif
   @objc deinit
 }
 @_documentation(visibility: internal) public protocol BannerContainerViewDelegate : AnyObject, MapboxNavigationCore.UnimplementedLogging {
@@ -95,10 +105,12 @@ extension MapboxNavigationUIKit.BannerContainerViewDelegate {
   public func bannerContainerView(_ bannerContainerView: MapboxNavigationUIKit.BannerContainerView, didExpandTo fraction: CoreFoundation.CGFloat)
 }
 @objc @_hasMissingDesignatedInitializers @_Concurrency.MainActor @preconcurrency public class BannerDismissalViewController : UIKit.UIViewController, MapboxNavigationUIKit.Banner {
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency public var backTitle: Swift.String? {
     get
     set
   }
+  #endif
   @_Concurrency.MainActor @preconcurrency weak public var delegate: (any MapboxNavigationUIKit.BannerDismissalViewControllerDelegate)?
   @_Concurrency.MainActor @preconcurrency final public let bannerConfiguration: MapboxNavigationUIKit.BannerConfiguration
   @_Concurrency.MainActor @preconcurrency public init(_ bannerConfiguration: MapboxNavigationUIKit.BannerConfiguration = BannerConfiguration(position: .topLeading, height: 70.0))
@@ -109,22 +121,30 @@ public protocol BannerDismissalViewControllerDelegate : AnyObject {
 }
 @_inheritsConvenienceInitializers @objc(MBTopBannerView) @_Concurrency.MainActor @preconcurrency open class TopBannerView : UIKit.UIView {
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_documentation(visibility: internal) @_Concurrency.MainActor @preconcurrency open class TopPaddingView : MapboxNavigationUIKit.TopBannerView {
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @_inheritsConvenienceInitializers @objc(MBBottomBannerView) @_Concurrency.MainActor @preconcurrency open class BottomBannerView : UIKit.UIView {
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_documentation(visibility: internal) @_Concurrency.MainActor @preconcurrency open class BottomPaddingView : MapboxNavigationUIKit.BottomBannerView {
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @IBDesignable @_Concurrency.MainActor @preconcurrency open class BottomBannerViewController : UIKit.UIViewController, MapboxNavigationUIKit.NavigationComponent {
@@ -146,8 +166,12 @@ public protocol BannerDismissalViewControllerDelegate : AnyObject {
   @_Concurrency.MainActor @preconcurrency open var verticalDividerView: MapboxNavigationUIKit.SeparatorView!
   @_Concurrency.MainActor @preconcurrency open var horizontalDividerView: MapboxNavigationUIKit.SeparatorView!
   @_Concurrency.MainActor @preconcurrency weak open var delegate: (any MapboxNavigationUIKit.BottomBannerViewControllerDelegate)?
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  #endif
   @objc deinit
   @_Concurrency.MainActor @preconcurrency @objc override dynamic open func viewWillDisappear(_ animated: Swift.Bool)
   @_Concurrency.MainActor @preconcurrency @objc override dynamic open func viewDidLoad()
@@ -161,31 +185,47 @@ public protocol BottomBannerViewControllerDelegate : AnyObject {
 }
 extension MapboxNavigationUIKit.BottomBannerViewController {
   @_Concurrency.MainActor @preconcurrency public func reinstallConstraints()
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc override dynamic open func traitCollectionDidChange(_ previousTraitCollection: UIKit.UITraitCollection?)
+  #endif
 }
 @_documentation(visibility: internal) public typealias CompletionHandler = () -> Swift.Void
 @objc(MBBimodalCache) public protocol BimodalCache {
   @objc func clearMemory()
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc func clearDisk(completion: MapboxNavigationUIKit.CompletionHandler?)
+  #endif
 }
 public protocol BimodalImageCache : MapboxNavigationUIKit.BimodalCache {
+  #if compiler(>=5.3) && $NonescapableTypes
   func store(_ image: UIKit.UIImage, forKey key: Swift.String, toDisk: Swift.Bool, completion completionBlock: MapboxNavigationUIKit.CompletionHandler?)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   func image(forKey: Swift.String?) -> UIKit.UIImage?
+  #endif
 }
 public protocol BimodalDataCache : MapboxNavigationUIKit.BimodalCache {
+  #if compiler(>=5.3) && $NonescapableTypes
   func store(_ data: Foundation.Data, forKey key: Swift.String, toDisk: Swift.Bool, completion completionBlock: MapboxNavigationUIKit.CompletionHandler?)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   func data(forKey: Swift.String?) -> Foundation.Data?
+  #endif
 }
 extension CarPlay.CPInterfaceController {
-  public func safePopTemplate(animated: Swift.Bool)
+  @_Concurrency.MainActor @preconcurrency public func safePopTemplate(animated: Swift.Bool)
 }
 extension CarPlay.CPRouteChoice {
+  #if compiler(>=5.3) && $NonescapableTypes
   public var navigationRoutes: MapboxNavigationCore.NavigationRoutes? {
     get
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_spi(MapboxInternal) public var searchResult: MapboxNavigationUIKit.SearchResultRecord? {
-    get
+    @_spi(MapboxInternal) get
   }
+  #endif
 }
 public enum CarPlayActivity : Swift.Int, Swift.Sendable {
   case browsing
@@ -193,7 +233,9 @@ public enum CarPlayActivity : Swift.Int, Swift.Sendable {
   case panningInNavigationMode
   case previewing
   case navigating
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -205,7 +247,9 @@ public enum CarPlayActivity : Swift.Int, Swift.Sendable {
     set
   }
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder decoder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @objc @_hasMissingDesignatedInitializers public class CarPlayManager : ObjectiveC.NSObject {
@@ -229,18 +273,39 @@ public enum CarPlayActivity : Swift.Int, Swift.Sendable {
   public var currentActivity: MapboxNavigationUIKit.CarPlayActivity? {
     get
   }
-  public func beginNavigationWithCarPlay(using currentLocation: CoreLocation.CLLocationCoordinate2D)
+  public func beginNavigationWithCarPlay(using currentLocation: _LocationEssentials.CLLocationCoordinate2D)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor convenience public init(navigationProvider: MapboxNavigationCore.MapboxNavigationProvider, styles: [MapboxNavigationUIKit.Style]? = nil)
+  #endif
   @_Concurrency.MainActor public var styles: [MapboxNavigationUIKit.Style] {
     get
     set
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor public var carPlayMapViewController: MapboxNavigationUIKit.CarPlayMapViewController? {
     get
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor public var navigationMapView: MapboxNavigationCore.NavigationMapView? {
     get
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  @_spi(MapboxInternal) @_Concurrency.MainActor public var browsingNavigationMapView: MapboxNavigationCore.NavigationMapView? {
+    @_spi(MapboxInternal) get
+  }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  @_spi(MapboxInternal) @_Concurrency.MainActor public var guidanceNavigationMapView: MapboxNavigationCore.NavigationMapView? {
+    @_spi(MapboxInternal) get
+  }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  @_spi(MapboxInternal) @_Concurrency.MainActor public var activeNavigationMapView: MapboxNavigationCore.NavigationMapView? {
+    @_spi(MapboxInternal) get
+  }
+  #endif
   public var exitButton: CarPlay.CPBarButton {
     get
     set
@@ -277,10 +342,10 @@ extension MapboxNavigationUIKit.CarPlayManager {
   @_Concurrency.MainActor public func resetPanButtons(_ mapTemplate: CarPlay.CPMapTemplate)
 }
 extension MapboxNavigationUIKit.CarPlayManager : CarPlay.CPInterfaceControllerDelegate {
-  @objc dynamic public func templateWillAppear(_ template: CarPlay.CPTemplate, animated: Swift.Bool)
-  @objc dynamic public func templateDidAppear(_ template: CarPlay.CPTemplate, animated: Swift.Bool)
-  @objc dynamic public func templateWillDisappear(_ template: CarPlay.CPTemplate, animated: Swift.Bool)
-  @objc dynamic public func templateDidDisappear(_ template: CarPlay.CPTemplate, animated: Swift.Bool)
+  @_Concurrency.MainActor @preconcurrency @objc dynamic public func templateWillAppear(_ template: CarPlay.CPTemplate, animated: Swift.Bool)
+  @_Concurrency.MainActor @preconcurrency @objc dynamic public func templateDidAppear(_ template: CarPlay.CPTemplate, animated: Swift.Bool)
+  @_Concurrency.MainActor @preconcurrency @objc dynamic public func templateWillDisappear(_ template: CarPlay.CPTemplate, animated: Swift.Bool)
+  @_Concurrency.MainActor @preconcurrency @objc dynamic public func templateDidDisappear(_ template: CarPlay.CPTemplate, animated: Swift.Bool)
 }
 extension MapboxNavigationUIKit.CarPlayManager {
   public func previewRoutes(to destination: MapboxDirections.Waypoint, completionHandler: @escaping MapboxNavigationUIKit.CompletionHandler)
@@ -299,38 +364,68 @@ extension MapboxNavigationUIKit.CarPlayManager : CarPlay.CPMapTemplateDelegate {
   @_spi(MapboxInternal) @_Concurrency.MainActor public func clearMapAnnotations()
   @_Concurrency.MainActor @objc dynamic public func mapTemplateDidCancelNavigation(_ mapTemplate: CarPlay.CPMapTemplate)
   @_Concurrency.MainActor @objc dynamic public func mapTemplateDidBeginPanGesture(_ mapTemplate: CarPlay.CPMapTemplate)
-  @objc dynamic public func mapTemplate(_ mapTemplate: CarPlay.CPMapTemplate, didEndPanGestureWithVelocity velocity: CoreFoundation.CGPoint)
+  @_Concurrency.MainActor @preconcurrency @objc dynamic public func mapTemplate(_ mapTemplate: CarPlay.CPMapTemplate, didEndPanGestureWithVelocity velocity: CoreFoundation.CGPoint)
   @_Concurrency.MainActor @objc dynamic public func mapTemplateDidShowPanningInterface(_ mapTemplate: CarPlay.CPMapTemplate)
-  @objc dynamic public func mapTemplateWillDismissPanningInterface(_ mapTemplate: CarPlay.CPMapTemplate)
-  @objc dynamic public func mapTemplateDidDismissPanningInterface(_ mapTemplate: CarPlay.CPMapTemplate)
-  @objc dynamic public func mapTemplate(_ mapTemplate: CarPlay.CPMapTemplate, didUpdatePanGestureWithTranslation translation: CoreFoundation.CGPoint, velocity: CoreFoundation.CGPoint)
-  @objc dynamic public func mapTemplate(_ mapTemplate: CarPlay.CPMapTemplate, panWith direction: CarPlay.CPMapTemplate.PanDirection)
-  @objc dynamic public func mapTemplate(_ mapTemplate: CarPlay.CPMapTemplate, displayStyleFor maneuver: CarPlay.CPManeuver) -> CarPlay.CPManeuverDisplayStyle
-  @objc dynamic public func mapTemplate(_ mapTemplate: CarPlay.CPMapTemplate, shouldShowNotificationFor maneuver: CarPlay.CPManeuver) -> Swift.Bool
-  @objc dynamic public func mapTemplate(_ mapTemplate: CarPlay.CPMapTemplate, shouldShowNotificationFor navigationAlert: CarPlay.CPNavigationAlert) -> Swift.Bool
-  @objc dynamic public func mapTemplate(_ mapTemplate: CarPlay.CPMapTemplate, shouldUpdateNotificationFor maneuver: CarPlay.CPManeuver, with travelEstimates: CarPlay.CPTravelEstimates) -> Swift.Bool
+  @_Concurrency.MainActor @preconcurrency @objc dynamic public func mapTemplateWillDismissPanningInterface(_ mapTemplate: CarPlay.CPMapTemplate)
+  @_Concurrency.MainActor @preconcurrency @objc dynamic public func mapTemplateDidDismissPanningInterface(_ mapTemplate: CarPlay.CPMapTemplate)
+  @_Concurrency.MainActor @preconcurrency @objc dynamic public func mapTemplate(_ mapTemplate: CarPlay.CPMapTemplate, didUpdatePanGestureWithTranslation translation: CoreFoundation.CGPoint, velocity: CoreFoundation.CGPoint)
+  @_Concurrency.MainActor @preconcurrency @objc dynamic public func mapTemplate(_ mapTemplate: CarPlay.CPMapTemplate, panWith direction: CarPlay.CPMapTemplate.PanDirection)
+  @_Concurrency.MainActor @preconcurrency @objc dynamic public func mapTemplate(_ mapTemplate: CarPlay.CPMapTemplate, displayStyleFor maneuver: CarPlay.CPManeuver) -> CarPlay.CPManeuverDisplayStyle
+  @_Concurrency.MainActor @preconcurrency @objc dynamic public func mapTemplate(_ mapTemplate: CarPlay.CPMapTemplate, shouldShowNotificationFor maneuver: CarPlay.CPManeuver) -> Swift.Bool
+  @_Concurrency.MainActor @preconcurrency @objc dynamic public func mapTemplate(_ mapTemplate: CarPlay.CPMapTemplate, shouldShowNotificationFor navigationAlert: CarPlay.CPNavigationAlert) -> Swift.Bool
+  @_Concurrency.MainActor @preconcurrency @objc dynamic public func mapTemplate(_ mapTemplate: CarPlay.CPMapTemplate, shouldUpdateNotificationFor maneuver: CarPlay.CPManeuver, with travelEstimates: CarPlay.CPTravelEstimates) -> Swift.Bool
 }
 extension MapboxNavigationUIKit.CarPlayManager : MapboxNavigationUIKit.CarPlayNavigationViewControllerDelegate {
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayNavigationViewController(_ carPlayNavigationViewController: MapboxNavigationUIKit.CarPlayNavigationViewController, guidanceBackgroundColorFor style: UIKit.UIUserInterfaceStyle) -> UIKit.UIColor?
+  #endif
   public func carPlayNavigationViewControllerWillDismiss(_ carPlayNavigationViewController: MapboxNavigationUIKit.CarPlayNavigationViewController, byCanceling canceled: Swift.Bool)
   @_Concurrency.MainActor public func carPlayNavigationViewControllerDidDismiss(_ carPlayNavigationViewController: MapboxNavigationUIKit.CarPlayNavigationViewController, byCanceling canceled: Swift.Bool)
   public func carPlayNavigationViewController(_ carPlayNavigationViewController: MapboxNavigationUIKit.CarPlayNavigationViewController, shouldPresentArrivalUIFor waypoint: MapboxDirections.Waypoint) -> Swift.Bool
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayNavigationViewController(_ carPlayNavigationViewController: MapboxNavigationUIKit.CarPlayNavigationViewController, shapeFor waypoints: [MapboxDirections.Waypoint], legIndex: Swift.Int) -> Turf.FeatureCollection?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayNavigationViewController(_ carPlayNavigationViewController: MapboxNavigationUIKit.CarPlayNavigationViewController, waypointCircleLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.CircleLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayNavigationViewController(_ carPlayNavigationViewController: MapboxNavigationUIKit.CarPlayNavigationViewController, waypointSymbolLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.SymbolLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayNavigationViewController(_ carPlayNavigationViewController: MapboxNavigationUIKit.CarPlayNavigationViewController, routeLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayNavigationViewController(_ carPlayNavigationViewController: MapboxNavigationUIKit.CarPlayNavigationViewController, routeCasingLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayNavigationViewController(_ carPlayNavigationViewController: MapboxNavigationUIKit.CarPlayNavigationViewController, routeRestrictedAreasLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayNavigationViewController(_ carPlayNavigationViewController: MapboxNavigationUIKit.CarPlayNavigationViewController, willAdd layer: any MapboxMaps.Layer) -> (any MapboxMaps.Layer)?
+  #endif
 }
 extension MapboxNavigationUIKit.CarPlayManager : MapboxNavigationUIKit.CarPlayMapViewControllerDelegate {
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayMapViewController(_ carPlayMapViewController: MapboxNavigationUIKit.CarPlayMapViewController, routeLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayMapViewController(_ carPlayMapViewController: MapboxNavigationUIKit.CarPlayMapViewController, routeCasingLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayMapViewController(_ carPlayMapViewController: MapboxNavigationUIKit.CarPlayMapViewController, routeRestrictedAreasLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayMapViewController(_ carPlayMapViewController: MapboxNavigationUIKit.CarPlayMapViewController, willAdd layer: any MapboxMaps.Layer) -> (any MapboxMaps.Layer)?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayMapViewController(_ carPlayMapViewController: MapboxNavigationUIKit.CarPlayMapViewController, shapeFor waypoints: [MapboxDirections.Waypoint], legIndex: Swift.Int) -> Turf.FeatureCollection?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayMapViewController(_ carPlayMapViewController: MapboxNavigationUIKit.CarPlayMapViewController, waypointCircleLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.CircleLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayMapViewController(_ carPlayMapViewController: MapboxNavigationUIKit.CarPlayMapViewController, waypointSymbolLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.SymbolLayer?
+  #endif
   @_spi(MapboxInternal) public func carPlayMapViewController(_ carPlayMapViewController: MapboxNavigationUIKit.CarPlayMapViewController, didSetup navigationMapView: MapboxNavigationCore.NavigationMapView)
 }
 extension MapboxNavigationUIKit.CarPlayManager {
@@ -338,19 +433,31 @@ extension MapboxNavigationUIKit.CarPlayManager {
   public func templateApplicationScene(_ templateApplicationScene: CarPlay.CPTemplateApplicationScene, didDisconnectCarInterfaceController interfaceController: CarPlay.CPInterfaceController, from window: CarPlay.CPWindow)
 }
 public protocol CarPlayManagerDelegate : AnyObject, MapboxNavigationCore.UnimplementedLogging {
+  #if compiler(>=5.3) && $NonescapableTypes
   func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, leadingNavigationBarButtonsCompatibleWith traitCollection: UIKit.UITraitCollection, in carPlayTemplate: CarPlay.CPMapTemplate, for activity: MapboxNavigationUIKit.CarPlayActivity) -> [CarPlay.CPBarButton]?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @available(*, deprecated, message: "Use carPlayManager(_:leadingNavigationBarButtonsCompatibleWith:in:for:) instead.")
   func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, leadingNavigationBarButtonsCompatibleWith traitCollection: UIKit.UITraitCollection, in carPlayTemplate: CarPlay.CPTemplate, for activity: MapboxNavigationUIKit.CarPlayActivity) -> [CarPlay.CPBarButton]?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, trailingNavigationBarButtonsCompatibleWith traitCollection: UIKit.UITraitCollection, in carPlayTemplate: CarPlay.CPMapTemplate, for activity: MapboxNavigationUIKit.CarPlayActivity) -> [CarPlay.CPBarButton]?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @available(*, deprecated, message: "Use carPlayManager(_:trailingNavigationBarButtonsCompatibleWith:in:for:) instead.")
   func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, trailingNavigationBarButtonsCompatibleWith traitCollection: UIKit.UITraitCollection, in carPlayTemplate: CarPlay.CPTemplate, for activity: MapboxNavigationUIKit.CarPlayActivity) -> [CarPlay.CPBarButton]?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, mapButtonsCompatibleWith traitCollection: UIKit.UITraitCollection, in carPlayTemplate: CarPlay.CPTemplate, for activity: MapboxNavigationUIKit.CarPlayActivity) -> [CarPlay.CPMapButton]?
+  #endif
   func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, willPreview trip: CarPlay.CPTrip) -> CarPlay.CPTrip
   func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, willPreview trip: CarPlay.CPTrip, with previewTextConfiguration: CarPlay.CPTripPreviewTextConfiguration) -> CarPlay.CPTripPreviewTextConfiguration
   func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, selectedPreviewFor trip: CarPlay.CPTrip, using routeChoice: CarPlay.CPRouteChoice)
   func carPlayManagerWillCancelPreview(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, configuration: inout MapboxNavigationUIKit.CarPlayManagerCancelPreviewConfiguration)
   func carPlayManagerDidCancelPreview(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager)
+  #if compiler(>=5.3) && $NonescapableTypes
   func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, didFailToFetchRouteBetween waypoints: [MapboxDirections.Waypoint]?, options: MapboxDirections.RouteOptions, error: any Swift.Error) -> CarPlay.CPNavigationAlert?
+  #endif
   func carPlayManagerDidBeginNavigation(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager)
   func carPlayManagerWillEndNavigation(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, byCanceling canceled: Swift.Bool)
   func carPlayManagerDidEndNavigation(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager)
@@ -361,17 +468,31 @@ public protocol CarPlayManagerDelegate : AnyObject, MapboxNavigationCore.Unimple
   func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, didPresent navigationViewController: MapboxNavigationUIKit.CarPlayNavigationViewController)
   @available(*, deprecated, message: "This method is deprecated and should no longer be used, as the final destination annotation is no longer added to the map. Use the corresponding delegate methods to customize waypoints appearance.")
   func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, didAdd finalDestinationAnnotation: MapboxMaps.PointAnnotation, to parentViewController: UIKit.UIViewController, pointAnnotationManager: MapboxMaps.PointAnnotationManager)
+  #if compiler(>=5.3) && $NonescapableTypes
   func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, waypointCircleLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.CircleLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, waypointSymbolLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.SymbolLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, shapeFor waypoints: [MapboxDirections.Waypoint], legIndex: Swift.Int) -> Turf.FeatureCollection?
+  #endif
   func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, templateWillAppear template: CarPlay.CPTemplate, animated: Swift.Bool)
   func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, templateDidAppear template: CarPlay.CPTemplate, animated: Swift.Bool)
   func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, templateWillDisappear template: CarPlay.CPTemplate, animated: Swift.Bool)
   func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, templateDidDisappear template: CarPlay.CPTemplate, animated: Swift.Bool)
+  #if compiler(>=5.3) && $NonescapableTypes
   func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, routeLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String, for parentViewController: UIKit.UIViewController) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, routeCasingLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String, for parentViewController: UIKit.UIViewController) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, routeRestrictedAreasLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String, for parentViewController: UIKit.UIViewController) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, willAdd layer: any MapboxMaps.Layer, for parentViewController: UIKit.UIViewController) -> (any MapboxMaps.Layer)?
+  #endif
   func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, didBeginPanGesture template: CarPlay.CPMapTemplate)
   func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, didEndPanGesture template: CarPlay.CPMapTemplate)
   func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, didShowPanningInterface template: CarPlay.CPMapTemplate)
@@ -380,17 +501,33 @@ public protocol CarPlayManagerDelegate : AnyObject, MapboxNavigationCore.Unimple
   func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, shouldShowNotificationFor maneuver: CarPlay.CPManeuver, in mapTemplate: CarPlay.CPMapTemplate) -> Swift.Bool
   func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, shouldShowNotificationFor navigationAlert: CarPlay.CPNavigationAlert, in mapTemplate: CarPlay.CPMapTemplate) -> Swift.Bool
   func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, shouldUpdateNotificationFor maneuver: CarPlay.CPManeuver, with travelEstimates: CarPlay.CPTravelEstimates, in mapTemplate: CarPlay.CPMapTemplate) -> Swift.Bool
+  #if compiler(>=5.3) && $NonescapableTypes
   func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, guidanceBackgroundColorFor style: UIKit.UIUserInterfaceStyle) -> UIKit.UIColor?
+  #endif
   @_spi(MapboxInternal) func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, didSetup navigationMapView: MapboxNavigationCore.NavigationMapView)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_spi(MapboxInternal) func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, leadingNavigationBarButtonsCompatibleWith traitCollection: UIKit.UITraitCollection, in carPlayTemplate: CarPlay.CPMapTemplate, for activity: MapboxNavigationUIKit.CarPlayActivity, cameraState: MapboxNavigationCore.NavigationCameraState) -> [CarPlay.CPBarButton]?
+  #endif
 }
 extension MapboxNavigationUIKit.CarPlayManagerDelegate {
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, leadingNavigationBarButtonsCompatibleWith traitCollection: UIKit.UITraitCollection, in carPlayTemplate: CarPlay.CPTemplate, for activity: MapboxNavigationUIKit.CarPlayActivity) -> [CarPlay.CPBarButton]?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, leadingNavigationBarButtonsCompatibleWith traitCollection: UIKit.UITraitCollection, in carPlayTemplate: CarPlay.CPMapTemplate, for activity: MapboxNavigationUIKit.CarPlayActivity) -> [CarPlay.CPBarButton]?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, trailingNavigationBarButtonsCompatibleWith traitCollection: UIKit.UITraitCollection, in carPlayTemplate: CarPlay.CPTemplate, for activity: MapboxNavigationUIKit.CarPlayActivity) -> [CarPlay.CPBarButton]?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, trailingNavigationBarButtonsCompatibleWith traitCollection: UIKit.UITraitCollection, in carPlayTemplate: CarPlay.CPMapTemplate, for activity: MapboxNavigationUIKit.CarPlayActivity) -> [CarPlay.CPBarButton]?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, mapButtonsCompatibleWith traitCollection: UIKit.UITraitCollection, in carPlayTemplate: CarPlay.CPTemplate, for activity: MapboxNavigationUIKit.CarPlayActivity) -> [CarPlay.CPMapButton]?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, didFailToFetchRouteBetween waypoints: [MapboxDirections.Waypoint]?, options: MapboxDirections.RouteOptions, error: any Swift.Error) -> CarPlay.CPNavigationAlert?
+  #endif
   public func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, willPreview trip: CarPlay.CPTrip) -> CarPlay.CPTrip
   public func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, willPreview trip: CarPlay.CPTrip, with previewTextConfiguration: CarPlay.CPTripPreviewTextConfiguration) -> CarPlay.CPTripPreviewTextConfiguration
   public func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, selectedPreviewFor trip: CarPlay.CPTrip, using routeChoice: CarPlay.CPRouteChoice)
@@ -405,16 +542,28 @@ extension MapboxNavigationUIKit.CarPlayManagerDelegate {
   public func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, willPresent navigationViewController: MapboxNavigationUIKit.CarPlayNavigationViewController)
   public func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, didPresent navigationViewController: MapboxNavigationUIKit.CarPlayNavigationViewController)
   public func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, didAdd finalDestinationAnnotation: MapboxMaps.PointAnnotation, to parentViewController: UIKit.UIViewController, pointAnnotationManager: MapboxMaps.PointAnnotationManager)
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, waypointSymbolLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.SymbolLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, waypointCircleLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.CircleLayer?
+  #endif
   public func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, templateWillAppear template: CarPlay.CPTemplate, animated: Swift.Bool)
   public func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, templateDidAppear template: CarPlay.CPTemplate, animated: Swift.Bool)
   public func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, templateWillDisappear template: CarPlay.CPTemplate, animated: Swift.Bool)
   public func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, templateDidDisappear template: CarPlay.CPTemplate, animated: Swift.Bool)
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, routeLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String, for parentViewController: UIKit.UIViewController) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, routeCasingLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String, for parentViewController: UIKit.UIViewController) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, routeRestrictedAreasLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String, for parentViewController: UIKit.UIViewController) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, willAdd layer: any MapboxMaps.Layer, for parentViewController: UIKit.UIViewController) -> (any MapboxMaps.Layer)?
+  #endif
   public func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, didBeginPanGesture template: CarPlay.CPMapTemplate)
   public func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, didEndPanGesture template: CarPlay.CPMapTemplate)
   public func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, didShowPanningInterface template: CarPlay.CPMapTemplate)
@@ -423,10 +572,16 @@ extension MapboxNavigationUIKit.CarPlayManagerDelegate {
   public func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, shouldShowNotificationFor maneuver: CarPlay.CPManeuver, in mapTemplate: CarPlay.CPMapTemplate) -> Swift.Bool
   public func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, shouldShowNotificationFor navigationAlert: CarPlay.CPNavigationAlert, in mapTemplate: CarPlay.CPMapTemplate) -> Swift.Bool
   public func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, shouldUpdateNotificationFor maneuver: CarPlay.CPManeuver, with travelEstimates: CarPlay.CPTravelEstimates, in mapTemplate: CarPlay.CPMapTemplate) -> Swift.Bool
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, shapeFor waypoints: [MapboxDirections.Waypoint], legIndex: Swift.Int) -> Turf.FeatureCollection?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, guidanceBackgroundColorFor style: UIKit.UIUserInterfaceStyle) -> UIKit.UIColor?
+  #endif
   @_spi(MapboxInternal) public func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, didSetup navigationMapView: MapboxNavigationCore.NavigationMapView)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_spi(MapboxInternal) public func carPlayManager(_ carPlayManager: MapboxNavigationUIKit.CarPlayManager, leadingNavigationBarButtonsCompatibleWith traitCollection: UIKit.UITraitCollection, in carPlayTemplate: CarPlay.CPMapTemplate, for activity: MapboxNavigationUIKit.CarPlayActivity, cameraState: MapboxNavigationCore.NavigationCameraState) -> [CarPlay.CPBarButton]?
+  #endif
 }
 public struct CarPlayManagerCancelPreviewConfiguration {
   public var popToRoot: Swift.Bool
@@ -464,7 +619,9 @@ public struct CarPlayManagerCancelPreviewConfiguration {
   @discardableResult
   @_Concurrency.MainActor @preconcurrency public func panningInterfaceDismissalButton(for mapTemplate: CarPlay.CPMapTemplate) -> CarPlay.CPMapButton
   @_Concurrency.MainActor @preconcurrency public init(core: any MapboxNavigationCore.MapboxNavigation, styles: [MapboxNavigationUIKit.Style])
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder decoder: Foundation.NSCoder)
+  #endif
   @objc deinit
   @_Concurrency.MainActor @preconcurrency public func startFreeDriveNavigation()
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public func loadView()
@@ -475,18 +632,34 @@ public struct CarPlayManagerCancelPreviewConfiguration {
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public func updateViewConstraints()
 }
 extension MapboxNavigationUIKit.CarPlayMapViewController : MapboxNavigationUIKit.StyleManagerDelegate {
-  @_Concurrency.MainActor @preconcurrency public func location(for styleManager: MapboxNavigationUIKit.StyleManager) -> CoreLocation.CLLocation?
+  #if compiler(>=5.3) && $NonescapableTypes
+  @_Concurrency.MainActor @preconcurrency public func location(for styleManager: MapboxNavigationUIKit.StyleManager) -> _LocationEssentials.CLLocation?
+  #endif
   @_Concurrency.MainActor @preconcurrency public func styleManager(_ styleManager: MapboxNavigationUIKit.StyleManager, didApply style: MapboxNavigationUIKit.Style)
   @_Concurrency.MainActor @preconcurrency public func styleManagerDidRefreshAppearance(_ styleManager: MapboxNavigationUIKit.StyleManager)
 }
 extension MapboxNavigationUIKit.CarPlayMapViewController : MapboxNavigationCore.NavigationMapViewDelegate {
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor public func navigationMapView(_ navigationMapView: MapboxNavigationCore.NavigationMapView, shapeFor waypoints: [MapboxDirections.Waypoint], legIndex: Swift.Int) -> Turf.FeatureCollection?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor public func navigationMapView(_ navigationMapView: MapboxNavigationCore.NavigationMapView, waypointCircleLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.CircleLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor public func navigationMapView(_ navigationMapView: MapboxNavigationCore.NavigationMapView, waypointSymbolLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.SymbolLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor public func navigationMapView(_ navigationMapView: MapboxNavigationCore.NavigationMapView, routeLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor public func navigationMapView(_ navigationMapView: MapboxNavigationCore.NavigationMapView, routeCasingLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor public func navigationMapView(_ navigationMapView: MapboxNavigationCore.NavigationMapView, routeRestrictedAreasLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor public func navigationMapView(_ navigationMapView: MapboxNavigationCore.NavigationMapView, willAdd layer: any MapboxMaps.Layer) -> (any MapboxMaps.Layer)?
+  #endif
 }
 extension MapboxNavigationUIKit.CarPlayMapViewController : CarPlay.CPSessionConfigurationDelegate {
   @_Concurrency.MainActor @preconcurrency @objc dynamic public func sessionConfiguration(_ sessionConfiguration: CarPlay.CPSessionConfiguration, contentStyleChanged contentStyle: CarPlay.CPContentStyle)
@@ -494,23 +667,49 @@ extension MapboxNavigationUIKit.CarPlayMapViewController : CarPlay.CPSessionConf
 public protocol CarPlayMapViewControllerDelegate : AnyObject, MapboxNavigationCore.UnimplementedLogging {
   @available(*, deprecated, message: "This method is deprecated and should no longer be used, as the final destination annotation is no longer added to the map. Use the corresponding delegate methods to customize waypoints appearance.")
   func carPlayMapViewController(_ carPlayMapViewController: MapboxNavigationUIKit.CarPlayMapViewController, didAdd finalDestinationAnnotation: MapboxMaps.PointAnnotation, pointAnnotationManager: MapboxMaps.PointAnnotationManager)
+  #if compiler(>=5.3) && $NonescapableTypes
   func carPlayMapViewController(_ carPlayMapViewController: MapboxNavigationUIKit.CarPlayMapViewController, routeLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   func carPlayMapViewController(_ carPlayMapViewController: MapboxNavigationUIKit.CarPlayMapViewController, routeCasingLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   func carPlayMapViewController(_ carPlayMapViewController: MapboxNavigationUIKit.CarPlayMapViewController, routeRestrictedAreasLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   func carPlayMapViewController(_ carPlayMapViewController: MapboxNavigationUIKit.CarPlayMapViewController, willAdd layer: any MapboxMaps.Layer) -> (any MapboxMaps.Layer)?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   func carPlayMapViewController(_ carPlayMapViewController: MapboxNavigationUIKit.CarPlayMapViewController, waypointCircleLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.CircleLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   func carPlayMapViewController(_ carPlayMapViewController: MapboxNavigationUIKit.CarPlayMapViewController, waypointSymbolLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.SymbolLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   func carPlayMapViewController(_ carPlayMapViewController: MapboxNavigationUIKit.CarPlayMapViewController, shapeFor waypoints: [MapboxNavigationCore.Waypoint], legIndex: Swift.Int) -> Turf.FeatureCollection?
+  #endif
   @_spi(MapboxInternal) func carPlayMapViewController(_ carPlayMapViewController: MapboxNavigationUIKit.CarPlayMapViewController, didSetup navigationMapView: MapboxNavigationCore.NavigationMapView)
 }
 extension MapboxNavigationUIKit.CarPlayMapViewControllerDelegate {
   public func carPlayMapViewController(_ carPlayMapViewController: MapboxNavigationUIKit.CarPlayMapViewController, didAdd finalDestinationAnnotation: MapboxMaps.PointAnnotation, pointAnnotationManager: MapboxMaps.PointAnnotationManager)
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayMapViewController(_ carPlayMapViewController: MapboxNavigationUIKit.CarPlayNavigationViewController, routeLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayMapViewController(_ carPlayMapViewController: MapboxNavigationUIKit.CarPlayNavigationViewController, routeCasingLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayMapViewController(_ carPlayMapViewController: MapboxNavigationUIKit.CarPlayNavigationViewController, routeRestrictedAreasLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayMapViewController(_ carPlayMapViewController: MapboxNavigationUIKit.CarPlayMapViewController, shapeFor waypoints: [MapboxNavigationCore.Waypoint], legIndex: Swift.Int) -> Turf.FeatureCollection?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayMapViewController(_ carPlayMapViewController: MapboxNavigationUIKit.CarPlayMapViewController, waypointCircleLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.CircleLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayMapViewController(_ carPlayMapViewController: MapboxNavigationUIKit.CarPlayMapViewController, waypointSymbolLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.SymbolLayer?
+  #endif
   @_spi(MapboxInternal) public func carPlayMapViewController(_ carPlayMapViewController: MapboxNavigationUIKit.CarPlayMapViewController, didSetup navigationMapView: MapboxNavigationCore.NavigationMapView)
 }
 @objc @_Concurrency.MainActor @preconcurrency open class CarPlayNavigationViewController : UIKit.UIViewController {
@@ -553,30 +752,52 @@ extension MapboxNavigationUIKit.CarPlayMapViewControllerDelegate {
   }
   @_Concurrency.MainActor @preconcurrency public func startNavigationSession(for trip: CarPlay.CPTrip)
   @_Concurrency.MainActor @preconcurrency public func exitNavigation(byCanceling canceled: Swift.Bool = false)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency required public init(accessToken: Swift.String, core: any MapboxNavigationCore.MapboxNavigation, mapTemplate: CarPlay.CPMapTemplate, interfaceController: CarPlay.CPInterfaceController, manager: MapboxNavigationUIKit.CarPlayManager, styles: [MapboxNavigationUIKit.Style]? = nil, navigationRoutes: MapboxNavigationCore.NavigationRoutes)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @available(*, unavailable)
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder decoder: Foundation.NSCoder)
+  #endif
   @objc deinit
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewDidLoad()
   @_Concurrency.MainActor @preconcurrency @objc override dynamic open func viewWillAppear(_ animated: Swift.Bool)
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewWillDisappear(_ animated: Swift.Bool)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public func traitCollectionDidChange(_ previousTraitCollection: UIKit.UITraitCollection?)
+  #endif
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewSafeAreaInsetsDidChange()
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public func updateViewConstraints()
 }
 extension MapboxNavigationUIKit.CarPlayNavigationViewController : MapboxNavigationUIKit.StyleManagerDelegate {
-  @_Concurrency.MainActor @preconcurrency public func location(for styleManager: MapboxNavigationUIKit.StyleManager) -> CoreLocation.CLLocation?
+  #if compiler(>=5.3) && $NonescapableTypes
+  @_Concurrency.MainActor @preconcurrency public func location(for styleManager: MapboxNavigationUIKit.StyleManager) -> _LocationEssentials.CLLocation?
+  #endif
   @_Concurrency.MainActor @preconcurrency public func styleManager(_ styleManager: MapboxNavigationUIKit.StyleManager, didApply style: MapboxNavigationUIKit.Style)
   @_Concurrency.MainActor @preconcurrency public func styleManagerDidRefreshAppearance(_ styleManager: MapboxNavigationUIKit.StyleManager)
 }
 extension MapboxNavigationUIKit.CarPlayNavigationViewController : MapboxNavigationCore.NavigationMapViewDelegate {
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor public func navigationMapView(_ navigationMapView: MapboxNavigationCore.NavigationMapView, waypointCircleLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.CircleLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor public func navigationMapView(_ navigationMapView: MapboxNavigationCore.NavigationMapView, waypointSymbolLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.SymbolLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor public func navigationMapView(_ navigationMapView: MapboxNavigationCore.NavigationMapView, shapeFor waypoints: [MapboxDirections.Waypoint], legIndex: Swift.Int) -> Turf.FeatureCollection?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor public func navigationMapView(_ navigationMapView: MapboxNavigationCore.NavigationMapView, routeLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor public func navigationMapView(_ navigationMapView: MapboxNavigationCore.NavigationMapView, routeCasingLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor public func navigationMapView(_ navigationMapView: MapboxNavigationCore.NavigationMapView, routeRestrictedAreasLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor public func navigationMapView(_ navigationMapView: MapboxNavigationCore.NavigationMapView, willAdd layer: any MapboxMaps.Layer) -> (any MapboxMaps.Layer)?
+  #endif
 }
 extension MapboxNavigationUIKit.CarPlayNavigationViewController : CarPlay.CPSessionConfigurationDelegate {
   @_Concurrency.MainActor @preconcurrency @objc dynamic public func sessionConfiguration(_ sessionConfiguration: CarPlay.CPSessionConfiguration, contentStyleChanged contentStyle: CarPlay.CPContentStyle)
@@ -587,31 +808,56 @@ public protocol CarPlayNavigationViewControllerDelegate : AnyObject, MapboxNavig
   func carPlayNavigationViewController(_ carPlayNavigationViewController: MapboxNavigationUIKit.CarPlayNavigationViewController, shouldPresentArrivalUIFor waypoint: MapboxDirections.Waypoint) -> Swift.Bool
   @available(*, deprecated, message: "This method is deprecated and should no longer be used, as the final destination annotation is no longer added to the map. Use the corresponding delegate methods to customize waypoints appearance.")
   func carPlayNavigationViewController(_ carPlayNavigationViewController: MapboxNavigationUIKit.CarPlayNavigationViewController, didAdd finalDestinationAnnotation: MapboxMaps.PointAnnotation, pointAnnotationManager: MapboxMaps.PointAnnotationManager)
+  #if compiler(>=5.3) && $NonescapableTypes
   func carPlayNavigationViewController(_ carPlayNavigationViewController: MapboxNavigationUIKit.CarPlayNavigationViewController, waypointCircleLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.CircleLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   func carPlayNavigationViewController(_ carPlayNavigationViewController: MapboxNavigationUIKit.CarPlayNavigationViewController, waypointSymbolLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.SymbolLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   func carPlayNavigationViewController(_ carPlayNavigationViewController: MapboxNavigationUIKit.CarPlayNavigationViewController, shapeFor waypoints: [MapboxDirections.Waypoint], legIndex: Swift.Int) -> Turf.FeatureCollection?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   func carPlayNavigationViewController(_ carPlayNavigationViewController: MapboxNavigationUIKit.CarPlayNavigationViewController, routeLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   func carPlayNavigationViewController(_ carPlayNavigationViewController: MapboxNavigationUIKit.CarPlayNavigationViewController, routeCasingLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   func carPlayNavigationViewController(_ carPlayNavigationViewController: MapboxNavigationUIKit.CarPlayNavigationViewController, routeRestrictedAreasLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   func carPlayNavigationViewController(_ carPlayNavigationViewController: MapboxNavigationUIKit.CarPlayNavigationViewController, willAdd layer: any MapboxMaps.Layer) -> (any MapboxMaps.Layer)?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   func carPlayNavigationViewController(_ carPlayNavigationViewController: MapboxNavigationUIKit.CarPlayNavigationViewController, guidanceBackgroundColorFor style: UIKit.UIUserInterfaceStyle) -> UIKit.UIColor?
+  #endif
 }
 extension MapboxNavigationUIKit.CarPlayNavigationViewControllerDelegate {
   public func carPlayNavigationViewControllerWillDismiss(_ carPlayNavigationViewController: MapboxNavigationUIKit.CarPlayNavigationViewController, byCanceling canceled: Swift.Bool)
   public func carPlayNavigationViewControllerDidDismiss(_ carPlayNavigationViewController: MapboxNavigationUIKit.CarPlayNavigationViewController, byCanceling canceled: Swift.Bool)
   public func carPlayNavigationViewController(_ carPlayNavigationViewController: MapboxNavigationUIKit.CarPlayNavigationViewController, shouldPresentArrivalUIFor waypoint: MapboxDirections.Waypoint)
   public func carPlayNavigationViewController(_ carPlayNavigationViewController: MapboxNavigationUIKit.CarPlayNavigationViewController, didAdd finalDestinationAnnotation: MapboxMaps.PointAnnotation, pointAnnotationManager: MapboxMaps.PointAnnotationManager)
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayNavigationViewController(_ carPlayNavigationViewController: MapboxNavigationUIKit.CarPlayNavigationViewController, waypointSymbolLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.SymbolLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayNavigationViewController(_ carPlayNavigationViewController: MapboxNavigationUIKit.CarPlayNavigationViewController, waypointCircleLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.CircleLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayNavigationViewController(_ carPlayNavigationViewController: MapboxNavigationUIKit.CarPlayNavigationViewController, guidanceBackgroundColorFor style: UIKit.UIUserInterfaceStyle) -> UIKit.UIColor?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func carPlayNavigationViewController(_ carPlayNavigationViewController: MapboxNavigationUIKit.CarPlayNavigationViewController, shapeFor waypoints: [MapboxDirections.Waypoint], legIndex: Swift.Int) -> Turf.FeatureCollection?
+  #endif
 }
 extension MapboxNavigationUIKit.CarPlaySearchController : CarPlay.CPSearchTemplateDelegate {
   public static let CarPlayGeocodedPlacemarkKey: Swift.String
-  @objc dynamic public func searchTemplateSearchButtonPressed(_ searchTemplate: CarPlay.CPSearchTemplate)
+  @_spi(MapboxInternal) public static let CarPlaySearchSuggestionRecordKey: Swift.String
+  @_Concurrency.MainActor @preconcurrency @objc dynamic public func searchTemplateSearchButtonPressed(_ searchTemplate: CarPlay.CPSearchTemplate)
   public func searchTemplateButton(searchTemplate: CarPlay.CPSearchTemplate, interfaceController: CarPlay.CPInterfaceController, traitCollection: UIKit.UITraitCollection) -> CarPlay.CPBarButton
-  @objc dynamic public func searchTemplate(_ searchTemplate: CarPlay.CPSearchTemplate, updatedSearchText searchText: Swift.String, completionHandler: @escaping ([CarPlay.CPListItem]) -> Swift.Void)
-  @objc dynamic public func searchTemplate(_ searchTemplate: CarPlay.CPSearchTemplate, selectedResult item: CarPlay.CPListItem, completionHandler: @escaping () -> Swift.Void)
+  @_Concurrency.MainActor @preconcurrency @objc dynamic public func searchTemplate(_ searchTemplate: CarPlay.CPSearchTemplate, updatedSearchText searchText: Swift.String, completionHandler: @escaping ([CarPlay.CPListItem]) -> Swift.Void)
+  @_Concurrency.MainActor @preconcurrency @objc dynamic public func searchTemplate(_ searchTemplate: CarPlay.CPSearchTemplate, selectedResult item: CarPlay.CPListItem, completionHandler: @escaping () -> Swift.Void)
 }
 @available(*, deprecated, message: "CPListItem.handler is used instead")
 extension MapboxNavigationUIKit.CarPlaySearchController : CarPlay.CPListTemplateDelegate {
@@ -620,6 +866,7 @@ extension MapboxNavigationUIKit.CarPlaySearchController : CarPlay.CPListTemplate
 }
 @objc @_inheritsConvenienceInitializers public class CarPlaySearchController : ObjectiveC.NSObject {
   weak public var delegate: (any MapboxNavigationUIKit.CarPlaySearchControllerDelegate)?
+  @_spi(MapboxInternal) public var searchResultsLimit: Swift.UInt
   @objc override dynamic public init()
   @objc deinit
 }
@@ -628,11 +875,20 @@ public protocol CarPlaySearchControllerDelegate : CarPlay.CPSearchTemplateDelega
   func resetPanButtons(_ mapTemplate: CarPlay.CPMapTemplate)
   func pushTemplate(_ template: CarPlay.CPTemplate, animated: Swift.Bool)
   func popTemplate(animated: Swift.Bool)
+  #if compiler(>=5.3) && $NonescapableTypes
   var recentSearchItems: [CarPlay.CPListItem]? { get set }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   var recentSearchText: Swift.String? { get set }
+  #endif
   func searchTemplate(_ searchTemplate: CarPlay.CPSearchTemplate, updatedSearchText searchText: Swift.String, completionHandler: @escaping ([CarPlay.CPListItem]) -> Swift.Void)
   func searchTemplate(_ searchTemplate: CarPlay.CPSearchTemplate, selectedResult item: CarPlay.CPListItem, completionHandler: @escaping () -> Swift.Void)
+  #if compiler(>=5.3) && $NonescapableTypes
   func searchResults(with items: [CarPlay.CPListItem], limit: Swift.UInt?) -> [CarPlay.CPListItem]
+  #endif
+}
+@_spi(MapboxInternal) public protocol CarPlaySearchControllerInternalDelegate {
+  @_spi(MapboxInternal) func selectSuggestion(item: any CarPlay.CPSelectableListItem, completion: @escaping () -> Swift.Void)
 }
 @_spi(MapboxInternal) public protocol CarPlayGridItem {
   @_spi(MapboxInternal) var icon: UIKit.UIImage { get }
@@ -654,7 +910,9 @@ public protocol CarPlaySearchControllerDelegate : CarPlay.CPSearchTemplateDelega
 }
 @_spi(MapboxInternal) open class CarPlayGridController {
   @_spi(MapboxInternal) public struct Style {
+    #if compiler(>=5.3) && $NonescapableTypes
     @_spi(MapboxInternal) public init(title: Swift.String, backItemTitle: Swift.String? = nil, items: [any MapboxNavigationUIKit.CarPlayGridItem], leadingNavigationItems: [MapboxNavigationUIKit.CarPlayNavigationItem], trailingNavigationItems: [MapboxNavigationUIKit.CarPlayNavigationItem])
+    #endif
   }
   @_spi(MapboxInternal) public var template: CarPlay.CPGridTemplate
   @_spi(MapboxInternal) weak public var delegate: (any MapboxNavigationUIKit.CarPlayGridControllerDelegate)?
@@ -691,7 +949,9 @@ public protocol CarPlaySearchControllerDelegate : CarPlay.CPSearchTemplateDelega
 }
 @_spi(MapboxInternal) final public class CarPlayVoiceInputController {
   @_spi(MapboxInternal) public struct State {
+    #if compiler(>=5.3) && $NonescapableTypes
     @_spi(MapboxInternal) public init(identifier: Swift.String, titleVariants: [Swift.String], image: UIKit.UIImage?, repeats: Swift.Bool)
+    #endif
   }
   @_spi(MapboxInternal) final public let template: CarPlay.CPVoiceControlTemplate
   @_spi(MapboxInternal) public init(states: [MapboxNavigationUIKit.CarPlayVoiceInputController.State])
@@ -702,8 +962,10 @@ public protocol CarPlaySearchControllerDelegate : CarPlay.CPSearchTemplateDelega
   @_spi(MapboxInternal) public let text: Swift.String
   @_spi(MapboxInternal) public let detailText: Swift.String?
   @_spi(MapboxInternal) public let icon: UIKit.UIImage?
-  @_spi(MapboxInternal) public let location: CoreLocation.CLLocation?
-  @_spi(MapboxInternal) public init(text: Swift.String, detailText: Swift.String?, icon: UIKit.UIImage?, location: CoreLocation.CLLocation?)
+  @_spi(MapboxInternal) public let location: _LocationEssentials.CLLocation?
+  #if compiler(>=5.3) && $NonescapableTypes
+  @_spi(MapboxInternal) public init(text: Swift.String, detailText: Swift.String?, icon: UIKit.UIImage?, location: _LocationEssentials.CLLocation?)
+  #endif
   @_spi(MapboxInternal) public static func == (a: MapboxNavigationUIKit.CarPlayListItem, b: MapboxNavigationUIKit.CarPlayListItem) -> Swift.Bool
   @_spi(MapboxInternal) public func hash(into hasher: inout Swift.Hasher)
   @_spi(MapboxInternal) public var hashValue: Swift.Int {
@@ -723,22 +985,18 @@ public protocol CarPlaySearchControllerDelegate : CarPlay.CPSearchTemplateDelega
 @_spi(MapboxInternal) public struct SearchResultRecord {
   @_spi(MapboxInternal) public let id: Swift.String
   @_spi(MapboxInternal) public var serverIndex: Swift.Int?
-  @_spi(MapboxInternal) public let coordinate: CoreLocation.CLLocationCoordinate2D
+  @_spi(MapboxInternal) public let coordinate: _LocationEssentials.CLLocationCoordinate2D
   @_spi(MapboxInternal) public let placemark: MapKit.MKPlacemark
   @_spi(MapboxInternal) public let name: Swift.String
   @_spi(MapboxInternal) public let descriptionText: Swift.String?
   @_spi(MapboxInternal) public let estimatedTime: Foundation.TimeInterval?
-  @_spi(MapboxInternal) public let estimatedDistance: CoreLocation.CLLocationDistance?
+  @_spi(MapboxInternal) public let estimatedDistance: _LocationEssentials.CLLocationDistance?
   @_spi(MapboxInternal) public var indexStringValue: Swift.String {
     @_spi(MapboxInternal) get
   }
-  @_spi(MapboxInternal) public init(id: Swift.String, serverIndex: Swift.Int? = nil, coordinate: CoreLocation.CLLocationCoordinate2D, placemark: MapKit.MKPlacemark, name: Swift.String, descriptionText: Swift.String?, estimatedTime: Foundation.TimeInterval?, estimatedDistance: CoreLocation.CLLocationDistance?)
-}
-extension CarPlay.CPSearchTemplate : @unchecked Swift.Sendable {
-}
-extension CarPlay.CPListItem : @unchecked Swift.Sendable {
-}
-extension CarPlay.CPTemplate : @unchecked Swift.Sendable {
+  #if compiler(>=5.3) && $NonescapableTypes
+  @_spi(MapboxInternal) public init(id: Swift.String, serverIndex: Swift.Int? = nil, coordinate: _LocationEssentials.CLLocationCoordinate2D, placemark: MapKit.MKPlacemark, name: Swift.String, descriptionText: Swift.String?, estimatedTime: Foundation.TimeInterval?, estimatedDistance: _LocationEssentials.CLLocationDistance?)
+  #endif
 }
 extension Foundation.NSNotification.Name {
   public static let styleManagerDidApplyStyle: Foundation.Notification.Name
@@ -753,10 +1011,16 @@ public struct StyleManagerNotificationUserInfoKey : Swift.Hashable, Swift.Equata
 public typealias CarPlayUserInfo = [Swift.String : Any?]
 public class DataCache : MapboxNavigationUIKit.BimodalDataCache {
   public init()
+  #if compiler(>=5.3) && $NonescapableTypes
   public func store(_ data: Foundation.Data, forKey key: Swift.String, toDisk: Swift.Bool, completion: MapboxNavigationUIKit.CompletionHandler?)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func data(forKey key: Swift.String?) -> Foundation.Data?
+  #endif
   @objc public func clearMemory()
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public func clearDisk(completion: MapboxNavigationUIKit.CompletionHandler?)
+  #endif
   @objc deinit
 }
 public protocol DestinationDataSource : AnyObject {
@@ -765,8 +1029,8 @@ public protocol DestinationDataSource : AnyObject {
 public struct DestinationOptions {
   public var primaryText: Foundation.NSAttributedString?
   public let waypoints: [MapboxDirections.Waypoint]
-  public let coordinates: [CoreLocation.CLLocationCoordinate2D]
-  public init(coordinates: [CoreLocation.CLLocationCoordinate2D])
+  public let coordinates: [_LocationEssentials.CLLocationCoordinate2D]
+  public init(coordinates: [_LocationEssentials.CLLocationCoordinate2D])
   public init(waypoints: [MapboxDirections.Waypoint])
 }
 @objc @_hasMissingDesignatedInitializers @_Concurrency.MainActor @preconcurrency public class DestinationPreviewViewController : UIKit.UIViewController, MapboxNavigationUIKit.Banner, MapboxNavigationUIKit.DestinationDataSource {
@@ -810,33 +1074,47 @@ public protocol DestinationPreviewViewControllerDelegate : AnyObject {
   }
   @_Concurrency.MainActor @preconcurrency override open func update()
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_documentation(visibility: internal) @_Concurrency.MainActor @preconcurrency open class EndOfRouteContentView : UIKit.UIView {
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_documentation(visibility: internal) @_Concurrency.MainActor @preconcurrency open class EndOfRouteTitleLabel : MapboxNavigationUIKit.StylableLabel {
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_documentation(visibility: internal) @_Concurrency.MainActor @preconcurrency open class EndOfRouteStaticLabel : MapboxNavigationUIKit.StylableLabel {
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_documentation(visibility: internal) @_Concurrency.MainActor @preconcurrency open class EndOfRouteCommentView : MapboxNavigationUIKit.StylableTextView {
+  #if compiler(>=5.3) && $NonescapableTypes
   @available(iOS 7.0, *)
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect, textContainer: UIKit.NSTextContainer?)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_documentation(visibility: internal) @_Concurrency.MainActor @preconcurrency open class EndOfRouteButton : MapboxNavigationUIKit.StylableButton {
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_documentation(visibility: internal) @_Concurrency.MainActor @preconcurrency public class ExitView : MapboxNavigationUIKit.StylableView {
@@ -846,7 +1124,9 @@ public protocol DestinationPreviewViewControllerDelegate : AnyObject {
   }
   @objc @_Concurrency.MainActor @preconcurrency dynamic public var highlightColor: UIKit.UIColor?
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 extension Foundation.Bundle {
@@ -867,12 +1147,16 @@ extension Foundation.DateComponentsFormatter {
   public static let shortDateComponentsFormatter: Foundation.DateComponentsFormatter
   public static let briefDateComponentsFormatter: Foundation.DateComponentsFormatter
   public static func travelDurationUnitStyle(interval: Foundation.TimeInterval) -> Foundation.DateComponentsFormatter.UnitsStyle
+  #if compiler(>=5.3) && $NonescapableTypes
   public static func travelTimeString(_ interval: Foundation.TimeInterval, signed: Swift.Bool, unitStyle: Foundation.DateComponentsFormatter.UnitsStyle?) -> Swift.String
+  #endif
 }
 extension Swift.String {
+  #if compiler(>=5.3) && $NonescapableTypes
   public var nonEmptyString: Swift.String? {
     get
   }
+  #endif
 }
 extension UIKit.UIEdgeInsets {
   public static func + (left: UIKit.UIEdgeInsets, right: UIKit.UIEdgeInsets) -> UIKit.UIEdgeInsets
@@ -913,7 +1197,9 @@ extension MapboxNavigationUIKit.FeedbackViewControllerDelegate {
   @objc @_Concurrency.MainActor @preconcurrency public func dismissFeedback()
   @_Concurrency.MainActor @preconcurrency public init(eventsManager: MapboxNavigationCore.NavigationEventsManager, type: MapboxNavigationUIKit.FeedbackViewControllerType = .activeNavigation)
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public func encode(with aCoder: Foundation.NSCoder)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  #endif
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewDidLoad()
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewDidAppear(_ animated: Swift.Bool)
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewWillTransition(to size: CoreFoundation.CGSize, with coordinator: any UIKit.UIViewControllerTransitionCoordinator)
@@ -932,9 +1218,15 @@ extension MapboxNavigationUIKit.FeedbackViewController : UIKit.UICollectionViewD
   @_Concurrency.MainActor @preconcurrency @objc dynamic public func collectionView(_ collectionView: UIKit.UICollectionView, layout collectionViewLayout: UIKit.UICollectionViewLayout, sizeForItemAt indexPath: Foundation.IndexPath) -> CoreFoundation.CGSize
 }
 extension MapboxNavigationUIKit.FeedbackViewController : UIKit.UIViewControllerTransitioningDelegate {
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc dynamic public func animationController(forDismissed dismissed: UIKit.UIViewController) -> (any UIKit.UIViewControllerAnimatedTransitioning)?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc dynamic public func animationController(forPresented presented: UIKit.UIViewController, presenting: UIKit.UIViewController, source: UIKit.UIViewController) -> (any UIKit.UIViewControllerAnimatedTransitioning)?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc dynamic public func interactionControllerForDismissal(using animator: any UIKit.UIViewControllerAnimatedTransitioning) -> (any UIKit.UIViewControllerInteractiveTransitioning)?
+  #endif
 }
 public enum FeedbackViewControllerType {
   case activeNavigation
@@ -943,9 +1235,13 @@ public enum FeedbackViewControllerType {
 }
 @_inheritsConvenienceInitializers @objc(MBFloatingButton) @_Concurrency.MainActor @preconcurrency open class FloatingButton : MapboxNavigationUIKit.Button {
   @_Concurrency.MainActor @preconcurrency public static let buttonSize: CoreFoundation.CGSize
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency public class func rounded<T>(image: UIKit.UIImage? = nil, selectedImage: UIKit.UIImage? = nil, size: CoreFoundation.CGSize = FloatingButton.buttonSize, type: UIKit.UIButton.ButtonType = .custom, imageEdgeInsets: UIKit.UIEdgeInsets = .zero, cornerRadius: CoreFoundation.CGFloat = FloatingButton.buttonSize.width / 2.0) -> T where T : MapboxNavigationUIKit.FloatingButton
+  #endif
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @_Concurrency.MainActor @preconcurrency public class GenericRouteShield : MapboxNavigationUIKit.StylableView {
@@ -954,30 +1250,42 @@ public enum FeedbackViewControllerType {
     @objc set
   }
   @objc @_Concurrency.MainActor @preconcurrency dynamic public var highlightColor: UIKit.UIColor?
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_Concurrency.MainActor @preconcurrency open class InstructionLabel : MapboxNavigationUIKit.StylableLabel {
   @_Concurrency.MainActor @preconcurrency override open func update()
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc override dynamic open func traitCollectionDidChange(_ previousTraitCollection: UIKit.UITraitCollection?)
+  #endif
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @_inheritsConvenienceInitializers @_documentation(visibility: internal) @objc(MBPrimaryLabel) @_Concurrency.MainActor @preconcurrency open class PrimaryLabel : MapboxNavigationUIKit.InstructionLabel {
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @_inheritsConvenienceInitializers @_documentation(visibility: internal) @objc(MBSecondaryLabel) @_Concurrency.MainActor @preconcurrency open class SecondaryLabel : MapboxNavigationUIKit.InstructionLabel {
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @IBDesignable @_Concurrency.MainActor @preconcurrency open class InstructionsBannerView : MapboxNavigationUIKit.BaseInstructionsBannerView, MapboxNavigationUIKit.NavigationComponent {
   @_Concurrency.MainActor @preconcurrency public func onDidPassVisualInstructionPoint(_ instruction: MapboxDirections.VisualInstructionBanner)
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_Concurrency.MainActor @preconcurrency open class BaseInstructionsBannerView : UIKit.UIControl {
@@ -998,16 +1306,22 @@ public enum FeedbackViewControllerType {
     set
   }
   @_Concurrency.MainActor @preconcurrency final public let distanceFormatter: MapboxNavigationUIKit.DistanceFormatter
-  @_Concurrency.MainActor @preconcurrency public var distance: CoreLocation.CLLocationDistance? {
+  @_Concurrency.MainActor @preconcurrency public var distance: _LocationEssentials.CLLocationDistance? {
     get
     set
   }
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency public func update(for instruction: MapboxDirections.VisualInstructionBanner?)
+  #endif
   @_Concurrency.MainActor @preconcurrency @objc override dynamic open func prepareForInterfaceBuilder()
   @_Concurrency.MainActor @preconcurrency public func updateDistance(for currentStepProgress: MapboxNavigationCore.RouteStepProgress)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc override dynamic open func traitCollectionDidChange(_ previousTraitCollection: UIKit.UITraitCollection?)
+  #endif
   @objc deinit
 }
 public protocol InstructionsBannerViewDelegate : MapboxNavigationUIKit.VisualInstructionDelegate {
@@ -1021,8 +1335,12 @@ extension MapboxNavigationUIKit.InstructionsBannerViewDelegate {
 @objc @_inheritsConvenienceInitializers @_documentation(visibility: internal) @_Concurrency.MainActor @preconcurrency public class InstructionsCardCell : UIKit.UICollectionViewCell {
   @_Concurrency.MainActor @preconcurrency final public let container: MapboxNavigationUIKit.InstructionsCardContainerView
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
-  @_Concurrency.MainActor @preconcurrency public func configure(for step: MapboxDirections.RouteStep, distance: CoreLocation.CLLocationDistance, instruction: MapboxDirections.VisualInstructionBanner? = nil, isCurrentCardStep: Swift.Bool = false)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  @_Concurrency.MainActor @preconcurrency public func configure(for step: MapboxDirections.RouteStep, distance: _LocationEssentials.CLLocationDistance, instruction: MapboxDirections.VisualInstructionBanner? = nil, isCurrentCardStep: Swift.Bool = false)
+  #endif
   @objc deinit
 }
 @objc @_hasMissingDesignatedInitializers @_Concurrency.MainActor @preconcurrency public class InstructionsCardContainerView : MapboxNavigationUIKit.StylableView, MapboxNavigationUIKit.InstructionsCardContainerViewDelegate {
@@ -1032,34 +1350,52 @@ extension MapboxNavigationUIKit.InstructionsBannerViewDelegate {
   @objc @_Concurrency.MainActor @preconcurrency dynamic public var highlightedSeparatorColor: UIKit.UIColor
   @_Concurrency.MainActor @preconcurrency weak public var delegate: (any MapboxNavigationUIKit.InstructionsCardContainerViewDelegate)?
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init()
-  @_Concurrency.MainActor @preconcurrency public func updateInstruction(for step: MapboxDirections.RouteStep, distance: CoreLocation.CLLocationDistance, instruction: MapboxDirections.VisualInstructionBanner? = nil, isCurrentCardStep: Swift.Bool = false)
+  #if compiler(>=5.3) && $NonescapableTypes
+  @_Concurrency.MainActor @preconcurrency public func updateInstruction(for step: MapboxDirections.RouteStep, distance: _LocationEssentials.CLLocationDistance, instruction: MapboxDirections.VisualInstructionBanner? = nil, isCurrentCardStep: Swift.Bool = false)
+  #endif
   @_Concurrency.MainActor @preconcurrency public func updateInstruction(_ instruction: MapboxDirections.VisualInstructionBanner)
-  @_Concurrency.MainActor @preconcurrency public func updateInstructionCard(distance: CoreLocation.CLLocationDistance, isCurrentCardStep: Swift.Bool = false)
+  @_Concurrency.MainActor @preconcurrency public func updateInstructionCard(distance: _LocationEssentials.CLLocationDistance, isCurrentCardStep: Swift.Bool = false)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency public func label(_ label: MapboxNavigationUIKit.InstructionLabel, willPresent instruction: MapboxDirections.VisualInstruction, as presented: Foundation.NSAttributedString) -> Foundation.NSAttributedString?
+  #endif
   @objc deinit
 }
 public protocol InstructionsCardContainerViewDelegate : MapboxNavigationUIKit.VisualInstructionDelegate {
+  #if compiler(>=5.3) && $NonescapableTypes
   func primaryLabel(_ primaryLabel: MapboxNavigationUIKit.InstructionLabel, willPresent instruction: MapboxDirections.VisualInstruction, as presented: Foundation.NSAttributedString) -> Foundation.NSAttributedString?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   func secondaryLabel(_ secondaryLabel: MapboxNavigationUIKit.InstructionLabel, willPresent instruction: MapboxDirections.VisualInstruction, as presented: Foundation.NSAttributedString) -> Foundation.NSAttributedString?
+  #endif
 }
 extension MapboxNavigationUIKit.InstructionsCardContainerViewDelegate {
+  #if compiler(>=5.3) && $NonescapableTypes
   public func primaryLabel(_ primaryLabel: MapboxNavigationUIKit.InstructionLabel, willPresent instruction: MapboxDirections.VisualInstruction, as presented: Foundation.NSAttributedString) -> Foundation.NSAttributedString?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func secondaryLabel(_ secondaryLabel: MapboxNavigationUIKit.InstructionLabel, willPresent instruction: MapboxDirections.VisualInstruction, as presented: Foundation.NSAttributedString) -> Foundation.NSAttributedString?
+  #endif
 }
 @objc @_inheritsConvenienceInitializers @_Concurrency.MainActor @preconcurrency public class InstructionsCardView : MapboxNavigationUIKit.BaseInstructionsBannerView {
   @_Concurrency.MainActor @preconcurrency @objc override required dynamic public init(frame: CoreFoundation.CGRect = .zero)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  #endif
   @_Concurrency.MainActor @preconcurrency public func prepareLayout()
   @_Concurrency.MainActor @preconcurrency public func updateInstruction(for step: MapboxDirections.RouteStep)
-  @_Concurrency.MainActor @preconcurrency public func updateDistanceFromCurrentLocation(_ distance: CoreLocation.CLLocationDistance)
+  @_Concurrency.MainActor @preconcurrency public func updateDistanceFromCurrentLocation(_ distance: _LocationEssentials.CLLocationDistance)
   @objc deinit
 }
 @objc @_Concurrency.MainActor @preconcurrency public class JunctionView : UIKit.UIImageView {
   @_Concurrency.MainActor @preconcurrency public func show(animated: Swift.Bool = false)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency public func update(for visualInstruction: MapboxDirections.VisualInstructionBanner?, accessToken: Swift.String?)
+  #endif
   @_Concurrency.MainActor @preconcurrency public func hide(delay: Foundation.TimeInterval = 0, animated: Swift.Bool = true)
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @_Concurrency.MainActor @preconcurrency open class LaneView : UIKit.UIView {
@@ -1086,20 +1422,32 @@ extension MapboxNavigationUIKit.InstructionsCardContainerViewDelegate {
     get
     set
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder decoder: Foundation.NSCoder)
+  #endif
   @_Concurrency.MainActor @preconcurrency @objc override dynamic open func draw(_ rect: CoreFoundation.CGRect)
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @IBDesignable @_Concurrency.MainActor @preconcurrency open class LanesView : UIKit.UIView, MapboxNavigationUIKit.NavigationComponent {
   @_Concurrency.MainActor @preconcurrency public var isCurrentlyVisible: Swift.Bool
   public typealias CompletionHandler = (_ completed: Swift.Bool) -> Swift.Void
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency public func update(for visualInstruction: MapboxDirections.VisualInstructionBanner?, animated: Swift.Bool = true, duration: Foundation.TimeInterval = 0.5, completion: MapboxNavigationUIKit.LanesView.CompletionHandler? = nil)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency public func show(animated: Swift.Bool = true, duration: Foundation.TimeInterval = 0.5, completion: MapboxNavigationUIKit.LanesView.CompletionHandler? = nil)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency public func hide(animated: Swift.Bool = true, duration: Foundation.TimeInterval = 0.5, completion: MapboxNavigationUIKit.LanesView.CompletionHandler? = nil)
+  #endif
   @_Concurrency.MainActor @preconcurrency public func onDidPassVisualInstructionPoint(_ instruction: MapboxDirections.VisualInstructionBanner)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  #endif
   @_Concurrency.MainActor @preconcurrency @objc override dynamic open func prepareForInterfaceBuilder()
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc override dynamic open func traitCollectionDidChange(_ previousTraitCollection: UIKit.UITraitCollection?)
+  #endif
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @IBDesignable @_Concurrency.MainActor @preconcurrency open class ManeuverView : UIKit.UIView {
@@ -1140,7 +1488,9 @@ extension MapboxNavigationUIKit.InstructionsCardContainerViewDelegate {
     set
   }
   @_Concurrency.MainActor @preconcurrency @objc override dynamic open func draw(_ rect: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 public enum MapOrnamentPosition {
@@ -1173,53 +1523,28 @@ extension MapboxNavigationUIKit.NavigationComponent {
   public func onWillEndSimulating()
 }
 public protocol NavigationMapInteractionObserver : AnyObject {
-  func navigationViewController(didCenterOn location: CoreLocation.CLLocation)
+  func navigationViewController(didCenterOn location: _LocationEssentials.CLLocation)
 }
 public protocol CarPlayConnectionObserver : AnyObject {
   func didConnectToCarPlay()
   func didDisconnectFromCarPlay()
 }
 public protocol NavigationStatusPresenter : AnyObject {
-  func show(_: MapboxNavigationUIKit.StatusView.Status)
-  func hide(_: MapboxNavigationUIKit.StatusView.Status)
+  func show(_ status: MapboxNavigationUIKit.StatusView.Status)
+  func hide(_ status: MapboxNavigationUIKit.StatusView.Status)
 }
 public struct NavigationGeocodedPlacemark : Swift.Equatable, Swift.Codable {
   public var title: Swift.String
   public var subtitle: Swift.String?
-  public var location: CoreLocation.CLLocation?
-  public var routableLocations: [CoreLocation.CLLocation]?
-  public init(title: Swift.String, subtitle: Swift.String?, location: CoreLocation.CLLocation?, routableLocations: [CoreLocation.CLLocation]?)
+  public var location: _LocationEssentials.CLLocation?
+  public var routableLocations: [_LocationEssentials.CLLocation]?
+  #if compiler(>=5.3) && $NonescapableTypes
+  public init(title: Swift.String, subtitle: Swift.String?, location: _LocationEssentials.CLLocation?, routableLocations: [_LocationEssentials.CLLocation]?)
+  #endif
   public init(from decoder: any Swift.Decoder) throws
   public func encode(to encoder: any Swift.Encoder) throws
   public static func == (lhs: MapboxNavigationUIKit.NavigationGeocodedPlacemark, rhs: MapboxNavigationUIKit.NavigationGeocodedPlacemark) -> Swift.Bool
   public func listItem() -> CarPlay.CPListItem
-}
-extension CoreLocation.CLLocation : Swift.Encodable {
-  public enum CodingKeys : Swift.String, Swift.CodingKey {
-    case latitude
-    case longitude
-    case altitude
-    case horizontalAccuracy
-    case verticalAccuracy
-    case speed
-    case course
-    case timestamp
-    public init?(rawValue: Swift.String)
-    public init?(stringValue: Swift.String)
-    public init?(intValue: Swift.Int)
-    @available(iOS 2.0, *)
-    public typealias RawValue = Swift.String
-    public var intValue: Swift.Int? {
-      get
-    }
-    public var rawValue: Swift.String {
-      get
-    }
-    public var stringValue: Swift.String {
-      get
-    }
-  }
-  public func encode(to encoder: any Swift.Encoder) throws
 }
 open class NavigationOptions {
   open var styles: [MapboxNavigationUIKit.Style]?
@@ -1231,7 +1556,9 @@ open class NavigationOptions {
   open var voiceController: MapboxNavigationCore.RouteVoiceController
   open var predictiveCacheManager: MapboxNavigationCore.PredictiveCacheManager?
   @_Concurrency.MainActor required public init()
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(mapboxNavigation: any MapboxNavigationCore.MapboxNavigation, voiceController: MapboxNavigationCore.RouteVoiceController, eventsManager: MapboxNavigationCore.NavigationEventsManager, styles: [MapboxNavigationUIKit.Style]? = nil, topBanner: (any UIKit.UIViewController & MapboxNavigationUIKit.NavigationComponent)? = nil, bottomBanner: (any UIKit.UIViewController & MapboxNavigationUIKit.NavigationComponent)? = nil, predictiveCacheManager: MapboxNavigationCore.PredictiveCacheManager? = nil, navigationMapView: MapboxNavigationCore.NavigationMapView? = nil)
+  #endif
   @objc deinit
 }
 @objc @IBDesignable @_Concurrency.MainActor @preconcurrency open class NavigationView : UIKit.UIView {
@@ -1264,31 +1591,49 @@ open class NavigationOptions {
     set
   }
   public enum MapViewConfiguration {
-    case createNew(location: Combine.AnyPublisher<CoreLocation.CLLocation, Swift.Never>, routeProgress: Combine.AnyPublisher<MapboxNavigationCore.RouteProgress?, Swift.Never>, heading: Combine.AnyPublisher<CoreLocation.CLHeading, Swift.Never>? = nil, predictiveCacheManager: MapboxNavigationCore.PredictiveCacheManager? = nil)
+    case createNew(location: Combine.AnyPublisher<_LocationEssentials.CLLocation, Swift.Never>, routeProgress: Combine.AnyPublisher<MapboxNavigationCore.RouteProgress?, Swift.Never>, heading: Combine.AnyPublisher<CoreLocation.CLHeading, Swift.Never>? = nil, predictiveCacheManager: MapboxNavigationCore.PredictiveCacheManager? = nil)
     case existing(MapboxNavigationCore.NavigationMapView)
   }
   @_Concurrency.MainActor @preconcurrency public init(frame: CoreFoundation.CGRect, mapViewConfiguration: MapboxNavigationUIKit.NavigationView.MapViewConfiguration)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder decoder: Foundation.NSCoder)
+  #endif
   @_Concurrency.MainActor @preconcurrency @objc override dynamic open func prepareForInterfaceBuilder()
   @objc deinit
 }
 extension MapboxNavigationUIKit.NavigationViewController : MapboxNavigationCore.NavigationMapViewDelegate {
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor public func navigationMapView(_ navigationMapView: MapboxNavigationCore.NavigationMapView, routeLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor public func navigationMapView(_ navigationMapView: MapboxNavigationCore.NavigationMapView, routeCasingLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor public func navigationMapView(_ navigationMapView: MapboxNavigationCore.NavigationMapView, routeRestrictedAreasLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor public func navigationMapView(_ navigationMapView: MapboxNavigationCore.NavigationMapView, willAdd layer: any MapboxMaps.Layer) -> (any MapboxMaps.Layer)?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor public func navigationMapView(_ navigationMapView: MapboxNavigationCore.NavigationMapView, waypointCircleLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.CircleLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor public func navigationMapView(_ navigationMapView: MapboxNavigationCore.NavigationMapView, waypointSymbolLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.SymbolLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor public func navigationMapView(_ navigationMapView: MapboxNavigationCore.NavigationMapView, shapeFor waypoints: [MapboxDirections.Waypoint], legIndex: Swift.Int) -> Turf.FeatureCollection?
+  #endif
   @_Concurrency.MainActor public func navigationMapView(_ navigationMapView: MapboxNavigationCore.NavigationMapView, didSelect waypoint: MapboxDirections.Waypoint)
   @_Concurrency.MainActor public func navigationMapView(_: MapboxNavigationCore.NavigationMapView, didSelect alternativeRoute: MapboxNavigationCore.AlternativeRoute)
 }
 public typealias ContainerViewController = UIKit.UIViewController & MapboxNavigationUIKit.NavigationComponent
 @objc @_Concurrency.MainActor @preconcurrency open class NavigationViewController : UIKit.UIViewController, MapboxNavigationUIKit.NavigationStatusPresenter {
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc @_Concurrency.MainActor @preconcurrency public var navigationMapView: MapboxNavigationCore.NavigationMapView? {
     @objc get
     @objc set
   }
+  #endif
   @_Concurrency.MainActor @preconcurrency public var navigationView: MapboxNavigationUIKit.NavigationView {
     get
   }
@@ -1314,15 +1659,21 @@ public typealias ContainerViewController = UIKit.UIViewController & MapboxNaviga
   }
   @_Concurrency.MainActor @preconcurrency public var usesNightStyleWhileInTunnel: Swift.Bool
   @_Concurrency.MainActor @preconcurrency public var navigationOptions: MapboxNavigationUIKit.NavigationOptions?
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency public var routeOptions: MapboxDirections.RouteOptions? {
     get
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency public var navigationRoutes: MapboxNavigationCore.NavigationRoutes? {
     get
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency public var route: MapboxDirections.Route? {
     get
   }
+  #endif
   @_Concurrency.MainActor @preconcurrency public var routingProvider: any MapboxNavigationCore.RoutingProvider {
     get
   }
@@ -1335,10 +1686,14 @@ public typealias ContainerViewController = UIKit.UIViewController & MapboxNaviga
     get
     set
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  #endif
   @_Concurrency.MainActor @preconcurrency required public init(navigationRoutes: MapboxNavigationCore.NavigationRoutes, navigationOptions: MapboxNavigationUIKit.NavigationOptions)
   @objc deinit
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @objc override dynamic open func dismiss(animated flag: Swift.Bool, completion: (() -> Swift.Void)? = nil)
+  #endif
   @_Concurrency.MainActor @preconcurrency @objc override dynamic open func loadView()
   @_Concurrency.MainActor @preconcurrency @objc override dynamic open func viewDidLoad()
   @_Concurrency.MainActor @preconcurrency @objc override dynamic open func viewWillAppear(_ animated: Swift.Bool)
@@ -1350,7 +1705,9 @@ public typealias ContainerViewController = UIKit.UIViewController & MapboxNaviga
   @_Concurrency.MainActor @preconcurrency @objc override dynamic open func viewDidDisappear(_ animated: Swift.Bool)
   @_Concurrency.MainActor @preconcurrency @objc override dynamic open func viewDidLayoutSubviews()
   @_Concurrency.MainActor @preconcurrency @objc override dynamic open func preferredContentSizeDidChange(forChildContentContainer container: any UIKit.UIContentContainer)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency public func prepareViewLoading(navigationRoutes: MapboxNavigationCore.NavigationRoutes?, navigationOptions: MapboxNavigationUIKit.NavigationOptions? = nil) -> Swift.Bool
+  #endif
   @_Concurrency.MainActor @preconcurrency public var showsReportFeedback: Swift.Bool {
     get
     set
@@ -1363,14 +1720,18 @@ public typealias ContainerViewController = UIKit.UIViewController & MapboxNaviga
     get
     set
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency open var floatingButtonsPosition: MapboxNavigationUIKit.MapOrnamentPosition? {
     get
     set
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency open var floatingButtons: [UIKit.UIButton]? {
     get
     set
   }
+  #endif
   @_Concurrency.MainActor @preconcurrency public var automaticallyAdjustsStyleForTimeOfDay: Swift.Bool {
     get
     set
@@ -1384,7 +1745,9 @@ public typealias ContainerViewController = UIKit.UIViewController & MapboxNaviga
   }
 }
 extension MapboxNavigationUIKit.NavigationViewController : MapboxNavigationUIKit.StyleManagerDelegate {
-  @_Concurrency.MainActor @preconcurrency public func location(for styleManager: MapboxNavigationUIKit.StyleManager) -> CoreLocation.CLLocation?
+  #if compiler(>=5.3) && $NonescapableTypes
+  @_Concurrency.MainActor @preconcurrency public func location(for styleManager: MapboxNavigationUIKit.StyleManager) -> _LocationEssentials.CLLocation?
+  #endif
   @_Concurrency.MainActor @preconcurrency public func styleManager(_ styleManager: MapboxNavigationUIKit.StyleManager, didApply style: MapboxNavigationUIKit.Style)
   @_Concurrency.MainActor @preconcurrency public func styleManagerDidRefreshAppearance(_ styleManager: MapboxNavigationUIKit.StyleManager)
 }
@@ -1393,7 +1756,9 @@ extension MapboxNavigationUIKit.NavigationViewController : MapboxNavigationUIKit
   @_Concurrency.MainActor @preconcurrency public func preview(step: MapboxDirections.RouteStep, in banner: MapboxNavigationUIKit.TopBannerViewController, remaining: [MapboxDirections.RouteStep], route: MapboxDirections.Route, animated: Swift.Bool = true)
   @_Concurrency.MainActor @preconcurrency public func topBanner(_ banner: MapboxNavigationUIKit.TopBannerViewController, didSelect legIndex: Swift.Int, stepIndex: Swift.Int, cell: MapboxNavigationUIKit.StepTableViewCell)
   @_Concurrency.MainActor @preconcurrency public func topBanner(_ banner: MapboxNavigationUIKit.TopBannerViewController, didDisplayStepsController: MapboxNavigationUIKit.StepsViewController)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency public func label(_ label: MapboxNavigationUIKit.InstructionLabel, willPresent instruction: MapboxDirections.VisualInstruction, as presented: Foundation.NSAttributedString) -> Foundation.NSAttributedString?
+  #endif
 }
 extension MapboxNavigationUIKit.NavigationViewController : MapboxNavigationUIKit.BottomBannerViewControllerDelegate {
   @_Concurrency.MainActor @preconcurrency public func didTapCancel(_ sender: Any)
@@ -1410,69 +1775,119 @@ extension MapboxNavigationCore.AlternativeRoute : Swift.Hashable {
 }
 public protocol NavigationViewControllerDelegate : MapboxNavigationUIKit.VisualInstructionDelegate {
   func navigationViewControllerDidDismiss(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, byCanceling canceled: Swift.Bool)
-  func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, didUpdate progress: MapboxNavigationCore.RouteProgress, with location: CoreLocation.CLLocation, rawLocation: CoreLocation.CLLocation)
+  func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, didUpdate progress: MapboxNavigationCore.RouteProgress, with location: _LocationEssentials.CLLocation, rawLocation: _LocationEssentials.CLLocation)
   func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, didArriveAt waypoint: MapboxDirections.Waypoint)
   @available(*, deprecated, message: "This method is deprecated and should no longer be used, as the final destination annotation is no longer added to the map. Use the corresponding delegate methods to customize waypoints appearance.")
   func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, didAdd finalDestinationAnnotation: MapboxMaps.PointAnnotation, pointAnnotationManager: MapboxMaps.PointAnnotationManager)
   func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, didSelect waypoint: MapboxDirections.Waypoint)
-  func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, willRerouteFrom location: CoreLocation.CLLocation?)
+  #if compiler(>=5.3) && $NonescapableTypes
+  func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, willRerouteFrom location: _LocationEssentials.CLLocation?)
+  #endif
   func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, didRerouteAlong route: MapboxDirections.Route)
   func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, didUpdateAlternatives updatedAlternatives: [MapboxNavigationCore.AlternativeRoute], removedAlternatives: [MapboxNavigationCore.AlternativeRoute])
   func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, didSwitchToCoincidentOnlineRoute coincideRoute: MapboxDirections.Route)
   func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, didSelect alternative: MapboxNavigationCore.AlternativeRoute)
   func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, didFailToRerouteWith error: any Swift.Error)
   func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, didRefresh routeProgress: MapboxNavigationCore.RouteProgress)
+  #if compiler(>=5.3) && $NonescapableTypes
   func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, routeLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, routeCasingLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, routeRestrictedAreasLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, willAdd layer: any MapboxMaps.Layer) -> (any MapboxMaps.Layer)?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, waypointCircleLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.CircleLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, waypointSymbolLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.SymbolLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, shapeFor waypoints: [MapboxDirections.Waypoint], legIndex: Swift.Int) -> Turf.FeatureCollection?
-  func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, roadNameAt location: CoreLocation.CLLocation) -> Swift.String?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, roadNameAt location: _LocationEssentials.CLLocation) -> Swift.String?
+  #endif
   func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, didSubmitArrivalFeedback isPositive: Swift.Bool)
 }
 extension MapboxNavigationUIKit.NavigationViewControllerDelegate {
   public func navigationViewControllerDidDismiss(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, byCanceling canceled: Swift.Bool)
-  public func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, didUpdate progress: MapboxNavigationCore.RouteProgress, with location: CoreLocation.CLLocation, rawLocation: CoreLocation.CLLocation)
+  public func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, didUpdate progress: MapboxNavigationCore.RouteProgress, with location: _LocationEssentials.CLLocation, rawLocation: _LocationEssentials.CLLocation)
   public func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, didArriveAt waypoint: MapboxDirections.Waypoint)
   public func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, didSelect waypoint: MapboxDirections.Waypoint)
-  public func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, willRerouteFrom location: CoreLocation.CLLocation?)
+  #if compiler(>=5.3) && $NonescapableTypes
+  public func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, willRerouteFrom location: _LocationEssentials.CLLocation?)
+  #endif
   public func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, didRerouteAlong route: MapboxDirections.Route)
   public func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, didUpdateAlternatives updatedAlternatives: [MapboxNavigationCore.AlternativeRoute], removedAlternatives: [MapboxNavigationCore.AlternativeRoute])
   public func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, didSwitchToCoincidentOnlineRoute coincideRoute: MapboxDirections.Route)
   public func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, didSelect continuousAlternative: MapboxNavigationCore.AlternativeRoute)
   public func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, didFailToRerouteWith error: any Swift.Error)
   public func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, didRefresh routeProgress: MapboxNavigationCore.RouteProgress)
+  #if compiler(>=5.3) && $NonescapableTypes
   public func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, shapeFor waypoints: [MapboxDirections.Waypoint], legIndex: Swift.Int) -> Turf.FeatureCollection?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, routeLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, routeCasingLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, routeRestrictedAreasLineLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.LineLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, willAdd layer: any MapboxMaps.Layer) -> (any MapboxMaps.Layer)?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, waypointCircleLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.CircleLayer?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, waypointSymbolLayerWithIdentifier identifier: Swift.String, sourceIdentifier: Swift.String) -> MapboxMaps.SymbolLayer?
-  public func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, roadNameAt location: CoreLocation.CLLocation) -> Swift.String?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  public func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, roadNameAt location: _LocationEssentials.CLLocation) -> Swift.String?
+  #endif
   public func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, didAdd finalDestinationAnnotation: MapboxMaps.PointAnnotation, pointAnnotationManager: MapboxMaps.PointAnnotationManager)
   public func navigationViewController(_ navigationViewController: MapboxNavigationUIKit.NavigationViewController, didSubmitArrivalFeedback isPositive: Swift.Bool)
 }
 extension MapboxNavigationUIKit.NavigationView {
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc override dynamic open func traitCollectionDidChange(_ previousTraitCollection: UIKit.UITraitCollection?)
+  #endif
 }
 @objc @_inheritsConvenienceInitializers @_documentation(visibility: internal) @_Concurrency.MainActor @preconcurrency open class NextInstructionLabel : MapboxNavigationUIKit.InstructionLabel {
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @IBDesignable @_Concurrency.MainActor @preconcurrency open class NextBannerView : UIKit.UIView, MapboxNavigationUIKit.NavigationComponent {
   @_Concurrency.MainActor @preconcurrency public var isCurrentlyVisible: Swift.Bool
   public typealias CompletionHandler = (_ completed: Swift.Bool) -> Swift.Void
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  #endif
   @_Concurrency.MainActor @preconcurrency @objc override dynamic open func prepareForInterfaceBuilder()
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc override dynamic open func traitCollectionDidChange(_ previousTraitCollection: UIKit.UITraitCollection?)
+  #endif
   @_Concurrency.MainActor @preconcurrency public func onRouteProgressUpdated(_ progress: MapboxNavigationCore.RouteProgress)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency public func update(for visualInstruction: MapboxDirections.VisualInstructionBanner?, animated: Swift.Bool = true, duration: Foundation.TimeInterval = 0.5, completion: MapboxNavigationUIKit.NextBannerView.CompletionHandler? = nil)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency public func show(animated: Swift.Bool = true, duration: Foundation.TimeInterval = 0.5, completion: MapboxNavigationUIKit.NextBannerView.CompletionHandler? = nil)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency public func hide(animated: Swift.Bool = true, duration: Foundation.TimeInterval = 0.5, completion: MapboxNavigationUIKit.NextBannerView.CompletionHandler? = nil)
+  #endif
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_documentation(visibility: internal) public class LanesStyleKit : ObjectiveC.NSObject {
@@ -1547,7 +1962,9 @@ extension MapboxNavigationUIKit.NavigationView {
     case stretch
     case center
     public func apply(rect: CoreFoundation.CGRect, target: CoreFoundation.CGRect) -> CoreFoundation.CGRect
+    #if compiler(>=5.3) && $NonescapableTypes
     public init?(rawValue: Swift.Int)
+    #endif
     public typealias RawValue = Swift.Int
     public var rawValue: Swift.Int {
       get
@@ -1577,7 +1994,9 @@ extension MapboxNavigationUIKit.NavigationView {
     case stretch
     case center
     public func apply(rect: CoreFoundation.CGRect, target: CoreFoundation.CGRect) -> CoreFoundation.CGRect
+    #if compiler(>=5.3) && $NonescapableTypes
     public init?(rawValue: Swift.Int)
+    #endif
     public typealias RawValue = Swift.Int
     public var rawValue: Swift.Int {
       get
@@ -1595,7 +2014,9 @@ extension MapboxNavigationUIKit.NavigationView {
     case stretch
     case center
     public func apply(rect: CoreFoundation.CGRect, target: CoreFoundation.CGRect) -> CoreFoundation.CGRect
+    #if compiler(>=5.3) && $NonescapableTypes
     public init?(rawValue: Swift.Int)
+    #endif
     public typealias RawValue = Swift.Int
     public var rawValue: Swift.Int {
       get
@@ -1608,7 +2029,9 @@ public struct PreviewOptions {
   public var styles: [MapboxNavigationUIKit.Style]? {
     get
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(styles: [MapboxNavigationUIKit.Style]? = nil, locationMatching: Combine.AnyPublisher<MapboxNavigationCore.MapMatchingState, Swift.Never>, routeProgress: Combine.AnyPublisher<MapboxNavigationCore.RouteProgress?, Swift.Never>, heading: Combine.AnyPublisher<CoreLocation.CLHeading, Swift.Never>? = nil, predictiveCacheManager: MapboxNavigationCore.PredictiveCacheManager? = nil)
+  #endif
 }
 @objc @_Concurrency.MainActor @preconcurrency public class PreviewViewController : UIKit.UIViewController {
   @_Concurrency.MainActor @preconcurrency public var navigationView: MapboxNavigationUIKit.NavigationView {
@@ -1620,21 +2043,33 @@ public struct PreviewOptions {
     set
   }
   @_Concurrency.MainActor @preconcurrency public init(_ previewOptions: MapboxNavigationUIKit.PreviewOptions)
+  #if compiler(>=5.3) && $NonescapableTypes
   @available(*, unavailable)
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public func loadView()
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewWillAppear(_ animated: Swift.Bool)
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewDidAppear(_ animated: Swift.Bool)
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewSafeAreaInsetsDidChange()
+  #if compiler(>=5.3) && $NonescapableTypes
   @discardableResult
   @_Concurrency.MainActor @preconcurrency public func dismissBanner(at position: MapboxNavigationUIKit.BannerPosition, animated: Swift.Bool = true, duration: Foundation.TimeInterval = 0.2, animations: (() -> Swift.Void)? = nil, completion: (() -> Swift.Void)? = nil) -> (any MapboxNavigationUIKit.Banner)?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency public func dismissAllExceptFirst(at position: MapboxNavigationUIKit.BannerPosition, animated: Swift.Bool = true, duration: Foundation.TimeInterval = 0.2, animations: (() -> Swift.Void)? = nil, completion: (() -> Swift.Void)? = nil)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency public func present(_ banner: any MapboxNavigationUIKit.Banner, animated: Swift.Bool = true, duration: Foundation.TimeInterval = 0.2, animations: (() -> Swift.Void)? = nil, completion: (() -> Swift.Void)? = nil)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency public func topBanner(at position: MapboxNavigationUIKit.BannerPosition) -> (any MapboxNavigationUIKit.Banner)?
+  #endif
   @objc deinit
 }
 extension MapboxNavigationUIKit.PreviewViewController : MapboxNavigationUIKit.StyleManagerDelegate {
-  @_Concurrency.MainActor @preconcurrency public func location(for styleManager: MapboxNavigationUIKit.StyleManager) -> CoreLocation.CLLocation?
+  #if compiler(>=5.3) && $NonescapableTypes
+  @_Concurrency.MainActor @preconcurrency public func location(for styleManager: MapboxNavigationUIKit.StyleManager) -> _LocationEssentials.CLLocation?
+  #endif
   @_Concurrency.MainActor @preconcurrency public func styleManager(_ styleManager: MapboxNavigationUIKit.StyleManager, didApply style: MapboxNavigationUIKit.Style)
 }
 public protocol PreviewViewControllerDelegate : AnyObject, MapboxNavigationCore.UnimplementedLogging {
@@ -1653,9 +2088,11 @@ public struct RecentItem : Swift.Equatable, Swift.Codable {
   public var navigationGeocodedPlacemark: MapboxNavigationUIKit.NavigationGeocodedPlacemark {
     get
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   public static var recentItemsPathURL: Foundation.URL? {
     get
   }
+  #endif
   public init(_ navigationGeocodedPlacemark: MapboxNavigationUIKit.NavigationGeocodedPlacemark)
   public static func loadDefaults() -> [MapboxNavigationUIKit.RecentItem]
   public func matches(_ searchText: Swift.String) -> Swift.Bool
@@ -1670,10 +2107,12 @@ extension Swift.Array where Element == MapboxNavigationUIKit.RecentItem {
   public mutating func remove(_ recentItem: MapboxNavigationUIKit.RecentItem)
 }
 @_inheritsConvenienceInitializers @IBDesignable @objc(MBResumeButton) @_Concurrency.MainActor @preconcurrency public class ResumeButton : UIKit.UIControl {
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public var tintColor: UIKit.UIColor! {
     @objc get
     @objc set
   }
+  #endif
   @objc @_Concurrency.MainActor @preconcurrency dynamic public var borderWidth: CoreFoundation.CGFloat {
     @objc get
     @objc set
@@ -1682,12 +2121,16 @@ extension Swift.Array where Element == MapboxNavigationUIKit.RecentItem {
     @objc get
     @objc set
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc @_Concurrency.MainActor @preconcurrency dynamic public var borderColor: UIKit.UIColor? {
     @objc get
     @objc set
   }
+  #endif
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  #endif
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public func prepareForInterfaceBuilder()
   @objc deinit
 }
@@ -1714,7 +2157,9 @@ public protocol RoutePreviewViewControllerDelegate : AnyObject {
 }
 @_inheritsConvenienceInitializers @_documentation(visibility: internal) @objc(MBSeparatorView) @_Concurrency.MainActor @preconcurrency public class SeparatorView : UIKit.UIView {
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @_Concurrency.MainActor @preconcurrency public class SpeedLimitView : UIKit.UIView {
@@ -1734,7 +2179,7 @@ public protocol RoutePreviewViewControllerDelegate : AnyObject {
     get
     set
   }
-  @_Concurrency.MainActor @preconcurrency public var currentSpeed: CoreLocation.CLLocationSpeed?
+  @_Concurrency.MainActor @preconcurrency public var currentSpeed: _LocationEssentials.CLLocationSpeed?
   @_Concurrency.MainActor @preconcurrency public var signStandard: MapboxDirections.SignStandard? {
     get
     set
@@ -1762,9 +2207,13 @@ public protocol RoutePreviewViewControllerDelegate : AnyObject {
   }
   public typealias Priority = Swift.Int
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  #endif
   @_Concurrency.MainActor @preconcurrency public func show(status: MapboxNavigationUIKit.StatusView.Status)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency public func hide(with status: MapboxNavigationUIKit.StatusView.Status? = nil, delay: Foundation.TimeInterval = 0, animated: Swift.Bool = true)
+  #endif
   @objc deinit
 }
 @_inheritsConvenienceInitializers @_documentation(visibility: internal) @objc(MBDraggableView) @_Concurrency.MainActor @preconcurrency open class StepListIndicatorView : UIKit.UIView {
@@ -1774,32 +2223,50 @@ public protocol RoutePreviewViewControllerDelegate : AnyObject {
   }
   @_Concurrency.MainActor @preconcurrency @objc override dynamic open func layoutSubviews()
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_Concurrency.MainActor @preconcurrency open class StepInstructionsView : MapboxNavigationUIKit.BaseInstructionsBannerView {
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @_Concurrency.MainActor @preconcurrency open class StepTableViewCell : UIKit.UITableViewCell {
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  #endif
   @_Concurrency.MainActor @preconcurrency @objc override dynamic open func prepareForReuse()
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_documentation(visibility: internal) @_Concurrency.MainActor @preconcurrency open class StepsBackgroundView : UIKit.UIView {
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_Concurrency.MainActor @preconcurrency public class StepsViewController : UIKit.UIViewController, MapboxNavigationUIKit.NavigationComponent {
   @_Concurrency.MainActor @preconcurrency weak public var delegate: (any MapboxNavigationUIKit.StepsViewControllerDelegate)?
+  @_Concurrency.MainActor @preconcurrency public var measurementSystem: MapboxDirections.MeasurementSystem? {
+    get
+    set
+  }
   @_Concurrency.MainActor @preconcurrency convenience public init(routeProgress: MapboxNavigationCore.RouteProgress)
   @_Concurrency.MainActor @preconcurrency @objc override dynamic open func viewDidLoad()
   @_Concurrency.MainActor @preconcurrency public func onRouteProgressUpdated(_ progress: MapboxNavigationCore.RouteProgress)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency public func dismiss(completion: MapboxNavigationUIKit.CompletionHandler? = nil)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 extension MapboxNavigationUIKit.StepsViewController : UIKit.UITableViewDelegate {
@@ -1812,7 +2279,9 @@ extension MapboxNavigationUIKit.StepsViewController : UIKit.UITableViewDataSourc
   @_Concurrency.MainActor @preconcurrency @objc dynamic public func tableView(_ tableView: UIKit.UITableView, cellForRowAt indexPath: Foundation.IndexPath) -> UIKit.UITableViewCell
   @_Concurrency.MainActor @preconcurrency @objc dynamic public func tableView(_ tableView: UIKit.UITableView, willDisplay cell: UIKit.UITableViewCell, forRowAt indexPath: Foundation.IndexPath)
   @_Concurrency.MainActor @preconcurrency @objc dynamic public func tableView(_ tableView: UIKit.UITableView, heightForHeaderInSection section: Swift.Int) -> CoreFoundation.CGFloat
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc dynamic public func tableView(_ tableView: UIKit.UITableView, viewForHeaderInSection section: Swift.Int) -> UIKit.UIView?
+  #endif
 }
 public protocol StepsViewControllerDelegate : AnyObject {
   func stepsViewController(_ viewController: MapboxNavigationUIKit.StepsViewController, didSelect legIndex: Swift.Int, stepIndex: Swift.Int, cell: MapboxNavigationUIKit.StepTableViewCell)
@@ -1840,37 +2309,51 @@ public protocol StepsViewControllerDelegate : AnyObject {
     @objc set
   }
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @_inheritsConvenienceInitializers @_documentation(visibility: internal) @objc(MBButton) @_Concurrency.MainActor @preconcurrency open class Button : MapboxNavigationUIKit.StylableButton {
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @_inheritsConvenienceInitializers @_documentation(visibility: internal) @objc(MBCancelButton) @_Concurrency.MainActor @preconcurrency open class CancelButton : MapboxNavigationUIKit.Button {
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @_inheritsConvenienceInitializers @_documentation(visibility: internal) @objc(MBDismissButton) @_Concurrency.MainActor @preconcurrency open class DismissButton : MapboxNavigationUIKit.Button {
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_documentation(visibility: internal) @_Concurrency.MainActor @preconcurrency public class BackButton : MapboxNavigationUIKit.Button {
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_documentation(visibility: internal) @_Concurrency.MainActor @preconcurrency public class PreviewButton : MapboxNavigationUIKit.Button {
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_documentation(visibility: internal) @_Concurrency.MainActor @preconcurrency public class StartButton : MapboxNavigationUIKit.Button {
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @_inheritsConvenienceInitializers @_documentation(visibility: internal) @objc(MBStylableLabel) @_Concurrency.MainActor @preconcurrency open class StylableLabel : UIKit.UILabel {
@@ -1892,7 +2375,9 @@ public protocol StepsViewControllerDelegate : AnyObject {
   }
   @_Concurrency.MainActor @preconcurrency open func update()
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @_inheritsConvenienceInitializers @objc(MBTimeRemainingLabel) @_Concurrency.MainActor @preconcurrency open class TimeRemainingLabel : MapboxNavigationUIKit.StylableLabel {
@@ -1905,22 +2390,30 @@ public protocol StepsViewControllerDelegate : AnyObject {
   @objc @_Concurrency.MainActor @preconcurrency dynamic public var trafficHeavyColor: UIKit.UIColor
   @objc @_Concurrency.MainActor @preconcurrency dynamic public var trafficSevereColor: UIKit.UIColor
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @_inheritsConvenienceInitializers @_documentation(visibility: internal) @objc(MBDistanceRemainingLabel) @_Concurrency.MainActor @preconcurrency open class DistanceRemainingLabel : MapboxNavigationUIKit.StylableLabel {
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @_inheritsConvenienceInitializers @_documentation(visibility: internal) @objc(MBArrivalTimeLabel) @_Concurrency.MainActor @preconcurrency open class ArrivalTimeLabel : MapboxNavigationUIKit.StylableLabel {
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_documentation(visibility: internal) @_Concurrency.MainActor @preconcurrency public class DestinationLabel : MapboxNavigationUIKit.StylableLabel {
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @_inheritsConvenienceInitializers @_documentation(visibility: internal) @objc(MBStylableTextView) @_Concurrency.MainActor @preconcurrency open class StylableTextView : UIKit.UITextView {
@@ -1928,9 +2421,13 @@ public protocol StepsViewControllerDelegate : AnyObject {
     @objc get
     @objc set
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   @available(iOS 7.0, *)
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect, textContainer: UIKit.NSTextContainer?)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @_inheritsConvenienceInitializers @_documentation(visibility: internal) @objc(MBStylableView) @_Concurrency.MainActor @preconcurrency open class StylableView : UIKit.UIView {
@@ -1942,12 +2439,16 @@ public protocol StepsViewControllerDelegate : AnyObject {
     @objc get
     @objc set
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc @_Concurrency.MainActor @preconcurrency dynamic public var borderColor: UIKit.UIColor? {
     @objc get
     @objc set
   }
+  #endif
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @_inheritsConvenienceInitializers @objc(MBStyle) open class Style : ObjectiveC.NSObject {
@@ -1984,27 +2485,39 @@ public protocol StepsViewControllerDelegate : AnyObject {
   @_Concurrency.MainActor public func applyMapStyle(type styleType: MapboxNavigationUIKit.StyleType, to mapView: MapboxNavigationCore.NavigationMapView)
 }
 public protocol StyleManagerDelegate : AnyObject, MapboxNavigationCore.UnimplementedLogging {
-  func location(for styleManager: MapboxNavigationUIKit.StyleManager) -> CoreLocation.CLLocation?
+  #if compiler(>=5.3) && $NonescapableTypes
+  func location(for styleManager: MapboxNavigationUIKit.StyleManager) -> _LocationEssentials.CLLocation?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @available(*, deprecated, message: "All views appearance will be refreshed without the `UITextEffectsWindow`.")
   func styleManager(_ styleManager: MapboxNavigationUIKit.StyleManager, viewForApplying currentStyle: MapboxNavigationUIKit.Style?) -> UIKit.UIView?
+  #endif
   func styleManager(_ styleManager: MapboxNavigationUIKit.StyleManager, didApply style: MapboxNavigationUIKit.Style)
   func styleManagerDidRefreshAppearance(_ styleManager: MapboxNavigationUIKit.StyleManager)
 }
 extension MapboxNavigationUIKit.StyleManagerDelegate {
-  public func location(for styleManager: MapboxNavigationUIKit.StyleManager) -> CoreLocation.CLLocation?
+  #if compiler(>=5.3) && $NonescapableTypes
+  public func location(for styleManager: MapboxNavigationUIKit.StyleManager) -> _LocationEssentials.CLLocation?
+  #endif
   public func styleManager(_ styleManager: MapboxNavigationUIKit.StyleManager, didApply style: MapboxNavigationUIKit.Style)
   public func styleManagerDidRefreshAppearance(_ styleManager: MapboxNavigationUIKit.StyleManager)
+  #if compiler(>=5.3) && $NonescapableTypes
   @available(*, deprecated, message: "All views appearance will be refreshed without the `UITextEffectsWindow`.")
   public func styleManager(_ styleManager: MapboxNavigationUIKit.StyleManager, viewForApplying currentStyle: MapboxNavigationUIKit.Style?) -> UIKit.UIView?
+  #endif
 }
 @objc public enum StyleType : Swift.Int, Swift.CustomStringConvertible {
   case day
   case night
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(description: Swift.String)
+  #endif
   public var description: Swift.String {
     get
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -2039,18 +2552,24 @@ extension MapboxNavigationUIKit.StyleManagerDelegate {
   @_Concurrency.MainActor @preconcurrency public var nextBannerView: MapboxNavigationUIKit.NextBannerView
   @_Concurrency.MainActor @preconcurrency public var statusView: MapboxNavigationUIKit.StatusView
   @_Concurrency.MainActor @preconcurrency public var junctionView: MapboxNavigationUIKit.JunctionView
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  #endif
   @_Concurrency.MainActor @preconcurrency @objc override dynamic open func viewDidLoad()
   @_Concurrency.MainActor @preconcurrency public var isDisplayingPreviewInstructions: Swift.Bool {
     get
   }
-  @_Concurrency.MainActor @preconcurrency public func preview(step stepOverride: MapboxDirections.RouteStep? = nil, maneuverStep: MapboxDirections.RouteStep, distance: CoreLocation.CLLocationDistance, steps: [MapboxDirections.RouteStep], completion: MapboxNavigationUIKit.CompletionHandler? = nil)
+  #if compiler(>=5.3) && $NonescapableTypes
+  @_Concurrency.MainActor @preconcurrency public func preview(step stepOverride: MapboxDirections.RouteStep? = nil, maneuverStep: MapboxDirections.RouteStep, distance: _LocationEssentials.CLLocationDistance, steps: [MapboxDirections.RouteStep], completion: MapboxNavigationUIKit.CompletionHandler? = nil)
+  #endif
   @_Concurrency.MainActor @preconcurrency public func stopPreviewing(showingSecondaryChildren: Swift.Bool = true)
   @_Concurrency.MainActor @preconcurrency public var isDisplayingSteps: Swift.Bool {
     get
   }
   @_Concurrency.MainActor @preconcurrency public func displayStepsTable()
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency public func dismissStepsTable(completion: MapboxNavigationUIKit.CompletionHandler? = nil)
+  #endif
   @objc deinit
 }
 extension MapboxNavigationUIKit.TopBannerViewController : MapboxNavigationUIKit.NavigationComponent {
@@ -2065,7 +2584,9 @@ extension MapboxNavigationUIKit.TopBannerViewController : MapboxNavigationUIKit.
 extension MapboxNavigationUIKit.TopBannerViewController : MapboxNavigationUIKit.InstructionsBannerViewDelegate {
   @_Concurrency.MainActor @preconcurrency public func didTapInstructionsBanner(_ sender: MapboxNavigationUIKit.BaseInstructionsBannerView)
   @_Concurrency.MainActor @preconcurrency public func didSwipeInstructionsBanner(_ sender: MapboxNavigationUIKit.BaseInstructionsBannerView, swipeDirection direction: UIKit.UISwipeGestureRecognizer.Direction)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency public func label(_ label: MapboxNavigationUIKit.InstructionLabel, willPresent instruction: MapboxDirections.VisualInstruction, as presented: Foundation.NSAttributedString) -> Foundation.NSAttributedString?
+  #endif
 }
 extension MapboxNavigationUIKit.TopBannerViewController : MapboxNavigationUIKit.StepsViewControllerDelegate {
   @_Concurrency.MainActor @preconcurrency public func stepsViewController(_ viewController: MapboxNavigationUIKit.StepsViewController, didSelect legIndex: Swift.Int, stepIndex: Swift.Int, cell: MapboxNavigationUIKit.StepTableViewCell)
@@ -2080,7 +2601,7 @@ extension MapboxNavigationUIKit.TopBannerViewController : MapboxNavigationUIKit.
   @_Concurrency.MainActor @preconcurrency public func hide(_ status: MapboxNavigationUIKit.StatusView.Status)
 }
 extension MapboxNavigationUIKit.TopBannerViewController : MapboxNavigationUIKit.NavigationMapInteractionObserver {
-  @_Concurrency.MainActor @preconcurrency public func navigationViewController(didCenterOn location: CoreLocation.CLLocation)
+  @_Concurrency.MainActor @preconcurrency public func navigationViewController(didCenterOn location: _LocationEssentials.CLLocation)
 }
 public protocol TopBannerViewControllerDelegate : MapboxNavigationUIKit.VisualInstructionDelegate {
   func topBanner(_ banner: MapboxNavigationUIKit.TopBannerViewController, didSwipeInDirection direction: UIKit.UISwipeGestureRecognizer.Direction)
@@ -2112,20 +2633,31 @@ extension MapboxNavigationUIKit.TopBannerViewControllerDelegate {
     get
     set
   }
+  open var measurementSystem: MapboxDirections.MeasurementSystem?
   @NSCopying open var measurementFormatter: Foundation.MeasurementFormatter
   @objc override dynamic public init()
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc required dynamic public init?(coder decoder: Foundation.NSCoder)
-  open func string(from distance: CoreLocation.CLLocationDistance) -> Swift.String
-  open func attributedString(from distance: CoreLocation.CLLocationDistance, defaultAttributes attributes: [Foundation.NSAttributedString.Key : Any]? = nil) -> Foundation.NSAttributedString
+  #endif
+  open func string(from distance: _LocationEssentials.CLLocationDistance) -> Swift.String
+  #if compiler(>=5.3) && $NonescapableTypes
+  open func attributedString(from distance: _LocationEssentials.CLLocationDistance, defaultAttributes attributes: [Foundation.NSAttributedString.Key : Any]? = nil) -> Foundation.NSAttributedString
+  #endif
   open func string(from measurement: Foundation.Measurement<Foundation.UnitLength>) -> Swift.String
+  #if compiler(>=5.3) && $NonescapableTypes
   open func attributedString(from measurement: Foundation.Measurement<Foundation.UnitLength>, defaultAttributes attributes: [Foundation.NSAttributedString.Key : Any]? = nil) -> Foundation.NSAttributedString
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc override dynamic open func string(for obj: Any?) -> Swift.String?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc override dynamic open func attributedString(for obj: Any, withDefaultAttributes attrs: [Foundation.NSAttributedString.Key : Any]? = nil) -> Foundation.NSAttributedString?
+  #endif
   @objc deinit
 }
 extension Foundation.Measurement where UnitType == Foundation.UnitLength {
-  public init(distance: CoreLocation.CLLocationDistance)
-  public var distance: CoreLocation.CLLocationDistance {
+  public init(distance: _LocationEssentials.CLLocationDistance)
+  public var distance: _LocationEssentials.CLLocationDistance {
     get
   }
   public func localized(into locale: Foundation.Locale = .nationalizedCurrent) -> Foundation.Measurement<Foundation.UnitLength>
@@ -2136,26 +2668,36 @@ public struct RoundingTable {
     public let roundingIncrement: Swift.Double
     public let maximumFractionDigits: Swift.Int
     public init(maximumDistance: Foundation.Measurement<Foundation.UnitLength>, roundingIncrement: Swift.Double, maximumFractionDigits: Swift.Int)
-    public func measurement(of distance: CoreLocation.CLLocationDistance) -> Foundation.Measurement<Foundation.UnitLength>
+    public func measurement(of distance: _LocationEssentials.CLLocationDistance) -> Foundation.Measurement<Foundation.UnitLength>
   }
   public let thresholds: [MapboxNavigationUIKit.RoundingTable.Threshold]
-  public func threshold(for distance: CoreLocation.CLLocationDistance) -> MapboxNavigationUIKit.RoundingTable.Threshold
+  public func threshold(for distance: _LocationEssentials.CLLocationDistance) -> MapboxNavigationUIKit.RoundingTable.Threshold
   public init(thresholds: [MapboxNavigationUIKit.RoundingTable.Threshold])
   public static var metric: MapboxNavigationUIKit.RoundingTable
   public static var uk: MapboxNavigationUIKit.RoundingTable
   public static var us: MapboxNavigationUIKit.RoundingTable
 }
 extension MapboxDirections.VisualInstruction {
+  #if compiler(>=5.3) && $NonescapableTypes
   public func maneuverImageSet(side: MapboxDirections.DrivingSide, visualInstruction: MapboxDirections.VisualInstruction? = nil) -> CarPlay.CPImageSet?
+  #endif
   public func shouldFlipImage(side: MapboxDirections.DrivingSide) -> Swift.Bool
-  public func carPlayManeuverLabelAttributedText<T>(bounds: @escaping () -> (CoreFoundation.CGRect), shieldHeight: CoreFoundation.CGFloat, window: UIKit.UIWindow?, traitCollection: UIKit.UITraitCollection? = nil, instructionLabelType: T.Type? = nil) -> Foundation.NSAttributedString? where T : MapboxNavigationUIKit.InstructionLabel
+  #if compiler(>=5.3) && $NonescapableTypes
+  public func carPlayManeuverLabelAttributedText<T>(bounds: @escaping () -> CoreFoundation.CGRect, shieldHeight: CoreFoundation.CGFloat, window: UIKit.UIWindow?, traitCollection: UIKit.UITraitCollection? = nil, instructionLabelType: T.Type? = nil) -> Foundation.NSAttributedString? where T : MapboxNavigationUIKit.InstructionLabel
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func lanesImageSet(side: MapboxDirections.DrivingSide, direction: MapboxDirections.ManeuverDirection?, scale: CoreFoundation.CGFloat) -> CarPlay.CPImageSet?
+  #endif
 }
 public protocol VisualInstructionDelegate : AnyObject, MapboxNavigationCore.UnimplementedLogging {
+  #if compiler(>=5.3) && $NonescapableTypes
   func label(_ label: MapboxNavigationUIKit.InstructionLabel, willPresent instruction: MapboxDirections.VisualInstruction, as presented: Foundation.NSAttributedString) -> Foundation.NSAttributedString?
+  #endif
 }
 extension MapboxNavigationUIKit.VisualInstructionDelegate {
+  #if compiler(>=5.3) && $NonescapableTypes
   public func label(_ label: MapboxNavigationUIKit.InstructionLabel, willPresent instruction: MapboxDirections.VisualInstruction, as presented: Foundation.NSAttributedString) -> Foundation.NSAttributedString?
+  #endif
 }
 @_inheritsConvenienceInitializers @objc(MBWayNameLabel) @_Concurrency.MainActor @preconcurrency open class WayNameLabel : MapboxNavigationUIKit.StylableLabel {
   @objc @_Concurrency.MainActor @preconcurrency dynamic public var roadShieldBlackColor: UIKit.UIColor
@@ -2167,21 +2709,31 @@ extension MapboxNavigationUIKit.VisualInstructionDelegate {
   @objc @_Concurrency.MainActor @preconcurrency dynamic public var roadShieldOrangeColor: UIKit.UIColor
   @objc @_Concurrency.MainActor @preconcurrency dynamic public var roadShieldDefaultColor: UIKit.UIColor
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  #endif
   @objc deinit
 }
 @_inheritsConvenienceInitializers @objc(MBWayNameView) @_Concurrency.MainActor @preconcurrency open class WayNameView : UIKit.UIView {
+  @_Concurrency.MainActor @preconcurrency public var label: MapboxNavigationUIKit.WayNameLabel {
+    get
+    set
+  }
   @_Concurrency.MainActor @preconcurrency @objc override dynamic open var layer: QuartzCore.CALayer {
     @objc get
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public var backgroundColor: UIKit.UIColor? {
     @objc get
     @objc set
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc @_Concurrency.MainActor @preconcurrency dynamic public var borderColor: UIKit.UIColor? {
     @objc get
     @objc set
   }
+  #endif
   @objc @_Concurrency.MainActor @preconcurrency dynamic public var borderWidth: CoreFoundation.CGFloat {
     @objc get
     @objc set
@@ -2191,7 +2743,9 @@ extension MapboxNavigationUIKit.VisualInstructionDelegate {
     @objc set
   }
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder decoder: Foundation.NSCoder)
+  #endif
   @_Concurrency.MainActor @preconcurrency @objc override dynamic open func layoutSubviews()
   @objc deinit
 }
@@ -2199,7 +2753,9 @@ public enum WaypointStyle : Swift.Int {
   case annotation
   case building
   case extrudedBuilding
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -2214,9 +2770,6 @@ extension MapboxNavigationUIKit.CarPlayActivity : Swift.Hashable {}
 extension MapboxNavigationUIKit.CarPlayActivity : Swift.RawRepresentable {}
 extension MapboxNavigationUIKit.MapOrnamentPosition : Swift.Equatable {}
 extension MapboxNavigationUIKit.MapOrnamentPosition : Swift.Hashable {}
-extension CoreLocation.CLLocation.CodingKeys : Swift.Equatable {}
-extension CoreLocation.CLLocation.CodingKeys : Swift.Hashable {}
-extension CoreLocation.CLLocation.CodingKeys : Swift.RawRepresentable {}
 extension MapboxNavigationUIKit.NavigationViewController : MapboxNavigationUIKit.InstructionsBannerViewDelegate {}
 extension MapboxNavigationUIKit.LanesStyleKit.ResizingBehavior : Swift.Equatable {}
 extension MapboxNavigationUIKit.LanesStyleKit.ResizingBehavior : Swift.Hashable {}

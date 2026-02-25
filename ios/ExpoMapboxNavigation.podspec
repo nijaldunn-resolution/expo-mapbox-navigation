@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.license        = package['license']
   s.author         = package['author']
   s.homepage       = package['homepage']
-  s.platforms      = { :ios => '13.4', :tvos => '13.4' }
+  s.platforms      = { :ios => '14.0', :tvos => '14.0' }
   s.swift_version  = '5.9'
   s.source         = { git: 'https://github.com/badatgil/expo-mapbox-navigation' }
   s.static_framework = true
@@ -29,6 +29,7 @@ Pod::Spec.new do |s|
 
   s.vendored_frameworks=[
     'Frameworks/_MapboxNavigationHelpers.xcframework',
+    'Frameworks/_MapboxNavigationLocalization.xcframework',
     'Frameworks/MapboxDirections.xcframework',
     'Frameworks/MapboxNavigationCore.xcframework',
     'Frameworks/MapboxNavigationNative.xcframework',

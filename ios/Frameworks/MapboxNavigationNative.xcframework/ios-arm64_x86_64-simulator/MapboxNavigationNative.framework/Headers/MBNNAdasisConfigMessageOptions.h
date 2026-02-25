@@ -4,7 +4,7 @@
 
 /**
  * Common message options
- * enable - if true, message of that type will be generated
+ * enabled - if true, message of that type will be generated
  * radiusMeters - distance along EH path in meters, for which message will be generated
  */
 NS_SWIFT_NAME(AdasisConfigMessageOptions)
@@ -13,11 +13,13 @@ __attribute__((visibility ("default")))
 
 - (nonnull instancetype)init;
 
-- (nonnull instancetype)initWithEnable:(BOOL)enable
-                          radiusMeters:(uint32_t)radiusMeters;
+- (nonnull instancetype)initWithEnabled:(BOOL)enabled
+                           radiusMeters:(uint32_t)radiusMeters
+                     branchRadiusMeters:(uint32_t)branchRadiusMeters;
 
-@property (nonatomic, readonly) BOOL enable;
+@property (nonatomic, readonly) BOOL enabled;
 @property (nonatomic, readonly) uint32_t radiusMeters;
+@property (nonatomic, readonly) uint32_t branchRadiusMeters;
 
 - (BOOL)isEqualToAdasisConfigMessageOptions:(nonnull MBNNAdasisConfigMessageOptions *)other;
 

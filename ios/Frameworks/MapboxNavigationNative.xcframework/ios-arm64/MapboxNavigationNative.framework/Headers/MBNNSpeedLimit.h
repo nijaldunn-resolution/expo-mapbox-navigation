@@ -1,8 +1,9 @@
 // This file is generated and will be overwritten automatically.
 
 #import <Foundation/Foundation.h>
-#import <MapboxNavigationNative/MBNNSpeedLimitSign.h>
-#import <MapboxNavigationNative/MBNNSpeedLimitUnit.h>
+
+typedef NS_ENUM(NSInteger, MBNNSpeedLimitSign);
+typedef NS_ENUM(NSInteger, MBNNSpeedLimitUnit);
 
 NS_SWIFT_NAME(SpeedLimit)
 __attribute__((visibility ("default")))

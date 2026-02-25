@@ -16,7 +16,8 @@ __attribute__((visibility ("default")))
 
 - (nonnull instancetype)initWithRouteProgress:(nonnull MBNNActiveGuidanceProgress *)routeProgress
                                   legProgress:(nonnull MBNNActiveGuidanceProgress *)legProgress
-                                 stepProgress:(nonnull MBNNActiveGuidanceProgress *)stepProgress;
+                                 stepProgress:(nonnull MBNNActiveGuidanceProgress *)stepProgress
+                                 linkProgress:(nonnull MBNNActiveGuidanceProgress *)linkProgress;
 
 /** Progress of current route */
 @property (nonatomic, readonly, nonnull) MBNNActiveGuidanceProgress *routeProgress;
@@ -26,6 +27,9 @@ __attribute__((visibility ("default")))
 
 /** Progress of current step */
 @property (nonatomic, readonly, nonnull) MBNNActiveGuidanceProgress *stepProgress;
+
+/** Progress on current link, where link is a part of step between two intersections */
+@property (nonatomic, readonly, nonnull) MBNNActiveGuidanceProgress *linkProgress;
 
 
 @end

@@ -2,13 +2,13 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
-#import <MapboxNavigationNative/MBNNMapboxAPI.h>
-#import <MapboxNavigationNative/MBNNRouterOrigin.h>
 @class MBXCoordinate2D;
 @class MBXDataRef;
 
 @class MBNNRouteInfo;
 @class MBNNWaypoint;
+typedef NS_ENUM(NSInteger, MBNNMapboxAPI);
+typedef NS_ENUM(NSInteger, MBNNRouterOrigin);
 
 NS_SWIFT_NAME(RouteInterface)
 @protocol MBNNRouteInterface
